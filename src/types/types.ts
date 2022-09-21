@@ -21,3 +21,43 @@ export type dataCurrentCourse = {
 	exercises: Array<IExercise>;
     lvlDifficulty:number;
 };
+
+///USER///
+export type dataUser = {
+	id: string;
+	username: string;
+	height: number;
+	weight: number;
+	age: number;
+	courses: Array<dataCurrentCourse>;
+	goal: GoalUser;
+	lvlActivity: number;
+	food: foodUser;
+	gender:genderUser;
+};
+
+export interface GoalUser  {
+	status:  EnumGoalUser
+	txt: "Lose Weight" | "Maintain Weight" | "Gain Weight";
+};
+export type foodUser = {
+	calories: {
+		dailyCalorieIntake: number;
+		dailyCarbs: number;
+		dailyProtein: number;
+		dailyFat: number;
+		eaten: number;
+		burned: number;
+	};
+};
+export type genderUser = {
+	id:1|2,
+	txt:"male"|"female"
+}
+
+export enum EnumGoalUser{
+	LoseWeight = 0,
+	MaintainWeight = 1,
+	GainWeight = 2
+}
+// export let goalOfUserId = [EnumGoalUser.LoseWeight, EnumGoalUser.MaintainWeight, EnumGoalUser.GainWeight]

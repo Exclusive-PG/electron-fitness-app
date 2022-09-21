@@ -3,6 +3,7 @@ import './assets/styles/index.scss';
 import "./scripts/Classes/User/User"
 import "./scripts/Classes/Courses/CourseBase"
 import './scripts/Classes/Exercises/Exercises';
+import './scripts/Classes/Calc/Calculating';
 import AppController from './scripts/Classes/AppController/AppController';
 import "./scripts/switcherPages/switcherPages"
 
@@ -23,10 +24,15 @@ let getData = () => {
   });
 }
 
+
 //getData()
 // let data = 200
 // document.getElementById("tweet").addEventListener("click", ()=>{
 //     shell.openExternal(`https://twitter.com/intent/tweet?text=Hello form Fitness App .My height is ${data}cm&hashtags=sport,workout,health`)      
 // })
 //console.log(AppController.isOnline())
-///AppController.watchInternetConnection()
+// AppController.watchInternetConnection()
+
+// window.addEventListener("keypress",(e)=>{
+// 	e.code === "Space" && AppController.stopWatchingInternetConnection()
+// })
