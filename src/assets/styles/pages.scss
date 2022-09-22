@@ -1,0 +1,20 @@
+.home_content_page {
+	background-color: $HOME_PAGE_COLOR;
+}
+.train_content_page {
+	background-color: $TRAIN_PAGE_COLOR;
+}
+.food_content_page {
+	background-color: $FOOD_PAGE_COLOR;
+}
+.profile_content_page {
+	background-color: $PROFILE_PAGE_COLOR;
+}
+
+.page{
+    min-height: 100vh;
+}
+
+.container_switcher{
+    z-index: 10;
+}

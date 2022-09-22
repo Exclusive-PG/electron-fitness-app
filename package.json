@@ -52,6 +52,7 @@
             "renderer": {
               "nodeIntegration": true,
               "webSecurity": false,
+              "enableRemoteModule": true, 
               "config": "./webpack.renderer.config.js",
               "entryPoints": [
                 {
@@ -97,6 +98,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "swiper": "^8.4.2"
   }
 }

@@ -1,0 +1,245 @@
+$color-primary: #26E089;
+$color-primary-dark: #00B297;
+$color-secondary: #FF5F87;
+$color-secondary-dark: #FB0779;
+$color-tertiary: #1BDBD1;
+$color-tertiary-dark: #1fa2ff;
+$color-orange: #FFB300;
+$color-purple: #6F16FD;
+$padding-btn: 15px 75px;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  background: #263238;
+}
+
+.container {
+  background: #263238;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 80vw 1fr;
+  grid-template-rows: 1fr 70vh 1fr;
+  justify-items: center;
+  align-items: center;
+  
+  &__btn {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: grid;
+    grid-template-columns: repeat(3, 230px);
+    grid-gap: 50px;
+    justify-items: center;
+    align-items: center;
+    
+    @media screen and (max-width: 800px) {
+      grid-template-columns: 230px;
+      grid-template-rows: repeat(auto-fit, 1fr);
+    }
+  }
+}
+
+
+/*  ALL BUTTONS */
+.btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  border: none;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 12px;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, .4);
+  
+  &:focus, &:focus::after {
+     outline: none;
+     }
+  
+  &:active {
+     transform: translateY(2px);
+     }
+}
+
+
+/*  BUTTON GREEN */
+.btn-flip {
+  overflow: hidden;
+  background-image: linear-gradient(to right, $color-primary, $color-primary-dark);
+
+    // select all the childs elements
+    & > * {
+      height: 100%;
+      width: 100%;
+      display: inline-block;
+      transition: all .4s;
+    }
+
+    &__visible {
+      padding: $padding-btn;
+    }
+
+    &__invisible {
+      position: absolute;
+      padding: 15px 0;
+      left: 0;
+      top: -100%;
+    }
+
+    &:hover &__visible{
+      transform: translateY(100%);
+    }
+
+    &:hover &__invisible {
+      top: 0;
+    }
+  
+    
+
+  }
+
+
+/*  BUTTON PINK  */
+.btn-pulse {
+  padding: $padding-btn;
+  background-image: linear-gradient(to right, $color-secondary, $color-secondary-dark);
+  z-index: 1;
+  
+  &::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: -1;
+		width: 100%;
+		height: 100%;
+		border: inherit;
+		top: 0;
+		left: 0;
+		background: inherit;
+		border-radius: inherit;
+    transition: all .5s;
+    }
+  
+  &:hover {
+    &::after {
+      transform: scaleX(1.2) scaleY(1.4);
+      opacity: 0;
+    }
+  }
+}
+
+
+/*  BUTTON BLUE  */
+.btn-shine {
+  padding: $padding-btn;
+  background-image: linear-gradient(to right, $color-tertiary, $color-tertiary-dark);
+  overflow: hidden; // we dont see the after pseudoelement outside of the button
+    
+    span {
+      z-index: 20; // position of the text infront of the pseudo-element
+    }
+    
+    &::after {
+      background: #fff;
+      content: "";
+      height: 155px;
+      top: -50px;
+      left: -75px;
+      opacity: .3;
+      position: absolute;
+      transform: rotate(35deg);
+      transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
+      width: 50px;
+      z-index: 0; // position of the pseudo-element behind the text
+    }
+
+    &:hover::after {
+            left: 120%;
+            transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+}
+
+
+/*  BUTTON ORANGE  */
+// .btn-fill {
+//   padding: $padding-btn;
+//   background: transparent;
+//   color: $color-orange;
+//   border: 1px solid $color-orange;
+//   z-index: 1;
+//   overflow: hidden;
+  
+//   &:hover {
+//     span {
+//       color: #263238;
+//       transition: all 0.2s;
+//     }
+//   }
+
+//   &::after {
+//     background: $color-orange;
+//     content: "";
+//     height: 100%;
+//     width: 100%;
+//     top: 0;
+//     left: -230px;
+//     position: absolute;
+//     transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+//     z-index: -1; // position of the pseudo-element behind the text
+//     }
+  
+//     &:hover::after {
+//       left: 0;
+//       transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+//       color: #fff;
+//     }
+// }
+
+
+/*  BUTTON LIGHT SHAD0W  */
+.btn-shadow {
+  padding: $padding-btn;
+  background-image: linear-gradient(to right, $color-orange, $color-secondary);
+  transition: .2s ease;
+  
+  &:hover {
+    transform: translateY(-2px) scaleX(1.05) scaleY(1.05);
+    box-shadow: 0 0 10px rgba($color-orange, .4);
+  }
+}
+
+
+/*  BTN GRADIENTS */
+.btn-gradients {
+  padding: $padding-btn;
+  background: transparent;
+  z-index: 1;
+  overflow: hidden;
+  
+  
+  &::after {
+    background-image: linear-gradient(to right, $color-purple, $color-secondary-dark);
+    content: "";
+    height: 100%;
+    width: 160%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: -1; // position of the pseudo-element behind the text
+    }
+  
+    &:hover::after {
+      left: -120px;
+      transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1);
+      color: #fff;
+    }
+}

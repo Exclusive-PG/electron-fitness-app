@@ -60,4 +60,10 @@ export enum EnumGoalUser{
 	MaintainWeight = 1,
 	GainWeight = 2
 }
+
+export type Nutrients = {
+	dailyCarbs:number,
+	dailyProtein:number,
+	dailyFat:number
+}
 // export let goalOfUserId = [EnumGoalUser.LoseWeight, EnumGoalUser.MaintainWeight, EnumGoalUser.GainWeight]

@@ -1,4 +1,4 @@
-import { EnumGoalUser, GoalUser } from "../../../types/types";
+import { Nutrients, EnumGoalUser, GoalUser } from "../../../types/types";
 
 type enterDataForDCI = {
 	gender: "male" | "female";
@@ -9,6 +9,11 @@ type enterDataForDCI = {
 };
 
 export default class Calculating {
+	static readonly PercentRatio = {
+		PROTEIN: 4,
+		FAT: 9,
+		GARBS: 4,
+	};
 	public static determineDailyCalorieIntake(data: enterDataForDCI) {
 		let result: number = 0;
 
@@ -19,14 +24,32 @@ export default class Calculating {
 		return Math.round(result);
 	}
 
-	public static determineRatioOfPFC(dailyCalorieIntake: number, goalUser: EnumGoalUser) {
+	public static determineRatioOfPFC(dailyCalorieIntake: number, goalUser: EnumGoalUser): Nutrients {
+		let _ratio: Nutrients = {
+			dailyProtein: 0,
+			dailyFat: 0,
+			dailyCarbs: 0,
+		};
 		switch (goalUser) {
-			case EnumGoalUser.LoseWeight:
-				return console.log("lose W");
-			case EnumGoalUser.MaintainWeight:
-				return console.log("main W");
-			case EnumGoalUser.GainWeight:
-				return console.log("gain W");
+			case EnumGoalUser.LoseWeight: {
+				_ratio.dailyProtein = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.PROTEIN);
+				_ratio.dailyFat = Math.round((dailyCalorieIntake * 0.2) / this.PercentRatio.FAT);
+				_ratio.dailyCarbs = Math.round((dailyCalorieIntake * 0.5) / this.PercentRatio.GARBS);
+				return _ratio;
+			}
+			case EnumGoalUser.MaintainWeight: {
+				_ratio.dailyProtein = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.PROTEIN);
+				_ratio.dailyFat = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.FAT);
+				_ratio.dailyCarbs = Math.round((dailyCalorieIntake * 0.4) / this.PercentRatio.GARBS);
+				return _ratio;
+			}
+
+			case EnumGoalUser.GainWeight: {
+				_ratio.dailyProtein = Math.round((dailyCalorieIntake * 0.35) / this.PercentRatio.PROTEIN);
+				_ratio.dailyFat = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.FAT);
+				_ratio.dailyCarbs = Math.round((dailyCalorieIntake * 0.55) / this.PercentRatio.GARBS);
+				return _ratio;
+			}
 		}
 	}
 
@@ -48,4 +71,12 @@ export default class Calculating {
 
 let res = Calculating.determineDailyCalorieIntake({ age: 21, weight: 65, height: 172, gender: "female", lvlActivy: 2 });
 console.log(res);
-let ratio = Calculating.determineRatioOfPFC(2000,EnumGoalUser.GainWeight)
+
+let loseRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.LoseWeight);
+console.log("LoseWeight",loseRatio);
+
+let MaintainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.MaintainWeight);
+console.log("MaintainWeight",MaintainRatio);
+
+let gainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.GainWeight);
+console.log("GainWeight",gainRatio);

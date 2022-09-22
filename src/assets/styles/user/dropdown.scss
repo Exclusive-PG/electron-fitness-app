@@ -1,0 +1,86 @@
+.dropdown {
+	position: relative;
+	margin-top: 15px;
+	width: 300px;
+	height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dropdown::before {
+	content: "";
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	z-index: 1000;
+	width: 8px;
+	height: 8px;
+	border: 2px solid #333;
+	border-top: 2px solid #fff;
+	border-right: 2px solid #fff;
+	transform: rotate(-45deg);
+	transition: 0.5s;
+	pointer-events: none;
+}
+
+.dropdown.active::before {
+	top: 22px;
+	transform: rotate(-225deg);
+
+}
+
+.dropdown input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	background: #fff;
+	font-size: 1.2em;
+	border: none;
+	outline: none;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+	padding: 12px 20px;
+	border-radius: 10px;
+}
+
+.dropdown .options-dropdown {
+	position: absolute;
+	top: 70px;
+	width: 100%;
+	background: #fff;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+	border-radius: 10px;
+	overflow-y: scroll;
+    max-height: 150px;
+	display: none;
+    z-index: 15;
+}
+.dropdown .options-dropdown::-webkit-scrollbar{
+    display: none;
+}
+
+.dropdown.active .options-dropdown {
+	display: block;
+}
+
+.dropdown .options-dropdown div {
+	padding: 12px 20px;
+	cursor: pointer;
+}
+
+.dropdown .options-dropdown div:hover {
+	background: #62baea;
+	color: #fff;
+}
+
+.dropdown .options-dropdown div ion-icon {
+	position: relative;
+	top: 4px;
+	font-size: 1.2em;
+	margin-right: 10px;
+}
+
+
+

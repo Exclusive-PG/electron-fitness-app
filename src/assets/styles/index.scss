@@ -1,6 +1,9 @@
+
 @import "./variables";
 @import "./panelSwitchPages";
-
+@import "./pages";
+@import "./buttons";
+@import "./user/createUser";
 * {
 	box-sizing: border-box;
 	padding: 0;

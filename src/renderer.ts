@@ -6,23 +6,24 @@ import './scripts/Classes/Exercises/Exercises';
 import './scripts/Classes/Calc/Calculating';
 import AppController from './scripts/Classes/AppController/AppController';
 import "./scripts/switcherPages/switcherPages"
+import "./scripts/addUser/addUser"
 
-const axios = require('axios'); 
+// const axios = require('axios'); 
 
-let getData = () => {
-  axios.get('https://github.com/Exclusive-PG/exclusive-ytdownloader-official-site/releases/download/release/link.txt')
-  .then(function (response:any) {
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error:any) {
-    // handle error
-    console.log(error);
-  })
-  .then(function () {
-    // always executed
-  });
-}
+// let getData = () => {
+//   axios.get('https://github.com/Exclusive-PG/exclusive-ytdownloader-official-site/releases/download/release/link.txt')
+//   .then(function (response:any) {
+//     // handle success
+//     console.log(response);
+//   })
+//   .catch(function (error:any) {
+//     // handle error
+//     console.log(error);
+//   })
+//   .then(function () {
+//     // always executed
+//   });
+// }
 
 
 //getData()

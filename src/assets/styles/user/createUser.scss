@@ -1,0 +1,194 @@
+@import "./radioBtn";
+@import "./dropdown";
+.create_login_user {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+}
+.wrapper_create_login_user {
+	position: relative;
+	width: 600px;
+	height: 300px;
+	border-radius: 20px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	padding: 15px;
+	transition: 0.3s all;
+	text-align: center;
+}
+//active class for login form
+.wrapper_create_login_user.active {
+	height: 100vh;
+}
+
+.add_new_user {
+	user-select: none;
+	padding: 5px 20px;
+	border-radius: 20px;
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.3s all;
+	i {
+		border-radius: 50%;
+		border: 3px solid $FOOD_PAGE_COLOR;
+		color: $FOOD_PAGE_COLOR;
+		padding: 20px 15px 20px 20px;
+	}
+	.txt_create_account {
+		font-size: 20px;
+		padding-left: 20px;
+	}
+	&:hover {
+		cursor: pointer;
+		background-color: #e1e1e1;
+		transform: translateY(-5px);
+	}
+}
+
+$gray: #9b9b9b;
+.form__group {
+	position: relative;
+	padding: 15px 0 0;
+	margin-top: 20px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.form__field {
+	font-family: inherit;
+	width: 100%;
+	border: 0;
+	border-bottom: 2px solid $gray;
+	outline: 0;
+	font-size: 1.3rem;
+	color: #000;
+	padding: 7px 0;
+	background: transparent;
+	transition: border-color 0.2s;
+
+	&::placeholder {
+		color: transparent;
+	}
+
+	&:placeholder-shown ~ .form__label {
+		font-size: 1.3rem;
+		cursor: text;
+		top: 20px;
+	}
+}
+
+.form__label {
+	position: absolute;
+	top: 0;
+	display: block;
+	transition: 0.2s;
+	font-size: 1rem;
+	color: $gray;
+}
+
+.form__field:focus {
+	~ .form__label {
+		position: absolute;
+		top: 0;
+		display: block;
+		transition: 0.2s;
+		font-size: 1rem;
+		color: $FOOD_PAGE_COLOR;
+		font-weight: 700;
+	}
+	padding-bottom: 6px;
+	font-weight: 700;
+	border-width: 3px;
+	border-image: linear-gradient(to right, $FOOD_PAGE_COLOR, $TRAIN_PAGE_COLOR);
+	border-image-slice: 1;
+}
+/* reset input */
+.form__field {
+	&:required,
+	&:invalid {
+		box-shadow: none;
+	}
+}
+
+.forms {
+	display: none;
+}
+
+.forms.active {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.cancel_reg_new_user {
+	display: none;
+	position: absolute;
+	right: 20px;
+	color: $FOOD_PAGE_COLOR;
+	&:hover {
+		cursor: pointer;
+	}
+}
+.cancel_reg_new_user.active{
+	display: block;
+}
+
+.hd_reg{
+	margin: 25px 60px;
+	text-align: left;
+}
+
+
+
+.btn-fill {
+	max-width: 230px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+	padding: $padding-btn;
+	background: transparent;
+	color: $FOOD_PAGE_COLOR;
+	border: 1px solid $FOOD_PAGE_COLOR;
+	z-index: 1;
+	overflow: hidden;
+	
+	&:hover {
+	  span {
+		color: #fff;
+		transition: all 0.2s;
+	  }
+	}
+  
+	&::after {
+	  background: $FOOD_PAGE_COLOR;
+	  content: "";
+	  height: 100%;
+	  width: 100%;
+	  top: 0;
+	  left: -230px;
+	  position: absolute;
+	  transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+	  z-index: -1; // position of the pseudo-element behind the text
+	  }
+	
+	  &:hover::after {
+		left: 0;
+		transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+		color: #fff;
+	  }
+  }
+  
+  
+  .FileUpload{
+	position: absolute;
+	left: 0;
+  }
+  .image_user{
+	border-radius: 50%;
+  }
