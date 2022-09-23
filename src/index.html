@@ -54,26 +54,31 @@
 				<div class="wrapper_create_login_user">
 					<div class="cancel_reg_new_user"><i class="fa-solid fa-xmark fa-2x"></i></div>
 					<div class="add_new_user">
-						<i class="fa-solid fa-user-plus fa-2x upload_img_user" ></i>
-						<img src="" height="80px" width="80px" alt="" class="image_user">
+						<span class="add_user_image">
+							<i class="fa-solid fa-user-plus fa-2x " ></i>					
+						</span>
 						<div class="txt_create_account">Add new account</div>
 					</div>
 					<div class="forms">
-						<div class="form__group field">
-							<input type="input" class="form__field" placeholder="Name" name="name" id="name" required />
+						<div class="form__group field reg_user_field">
+							<input type="input" class="form__field" placeholder="Name" name="name" id="name" required data-type="string"/>
 							<label for="name" class="form__label">Name</label>
+							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
-						<div class="form__group field">
-							<input type="input" class="form__field" placeholder="Age" name="age" id="age" required />
+						<div class="form__group field reg_user_field">
+							<input type="input" class="form__field" placeholder="Age" name="age" id="age" required data-type="number"/>
 							<label for="age" class="form__label">Your age</label>
+							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
-						<div class="form__group field">
-							<input type="input" class="form__field" placeholder="Weight" name="weight" id="weight" required />
+						<div class="form__group field reg_user_field">
+							<input type="input" class="form__field" placeholder="Weight" name="weight" id="weight" required data-type="number"/>
 							<label for="weight" class="form__label">Your weight (kg)</label>
+							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
-						<div class="form__group field">
-							<input type="input" class="form__field" placeholder="Height" name="height" id="height" required />
+						<div class="form__group field reg_user_field">
+							<input type="input" class="form__field" placeholder="Height" name="height" id="height" required data-type="number"/>
 							<label for="height" class="form__label">Your height (cm)</label>
+							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
 						<div class="control-group">
 							<ul class="radioBtn_registration">
@@ -127,7 +132,7 @@
 							
 							</div>
 						</div>
-						<button class="btn btn-fill"><span>create</span></button>
+						<button class="btn btn-fill create-user-account"><span>create</span></button>
 					</div>
 				</div>
 			</section>
