@@ -1,7 +1,7 @@
 import { Nutrients, EnumGoalUser, GoalUser } from "../../../types/types";
 
 type enterDataForDCI = {
-	gender: "male" | "female";
+	gender: "male" | "female" | string;
 	age: number;
 	weight: number;
 	height: number;
@@ -17,11 +17,9 @@ export default class Calculating {
 	public static determineDailyCalorieIntake(data: enterDataForDCI) {
 		let result: number = 0;
 
-		data.gender === "female"
-			? (result = (10 * data.weight + 6.25 * data.height - 5 * data.age - 161) * this.getCoefLvlActivity(data.lvlActivy))
-			: (result = (10 * data.weight + 6.25 * data.height - 5 * data.age + 5) * this.getCoefLvlActivity(data.lvlActivy));
+		data.gender === "female" ? (result = 10 * data.weight + 6.25 * data.height - 5 * data.age - 161) : (result = 10 * data.weight + 6.25 * data.height - 5 * data.age + 5);
 
-		return Math.round(result);
+		return Math.round(result) * this.getCoefLvlActivity(data.lvlActivy);
 	}
 
 	public static determineRatioOfPFC(dailyCalorieIntake: number, goalUser: EnumGoalUser): Nutrients {
@@ -73,10 +71,10 @@ let res = Calculating.determineDailyCalorieIntake({ age: 21, weight: 65, height:
 console.log(res);
 
 let loseRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.LoseWeight);
-console.log("LoseWeight",loseRatio);
+console.log("LoseWeight", loseRatio);
 
 let MaintainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.MaintainWeight);
-console.log("MaintainWeight",MaintainRatio);
+console.log("MaintainWeight", MaintainRatio);
 
 let gainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.GainWeight);
-console.log("GainWeight",gainRatio);
+console.log("GainWeight", gainRatio);

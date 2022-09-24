@@ -200,3 +200,11 @@ $gray: #9b9b9b;
 .error-icon.active {
 	display: block;
 }
+
+.error-icon-dropdown{
+	display: none;
+	color: $MAIN_RED_COLOR;
+}
+.error-icon-dropdown.active{
+	display: inline-block;
+}

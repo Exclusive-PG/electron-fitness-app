@@ -6,6 +6,7 @@ export interface IExercise {
 	ExecutionTime: number;
     lvlDifficulty : {id:1|2|3, name:"Beginner"|"Intermediate"|"Advanced"},
 	caloriesBurned:number
+	description:string
     image?:string;
 }
 
@@ -29,7 +30,7 @@ export type dataUser = {
 	height: number;
 	weight: number;
 	age: number;
-	courses: Array<dataCurrentCourse>;
+	courses: Array<dataCurrentCourse> | any[];
 	goal: GoalUser;
 	lvlActivity: number;
 	food: foodUser;
@@ -38,7 +39,7 @@ export type dataUser = {
 
 export interface GoalUser  {
 	status:  EnumGoalUser
-	txt: "Lose Weight" | "Maintain Weight" | "Gain Weight";
+	txt: "Lose Weight" | "Maintain Weight" | "Gain Weight" | string;
 };
 export type foodUser = {
 	calories: {
@@ -52,7 +53,7 @@ export type foodUser = {
 };
 export type genderUser = {
 	id:1|2,
-	txt:"male"|"female"
+	txt:"male"|"female"|string
 }
 
 export enum EnumGoalUser{

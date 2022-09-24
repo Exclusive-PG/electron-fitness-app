@@ -30,6 +30,6 @@ export default class Exercises {
 
 export const allExercises = new Exercises();
 
-allExercises.pushExercise(new Exercise({ExecutionTime:20,id:uuidv1(),muscleType:"abs",name:"jumped Jump",RepetitionСount:20,lvlDifficulty:{id:1,name:"Beginner"},caloriesBurned:14}))
-allExercises.pushExercise(new Exercise({ExecutionTime:30,id:uuidv1(),muscleType:"arm",name:"Pass asd",RepetitionСount:40,lvlDifficulty:{id:2,name:"Intermediate"},caloriesBurned:19}))
+allExercises.pushExercise(new Exercise({ExecutionTime:20,id:uuidv1(),muscleType:"abs",name:"jumped Jump",RepetitionСount:20,lvlDifficulty:{id:1,name:"Beginner"},caloriesBurned:14,description:"ok"}))
+allExercises.pushExercise(new Exercise({ExecutionTime:30,id:uuidv1(),muscleType:"arm",name:"Pass asd",RepetitionСount:40,lvlDifficulty:{id:2,name:"Intermediate"},caloriesBurned:19,description:"ok"}))
 

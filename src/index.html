@@ -112,23 +112,25 @@
 								</li>
 							</ul>
 						</div>
-						<h3 class="hd_reg">My Goal</h3>
+						<h3 class="hd_reg">My Goal <span class="error-icon-dropdown"><i class="fa-solid fa-circle-exclamation"></i></span></h3>
 						<div class="dropdown">
-							<input class="text-box-reg-user goal-user-input" type="text" placeholder="Select on" readonly />
+							<input class="text-box-reg-user goal-user-input" type="text" placeholder="Select on" readonly data-type="string" id="goal"/>
 							<div class="options-dropdown goal-user">
 								<div data-value="Lose Weight"><i class="fa-regular fa-heart"></i> Lose Weight</div>
 								<div data-value="Maintain Weight"><i class="fa-solid fa-scale-balanced"></i> Maintain Weight</div>
-								<div data-value="Gain weigh"><i class="fa-solid fa-dumbbell"></i> Gain weight</div>
+								<div data-value="Gain Weight"><i class="fa-solid fa-dumbbell"></i> Gain weight</div>
 							</div>
+							
 						</div>
-						<h3 class="hd_reg">My Activity</h3>
+						<h3 class="hd_reg">My Activity <span class="error-icon-dropdown"><i class="fa-solid fa-circle-exclamation"></i></span></h3>
 						<div class="dropdown">
-							<input class="text-box-reg-user activity-user-input" type="text" placeholder="Select on" readonly />
+							<input class="text-box-reg-user activity-user-input" type="text" placeholder="Select on" readonly data-type="string"  data-activity="0"id="activity" />
 							<div class="options-dropdown activity-user">
-								<div data-value="Sedentary">Sedentary</div>
-								<div data-value="Workout 1-3 times a week">Workout 1-3 times a week</div>
-								<div data-value="Workout 3-5 times a week">Workout 3-5 times a week</div>
-								<div data-value="High loads every day">High loads every day</div>
+								<div data-value="Sedentary" data-activity="0">Sedentary</div>
+								<div data-value="Workout 1-3 times a week" data-activity="1">Workout 1-3 times a week</div>
+								<div data-value="Workout 3-5 times a week" data-activity="2">Workout 3-5 times a week</div>
+								<div data-value="Workout 6-7 times a week" data-activity="3">Workout 6-7 times a week</div>
+								<div data-value="High loads every day" data-activity="4">High loads every day</div>
 							
 							</div>
 						</div>
