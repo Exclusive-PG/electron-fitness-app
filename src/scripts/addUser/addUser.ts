@@ -1,10 +1,10 @@
 import { ipcRenderer } from "electron";
 import { dataUser, EnumGoalUser, foodUser } from "../../types/types";
+import FileSystem from "../Classes/FileSystem/FileSystem";
 import User from "../Classes/User/User";
 import { usersManager } from "../Classes/User/UsersManager";
-import { uuidv1 } from "../requiredLib/requiredLib";
-import Calculating from './../Classes/Calc/Calculating';
-
+import { path, uuidv1 } from "../requiredLib/requiredLib";
+import Calculating from "./../Classes/Calc/Calculating";
 
 const addNewUserBtn = document.querySelector<HTMLElement>(".add_new_user");
 const cancelRegForm = document.querySelector<HTMLElement>(".cancel_reg_new_user");
@@ -17,12 +17,16 @@ const genderRation = document.querySelectorAll<HTMLElement>(".gender_ratio");
 const goalUserInput = document.querySelector<HTMLInputElement>(".goal-user-input");
 const activityUserInput = document.querySelector<HTMLInputElement>(".activity-user-input");
 
+let avatarUser = {
+	isAvatar:false,
+	src : ""
+}
 const validateAndCreateUser = () => {
 	let numbers = /^[0-9]+$/;
 	let _error = [...document.querySelectorAll(".error-icon"), ...document.querySelectorAll(".error-icon-dropdown")];
 	let isValidate = false;
 	//let _data: { name: string; age: number; weight: number; height: number; gender: string; goal: string; activity: string } ;
-	let _data:dataUser
+	let _data: dataUser;
 	[...document.querySelectorAll(".reg_user_field > input"), ...document.querySelectorAll(".text-box-reg-user")].forEach((item: HTMLInputElement, index: number) => {
 		if (item.hasAttribute("data-type")) {
 			switch (item.getAttribute("data-type")) {
@@ -49,56 +53,68 @@ const validateAndCreateUser = () => {
 		}
 	});
 
-
 	if (isValidate) {
-		const goalInput = (document.getElementById("goal") as HTMLInputElement).value
 		let _gender: string;
+		let pathForAvatar ;
 		genderRation.forEach((item: HTMLInputElement) => {
 			item.checked && (_gender = item.getAttribute("data-gender"));
 		});
-		let lvlActivity = parseInt((document.getElementById("activity") as HTMLInputElement).getAttribute("data-activity"));
-		let age =  parseInt((document.getElementById("age") as HTMLInputElement).value)
-		let height = parseInt((document.getElementById("height") as HTMLInputElement).value)
-		let weight = parseInt((document.getElementById("weight") as HTMLInputElement).value)
-		let dailyCalorieIntake = Calculating.determineDailyCalorieIntake({age:age,gender:_gender,height:height,lvlActivy:lvlActivity,weight:weight})
-		console.log(dailyCalorieIntake)
-		console.log(usersManager.getIdUserGoal(goalInput))
-		let _food:foodUser= {
-			calories:{
-				burned:0,
-				eaten:0,
-				dailyCalorieIntake:dailyCalorieIntake,
-				dailyCarbs:Calculating.determineRatioOfPFC(dailyCalorieIntake,usersManager.getIdUserGoal(goalInput)).dailyCarbs,
-				dailyFat:Calculating.determineRatioOfPFC(dailyCalorieIntake,usersManager.getIdUserGoal(goalInput)).dailyFat,
-				dailyProtein:Calculating.determineRatioOfPFC(dailyCalorieIntake,usersManager.getIdUserGoal(goalInput)).dailyProtein,
 
-			}
+		if(avatarUser.isAvatar){
+			pathForAvatar = path.join(FileSystem.PATHS.images,path.basename(avatarUser.src));
+			FileSystem.copyAvatarUser(avatarUser.src,pathForAvatar)
 		}
 
+		let lvlActivity = parseInt((document.getElementById("activity") as HTMLInputElement).getAttribute("data-activity"));
+		let age = parseInt((document.getElementById("age") as HTMLInputElement).value);
+		let height = parseInt((document.getElementById("height") as HTMLInputElement).value);
+		let weight = parseInt((document.getElementById("weight") as HTMLInputElement).value);
+		let IdUserGoal = usersManager.getIdUserGoal((document.getElementById("goal") as HTMLInputElement).value);
+		let dailyCalorieIntake = Calculating.getFullTestDailyCalorieIntake(
+			{ age: age, gender: _gender, height: height, lvlActivy: lvlActivity, weight: weight },IdUserGoal);
+		let resultBodyMassIndex = Calculating.getBodyMassIndex({weight,height})
+		let _food: foodUser = {
+			calories: {
+				burned: 0,
+				eaten: 0,
+				dailyCalorieIntake: dailyCalorieIntake._dailyCalories,
+				dailyCarbs: dailyCalorieIntake._ratioOfPfc.dailyCarbs,
+				dailyFat: dailyCalorieIntake._ratioOfPfc.dailyFat,
+				dailyProtein: dailyCalorieIntake._ratioOfPfc.dailyProtein,
+			},
+		};
+
 		_data = {
-			age : age,
-			courses : [],
-			food:_food,
-			gender:{txt:_gender,id:_gender=== "male" ? 1 : 2},
-			goal : {txt:(document.getElementById("goal") as HTMLInputElement).value,status:usersManager.getIdUserGoal((document.getElementById("goal") as HTMLInputElement).value)},
-			height: height,
-			id:uuidv1(),
-			lvlActivity: lvlActivity,
 			username: (document.getElementById("name") as HTMLInputElement).value,
-			weight : weight
-		} 
-		 usersManager.addNewUser(new User(_data))
-		 console.log(usersManager.users)
+			age,
+			weight,
+			height,
+			id: uuidv1(),
+			gender: { txt: _gender, id: _gender === "male" ? 1 : 2 },
+			goal: { txt: (document.getElementById("goal") as HTMLInputElement).value, status: IdUserGoal },	
+			lvlActivity: lvlActivity,
+			courses: [],
+			food: [],
+			test:{
+				dailyCalorieIntake:_food,
+				bodyMassIndex:{
+					bmi:resultBodyMassIndex
+				}
+			},
+			image:pathForAvatar
+		};
+		usersManager.addNewUser(new User(_data));
+		usersManager.saveUsers();
+		console.log(usersManager.users);
 	}
-	// goalUserInput.value === "" ? document.querySelectorAll("") : console.log(goalUserInput.value)
-	// activityUserInput.value === "" ? console.log("activity empty") : console.log(activityUserInput.value)
+	
 };
 
 const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
 	input.value = value;
 };
 const addDataSet = (value: string, input: HTMLInputElement): void => {
-	input.setAttribute("data-activity",value);
+	input.setAttribute("data-activity", value);
 };
 const initEvents = () => {
 	document.querySelectorAll(".goal-user > div").forEach((item: HTMLElement) => {
@@ -109,8 +125,8 @@ const initEvents = () => {
 	document.querySelectorAll(".activity-user > div").forEach((item: HTMLElement) => {
 		item.addEventListener("click", () => {
 			showTitleDropdown(item.getAttribute("data-value"), activityUserInput);
-			addDataSet(item.getAttribute("data-activity"),activityUserInput)
-		})
+			addDataSet(item.getAttribute("data-activity"), activityUserInput);
+		});
 	});
 	dropdowns.forEach((item: HTMLElement) => {
 		item.addEventListener("click", () => item.classList.toggle("active"));
@@ -149,6 +165,9 @@ createUserAccountBtn.addEventListener("click", validateAndCreateUser);
 ///upload_file event
 ipcRenderer.on("upload_file", (event, arg) => {
 	console.log(arg.filePath);
-
 	addImageUserBtn.innerHTML = `<img src="${arg.filePath}" height="80px" width="80px" alt="" class="image_user">`;
+	avatarUser = {
+		isAvatar: true,
+		src:arg.filePath
+	}
 });

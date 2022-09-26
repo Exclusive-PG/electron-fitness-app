@@ -33,8 +33,16 @@ export type dataUser = {
 	courses: Array<dataCurrentCourse> | any[];
 	goal: GoalUser;
 	lvlActivity: number;
-	food: foodUser;
+	food: Array<any>;
 	gender:genderUser;
+	test:{
+		dailyCalorieIntake : foodUser
+		bodyMassIndex : {
+			bmi:number
+		},
+
+	}
+	image?:string
 };
 
 export interface GoalUser  {

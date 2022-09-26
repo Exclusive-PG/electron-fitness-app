@@ -7,7 +7,10 @@ type enterDataForDCI = {
 	height: number;
 	lvlActivy: number;
 };
-
+type EnterDataBodyMassIndex = {
+	weight:number;
+	height:number
+}
 export default class Calculating {
 	static readonly PercentRatio = {
 		PROTEIN: 4,
@@ -65,16 +68,33 @@ export default class Calculating {
 				return 1.9;
 		}
 	}
+	public static getFullTestDailyCalorieIntake(data:enterDataForDCI,goalUser:EnumGoalUser){
+		let _dailyCalories = this.determineDailyCalorieIntake(data);
+		let _ratioOfPfc:Nutrients = this.determineRatioOfPFC(_dailyCalories,goalUser);
+		
+		return{
+			_dailyCalories,
+			_ratioOfPfc
+		}
+	}
+	public static getBodyMassIndex(data:EnterDataBodyMassIndex){
+		
+		return (data.weight)/(Math.pow((data.height/100),2))
+	}
 }
 
-let res = Calculating.determineDailyCalorieIntake({ age: 21, weight: 65, height: 172, gender: "female", lvlActivy: 2 });
-console.log(res);
 
-let loseRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.LoseWeight);
-console.log("LoseWeight", loseRatio);
 
-let MaintainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.MaintainWeight);
-console.log("MaintainWeight", MaintainRatio);
 
-let gainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.GainWeight);
-console.log("GainWeight", gainRatio);
+
+// let res = Calculating.determineDailyCalorieIntake({ age: 21, weight: 65, height: 172, gender: "female", lvlActivy: 2 });
+// console.log(res);
+
+// let loseRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.LoseWeight);
+// console.log("LoseWeight", loseRatio);
+
+// let MaintainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.MaintainWeight);
+// console.log("MaintainWeight", MaintainRatio);
+
+// let gainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.GainWeight);
+// console.log("GainWeight", gainRatio);

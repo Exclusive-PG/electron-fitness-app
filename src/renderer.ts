@@ -7,7 +7,7 @@ import './scripts/Classes/Calc/Calculating';
 import AppController from './scripts/Classes/AppController/AppController';
 import "./scripts/switcherPages/switcherPages"
 import "./scripts/addUser/addUser"
-
+import "./scripts/Classes/FileSystem/FileSystem"
 // const axios = require('axios'); 
 
 // let getData = () => {
