@@ -1,5 +1,6 @@
 @import "./radioBtn";
 @import "./dropdown";
+@import "./switchUser";
 .create_login_user {
 	position: absolute;
 	left: 50%;
@@ -49,8 +50,30 @@
 		transform: translateY(-5px);
 	}
 }
+.choose_another_user {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;
+	transition: .3s all;
+	padding: 10px;
+	border-radius: 10px;
+	i {
+		border-radius: 50%;
+		color: $FOOD_PAGE_COLOR;
 
-$gray: #9b9b9b;
+	}
+	.txt_switch_account{
+		font-size: 22px;
+		padding-left: 20px;
+	}
+	&:hover {
+		cursor: pointer;
+		background-color: #e1e1e1;
+		transform: translateY(-5px);
+	}
+}
+
 .form__group {
 	position: relative;
 	padding: 15px 0 0;
@@ -116,11 +139,12 @@ $gray: #9b9b9b;
 	}
 }
 
-.forms {
+.form-create-user {
 	display: none;
 }
 
-.forms.active {
+
+.form-create-user.active {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -201,10 +225,10 @@ $gray: #9b9b9b;
 	display: block;
 }
 
-.error-icon-dropdown{
+.error-icon-dropdown {
 	display: none;
 	color: $MAIN_RED_COLOR;
 }
-.error-icon-dropdown.active{
+.error-icon-dropdown.active {
 	display: inline-block;
 }

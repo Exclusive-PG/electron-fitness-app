@@ -31,6 +31,14 @@ export default class FileSystem {
             console.error(err)
           }
     }
+    public static loadData(pathToFile: string, ext: string = ".json") {
+		let _loadData;
+		if (fs.existsSync(pathToFile) && path.extname(pathToFile) === ext) {
+			_loadData = JSON.parse(fs.readFileSync(pathToFile, { encoding: "utf-8" }));
+		}
+
+		return _loadData;
+	}
     static get PATHS(){
         return this.paths;
     }

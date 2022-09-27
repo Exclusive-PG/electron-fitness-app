@@ -26,7 +26,7 @@ const initTabs = () => {
 	});
 
 	tabsSwiper.on('slideChange', function () {
-		console.log(tabsSwiper.activeIndex)
+		//console.log(tabsSwiper.activeIndex)
 		let tab = switchers[tabsSwiper.activeIndex]
 		tab.click();
 	});

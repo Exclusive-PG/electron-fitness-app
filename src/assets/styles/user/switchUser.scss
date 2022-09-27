@@ -1,0 +1,56 @@
+.user-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+	transition: 0.3s all;
+	border-radius: 10px;
+	padding: 10px 0;
+	&:hover {
+		cursor: pointer;
+		background-color: #e1e1e1;
+		transform: translateY(-5px);
+	}
+}
+.user-img {
+	img {
+		border-radius: 50%;
+		height: 70px;
+		width: 70px;
+	}
+}
+.user-name {
+	font-size: 20px;
+	font-weight: 800;
+}
+.wrapper_txt_data_user {
+	margin-left: 30px;
+}
+.render_switch_users {
+	margin: 25px;
+    overflow-y: scroll;
+    max-height: 80vh;
+}
+
+.form-switch-user {
+	display: none;
+}
+.form-switch-user.active {
+	display: block;
+}
+
+
+.render_switch_users::-webkit-scrollbar {
+    width: 20px;
+}
+
+.render_switch_users::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 20px;
+    border: 4px solid rgba(0,0,0,0);
+    background-clip: content-box;
+    min-width: 32px;
+    min-height: 32px;
+    max-height: 50px;
+}
+

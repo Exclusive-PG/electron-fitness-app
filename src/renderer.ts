@@ -6,7 +6,8 @@ import './scripts/Classes/Exercises/Exercises';
 import './scripts/Classes/Calc/Calculating';
 import AppController from './scripts/Classes/AppController/AppController';
 import "./scripts/switcherPages/switcherPages"
-import "./scripts/addUser/addUser"
+import "./scripts/user-controller/addUser"
+import "./scripts/user-controller/switchUser"
 import "./scripts/Classes/FileSystem/FileSystem"
 // const axios = require('axios'); 
 

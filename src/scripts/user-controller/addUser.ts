@@ -4,18 +4,21 @@ import FileSystem from "../Classes/FileSystem/FileSystem";
 import User from "../Classes/User/User";
 import { usersManager } from "../Classes/User/UsersManager";
 import { path, uuidv1 } from "../requiredLib/requiredLib";
-import Calculating from "./../Classes/Calc/Calculating";
+import Calculating from "../Classes/Calc/Calculating";
+import { renderUsersList } from "./switchUser";
 
 const addNewUserBtn = document.querySelector<HTMLElement>(".add_new_user");
+const switchUserBtn = document.querySelector<HTMLElement>(".choose_another_user");
 const cancelRegForm = document.querySelector<HTMLElement>(".cancel_reg_new_user");
 const WrapperLoginForm = document.querySelector<HTMLElement>(".wrapper_create_login_user");
-const FormElement = document.querySelector<HTMLElement>(".forms");
+const FormElement = document.querySelector<HTMLElement>(".form-create-user");
 const dropdowns = document.querySelectorAll<HTMLElement>(".dropdown");
 const addImageUserBtn = document.querySelector<HTMLElement>(".add_user_image");
 const createUserAccountBtn = document.querySelector<HTMLElement>(".create-user-account");
 const genderRation = document.querySelectorAll<HTMLElement>(".gender_ratio");
 const goalUserInput = document.querySelector<HTMLInputElement>(".goal-user-input");
 const activityUserInput = document.querySelector<HTMLInputElement>(".activity-user-input");
+const switchUserForm = document.querySelector<HTMLElement>(".form-switch-user");
 
 let avatarUser = {
 	isAvatar:false,
@@ -105,6 +108,7 @@ const validateAndCreateUser = () => {
 		};
 		usersManager.addNewUser(new User(_data));
 		usersManager.saveUsers();
+		renderUsersList();
 		console.log(usersManager.users);
 	}
 	
@@ -147,13 +151,18 @@ addNewUserBtn.addEventListener("click", () => {
 	WrapperLoginForm.classList.add("active");
 	FormElement.classList.add("active");
 	cancelRegForm.classList.add("active");
+	switchUserBtn.style.display = "none"
 });
 
 cancelRegForm.addEventListener("click", () => {
 	WrapperLoginForm.classList.remove("active");
 	FormElement.classList.remove("active");
 	cancelRegForm.classList.remove("active");
+	switchUserBtn.style.display = "flex"
+	addNewUserBtn.style.display = "flex";
+	switchUserForm.classList.remove("active")
 	addImageUserBtn.innerHTML = `<i class="fa-solid fa-user-plus fa-2x "></i>`;
+	
 });
 
 document.querySelector(".add_user_image").addEventListener("click", () => {

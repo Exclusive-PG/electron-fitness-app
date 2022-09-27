@@ -1,14 +1,18 @@
-import { EnumGoalUser } from "../../../types/types";
+import { dataUser, EnumGoalUser } from "../../../types/types";
 import FileSystem from "../FileSystem/FileSystem";
 import User from "./User";
 import { fs, path } from "../../../scripts/requiredLib/requiredLib";
 
 export class UsersManager {
 	private _users: User[] = [];
-
+	private _activeUser:User;
     constructor(){
         try {
-			this._users = this.loadData(FileSystem.PATHS.users) || [];
+			let _dataUser : Array<any> = FileSystem.loadData(FileSystem.PATHS.users) || [];
+			this._users = []
+			_dataUser.forEach((user)=>{
+				this._users.push(new User(user._data))
+			})
 			console.log(this._users);
 
 		} catch (e) {
@@ -16,8 +20,9 @@ export class UsersManager {
 		}
     }
 
-	public addNewUser(user: User) {
+	public addNewUser(user: any) {
 		this._users.push(user);
+		console.log(this._users)
 	}
 	public getIdUserGoal(userGoal: string) {
 		switch (userGoal) {
@@ -32,14 +37,7 @@ export class UsersManager {
 			}
 		}
 	}
-	public loadData(pathToFile: string, ext: string = ".json") {
-		let _loadData;
-		if (fs.existsSync(pathToFile) && path.extname(pathToFile) === ext) {
-			_loadData = JSON.parse(fs.readFileSync(pathToFile, { encoding: "utf-8" }));
-		}
 
-		return _loadData;
-	}
 	public saveUsers() {
 		let _pathFile = FileSystem.PATHS.users;
         FileSystem.createJSONData(this._users, _pathFile);
@@ -48,6 +46,13 @@ export class UsersManager {
 
 	get users() {
 		return this._users;
+	}
+	get getctiveUser(){
+		return this._activeUser;
+	}
+	set setActiveUser(activeUserInput : User){
+		this._activeUser = activeUserInput
+		console.log("Active user",this._activeUser)
 	}
 }
 
