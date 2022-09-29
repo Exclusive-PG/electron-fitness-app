@@ -43,4 +43,4 @@ export default class FileSystem {
         return this.paths;
     }
 }
-//FileSystem.createDirectory();
+FileSystem.createDirectory();

@@ -4,6 +4,7 @@
 @import "./pages";
 @import "./buttons";
 @import "./user/createUser";
+@import "./pages/home";
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -21,7 +22,7 @@ body::-webkit-scrollbar {
 }
 
 .app {
-	max-width: $MAX_WIDTH_APP;
+	//max-width: $MAX_WIDTH_APP;
 	margin: 0 auto;
 }
 

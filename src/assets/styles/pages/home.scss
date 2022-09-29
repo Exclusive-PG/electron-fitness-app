@@ -1,0 +1,130 @@
+.circular-progress {
+	position: relative;
+	height: 250px;
+	width: 250px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+}
+
+.circular-progress:before {
+	content: "";
+	position: absolute;
+	height: 84%;
+	width: 84%;
+	background-color: #ffffff;
+	border-radius: 50%;
+}
+.value-container {
+	position: relative;
+	font-weight: 900;
+	font-size: 30px;
+	color: #231c3d;
+	text-align: center;
+}
+.circular_card {
+	height: 350px;
+	width: 400px;
+	background-color: #ffffff;
+	border-radius: 100px;
+	box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
+	display: grid;
+	place-items: center;
+	transition: 0.3s all;
+	&:hover {
+		transform: translateY(-10px);
+		box-shadow: 40px 20px 20px rgba(60, 60, 150, 0.25);
+		cursor: pointer;
+	}
+}
+.title_circle_card {
+	font-weight: 300;
+	font-size: 20px;
+}
+//SMALL VARIANT
+.circular-progress-small {
+	position: relative;
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+}
+
+.circular-progress-small:before {
+	content: "";
+	position: absolute;
+	height: 84%;
+	width: 84%;
+	background-color: #ffffff;
+	border-radius: 50%;
+}
+.value-container-small {
+	position: relative;
+	font-weight: 900;
+	font-size: 25px;
+	color: #231c3d;
+	text-align: center;
+}
+.circular_card-small {
+	height: 200px;
+	width: 200px;
+	background-color: transparent;
+	border-radius: 50%;
+	//box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
+	display: grid;
+	place-items: center;
+	transition: 0.3s all;
+	&:hover {
+		transform: translateY(-10px);
+		box-shadow: 40px 20px 20px rgba(60, 60, 150, 0.25);
+		cursor: pointer;
+	}
+}
+
+.dailyIntake_home_page {
+	padding: 80px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.kcal_stat {
+	//  margin-top: 50px;
+	margin: 0 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: #ffffff;
+	border-radius: 50%;
+	min-width: 100px;
+	min-height: 100px;
+    transition: .3s all;
+	.txt_kcal_home {
+		font-size: 20px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	.count_eaten_kcal,
+	.count_burned_kcal {
+		font-size: 20px;
+	}
+
+	&:hover {
+		transform: translateY(-10px);
+		box-shadow: 40px 20px 20px rgba(60, 60, 150, 0.25);
+		cursor: pointer;
+	}
+}
+
+.nutrients_home_page {
+	margin-left: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.nutrien_item {
+		margin-right: 50px;
+	}
+}

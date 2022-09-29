@@ -5,24 +5,24 @@ import { fs, path } from "../../../scripts/requiredLib/requiredLib";
 
 export class UsersManager {
 	private _users: User[] = [];
-	private _activeUser:User;
-    constructor(){
-        try {
-			let _dataUser : Array<any> = FileSystem.loadData(FileSystem.PATHS.users) || [];
-			this._users = []
-			_dataUser.forEach((user)=>{
-				this._users.push(new User(user._data))
-			})
+	private _activeUser: User;
+	constructor() {
+		try {
+			let _dataUser: Array<any> = FileSystem.loadData(FileSystem.PATHS.users) || [];
+			this._users = [];
+			_dataUser.forEach((user) => {
+				this._users.push(new User(user._data));
+			});
 			console.log(this._users);
-
 		} catch (e) {
 			console.log((e as Error).message);
 		}
-    }
+	}
 
-	public addNewUser(user: any) {
+	public addNewUser(user: User) {
+		this.setActiveUser = user;
 		this._users.push(user);
-		console.log(this._users)
+		console.log(this._users);
 	}
 	public getIdUserGoal(userGoal: string) {
 		switch (userGoal) {
@@ -40,19 +40,18 @@ export class UsersManager {
 
 	public saveUsers() {
 		let _pathFile = FileSystem.PATHS.users;
-        FileSystem.createJSONData(this._users, _pathFile);
-        
+		FileSystem.createJSONData(this._users, _pathFile);
 	}
 
 	get users() {
 		return this._users;
 	}
-	get getctiveUser(){
+	get getctiveUser() {
 		return this._activeUser;
 	}
-	set setActiveUser(activeUserInput : User){
-		this._activeUser = activeUserInput
-		console.log("Active user",this._activeUser)
+	set setActiveUser(activeUserInput: User) {
+		this._activeUser = activeUserInput;
+		console.log("Active user", this._activeUser);
 	}
 }
 

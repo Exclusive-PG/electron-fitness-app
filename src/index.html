@@ -14,7 +14,11 @@
 			<section class="content_section">
 				<div class="tabs__content swiper">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide home_content_page page">Home</div>
+						<div class="swiper-slide home_content_page page">
+							<div class="home_wrapper">
+								
+							</div>
+						</div>
 						<div class="swiper-slide train_content_page page">Training</div>
 						<div class="swiper-slide food_content_page page">Food</div>
 						<div class="swiper-slide profile_content_page page">Profile</div>
@@ -55,41 +59,41 @@
 					<div class="cancel_reg_new_user"><i class="fa-solid fa-xmark fa-2x"></i></div>
 					<div class="add_new_user">
 						<span class="add_user_image">
-							<i class="fa-solid fa-user-plus fa-2x " ></i>					
+							<i class="fa-solid fa-user-plus fa-2x"></i>
 						</span>
 						<div class="txt_create_account">Add new account</div>
 					</div>
 					<div class="choose_another_user">
 						<span class="icon_choose">
-							<i class="fa-solid fa-chevron-right fa-2x"></i>		
+							<i class="fa-solid fa-chevron-right fa-2x"></i>
 						</span>
 						<div class="txt_switch_account">Switch account</div>
 					</div>
 					<div class="form-create-user">
 						<div class="form__group field reg_user_field">
-							<input type="input" class="form__field" placeholder="Name" name="name" id="name" required data-type="string"/>
+							<input type="input" class="form__field" placeholder="Name" name="name" id="name" required data-type="string" />
 							<label for="name" class="form__label">Name</label>
 							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
 						<div class="form__group field reg_user_field">
-							<input type="input" class="form__field" placeholder="Age" name="age" id="age" required data-type="number"/>
+							<input type="input" class="form__field" placeholder="Age" name="age" id="age" required data-type="number" />
 							<label for="age" class="form__label">Your age</label>
 							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
 						<div class="form__group field reg_user_field">
-							<input type="input" class="form__field" placeholder="Weight" name="weight" id="weight" required data-type="number"/>
+							<input type="input" class="form__field" placeholder="Weight" name="weight" id="weight" required data-type="number" />
 							<label for="weight" class="form__label">Your weight (kg)</label>
 							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
 						<div class="form__group field reg_user_field">
-							<input type="input" class="form__field" placeholder="Height" name="height" id="height" required data-type="number"/>
+							<input type="input" class="form__field" placeholder="Height" name="height" id="height" required data-type="number" />
 							<label for="height" class="form__label">Your height (cm)</label>
 							<div class="error-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
 						</div>
 						<div class="control-group">
 							<ul class="radioBtn_registration">
 								<li>
-									<input checked type="radio" name="1" class="gender_ratio" data-gender="female"/>
+									<input checked type="radio" name="1" class="gender_ratio" data-gender="female" />
 									<label class="label_for_radioBtn_registration">Female</label>
 									<div class="bullet">
 										<div class="line zero"></div>
@@ -103,7 +107,7 @@
 									</div>
 								</li>
 								<li>
-									<input type="radio" name="1" class="gender_ratio" data-gender="male"/>
+									<input type="radio" name="1" class="gender_ratio" data-gender="male" />
 									<label class="label_for_radioBtn_registration">Male</label>
 									<div class="bullet">
 										<div class="line zero"></div>
@@ -118,37 +122,38 @@
 								</li>
 							</ul>
 						</div>
-						<h3 class="hd_reg">My Goal <span class="error-icon-dropdown"><i class="fa-solid fa-circle-exclamation"></i></span></h3>
+						<h3 class="hd_reg">
+							My Goal <span class="error-icon-dropdown"><i class="fa-solid fa-circle-exclamation"></i></span>
+						</h3>
 						<div class="dropdown">
-							<input class="text-box-reg-user goal-user-input" type="text" placeholder="Select on" readonly data-type="string" id="goal"/>
+							<input class="text-box-reg-user goal-user-input" type="text" placeholder="Select on" readonly data-type="string" id="goal" />
 							<div class="options-dropdown goal-user">
 								<div data-value="Lose Weight"><i class="fa-regular fa-heart"></i> Lose Weight</div>
 								<div data-value="Maintain Weight"><i class="fa-solid fa-scale-balanced"></i> Maintain Weight</div>
 								<div data-value="Gain Weight"><i class="fa-solid fa-dumbbell"></i> Gain weight</div>
 							</div>
-							
 						</div>
-						<h3 class="hd_reg">My Activity <span class="error-icon-dropdown"><i class="fa-solid fa-circle-exclamation"></i></span></h3>
+						<h3 class="hd_reg">
+							My Activity <span class="error-icon-dropdown"><i class="fa-solid fa-circle-exclamation"></i></span>
+						</h3>
 						<div class="dropdown">
-							<input class="text-box-reg-user activity-user-input" type="text" placeholder="Select on" readonly data-type="string"  data-activity="0"id="activity" />
+							<input class="text-box-reg-user activity-user-input" type="text" placeholder="Select on" readonly data-type="string" data-activity="0" id="activity" />
 							<div class="options-dropdown activity-user">
 								<div data-value="Sedentary" data-activity="0">Sedentary</div>
 								<div data-value="Workout 1-3 times a week" data-activity="1">Workout 1-3 times a week</div>
 								<div data-value="Workout 3-5 times a week" data-activity="2">Workout 3-5 times a week</div>
 								<div data-value="Workout 6-7 times a week" data-activity="3">Workout 6-7 times a week</div>
 								<div data-value="High loads every day" data-activity="4">High loads every day</div>
-							
 							</div>
 						</div>
 						<button class="btn btn-fill create-user-account"><span>create</span></button>
 					</div>
 					<div class="form-switch-user">
-						<div class="render_switch_users">
-							
-						</div>
+						<div class="render_switch_users"></div>
 					</div>
 				</div>
 			</section>
+			<section class="user"></section>
 		</main>
 	</body>
 </html>

@@ -9,6 +9,7 @@ import "./scripts/switcherPages/switcherPages"
 import "./scripts/user-controller/addUser"
 import "./scripts/user-controller/switchUser"
 import "./scripts/Classes/FileSystem/FileSystem"
+import "./scripts/pages/home"
 // const axios = require('axios'); 
 
 // let getData = () => {

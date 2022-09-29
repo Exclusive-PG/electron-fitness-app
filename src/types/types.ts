@@ -34,15 +34,18 @@ export type dataUser = {
 	goal: GoalUser;
 	lvlActivity: number;
 	food: Array<any>;
+	history : Array<any>;
 	gender:genderUser;
 	test:{
 		dailyCalorieIntake : foodUser
 		bodyMassIndex : {
 			bmi:number
+			lastUpdate : string
 		},
 
 	}
 	image?:string
+	dateRegister : string
 };
 
 export interface GoalUser  {
@@ -58,6 +61,7 @@ export type foodUser = {
 		eaten: number;
 		burned: number;
 	};
+	lastUpdate : string
 };
 export type genderUser = {
 	id:1|2,

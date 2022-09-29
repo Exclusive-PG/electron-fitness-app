@@ -13,6 +13,8 @@
 
 .page{
     min-height: 100vh;
+	max-width: $MAX_WIDTH_APP;
+	margin: 0 auto;
 }
 
 .container_switcher{

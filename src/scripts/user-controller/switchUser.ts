@@ -1,5 +1,6 @@
 import User from "../Classes/User/User";
 import { usersManager } from "../Classes/User/UsersManager";
+import { acceptedRegisterUser } from "./addUser";
 
 const switchUserBtn = document.querySelector<HTMLElement>(".choose_another_user");
 const addNewUserBtn = document.querySelector<HTMLElement>(".add_new_user");
@@ -18,7 +19,7 @@ const renderUsers = (outWrapper: HTMLElement, data: Array<User>) => {
 	outWrapper.innerHTML = "";
 	data.forEach((user) => {
 		outWrapper.innerHTML += `<div class="user-item" data-id="${user.about.id}">
-         <div class="user-img"><img src="${user.about.image}"/></div>
+         <div class="user-img">${user.about.image ?  `<img src="${user.about.image}"/>` : '<i class="fa-solid fa-user fa-2x"></i>' }</div>
             <div class="wrapper_txt_data_user">
                 <div class="user-name">${user.about.username}</div>
                 <div class="user-age">${user.about.age} year</div>
@@ -37,6 +38,8 @@ const renderUsers = (outWrapper: HTMLElement, data: Array<User>) => {
                     }
 				});
 				usersManager.setActiveUser = currentUser[0]
+				acceptedRegisterUser();
+				
 			}
 		});
 	});
