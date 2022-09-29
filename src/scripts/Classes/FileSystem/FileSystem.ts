@@ -35,6 +35,7 @@ export default class FileSystem {
 		let _loadData;
 		if (fs.existsSync(pathToFile) && path.extname(pathToFile) === ext) {
 			_loadData = JSON.parse(fs.readFileSync(pathToFile, { encoding: "utf-8" }));
+			
 		}
 
 		return _loadData;

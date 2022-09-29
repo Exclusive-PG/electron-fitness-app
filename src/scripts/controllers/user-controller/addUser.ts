@@ -1,12 +1,12 @@
 import { ipcRenderer } from "electron";
-import { dataUser, EnumGoalUser, foodUser } from "../../types/types";
-import FileSystem from "../Classes/FileSystem/FileSystem";
-import User from "../Classes/User/User";
-import { usersManager } from "../Classes/User/UsersManager";
-import { path, uuidv1 } from "../requiredLib/requiredLib";
-import Calculating from "../Classes/Calc/Calculating";
+import { dataUser, EnumGoalUser, foodUser } from "../../../types/types";
+import FileSystem from "../../Classes/FileSystem/FileSystem";
+import User from "../../Classes/User/User";
+import { usersManager } from "../../Classes/User/UsersManager";
+import { path, uuidv1 } from "../../requiredLib/requiredLib";
+import Calculating from "../../Classes/Calc/Calculating";
 import { renderUsersList } from "./switchUser";
-import { renderApp } from "../pages/pageController";
+import { renderApp } from "../../pages/pageController";
 
 const addNewUserBtn = document.querySelector<HTMLElement>(".add_new_user");
 const switchUserBtn = document.querySelector<HTMLElement>(".choose_another_user");

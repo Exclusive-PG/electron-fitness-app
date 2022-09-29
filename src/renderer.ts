@@ -5,9 +5,9 @@ import "./scripts/Classes/Courses/CourseBase"
 import './scripts/Classes/Exercises/Exercises';
 import './scripts/Classes/Calc/Calculating';
 import AppController from './scripts/Classes/AppController/AppController';
-import "./scripts/switcherPages/switcherPages"
-import "./scripts/user-controller/addUser"
-import "./scripts/user-controller/switchUser"
+import "./scripts/controllers/user-controller/switcherPages/switcherPages"
+import "./scripts/controllers/user-controller/addUser"
+import "./scripts/controllers/user-controller/switchUser"
 import "./scripts/Classes/FileSystem/FileSystem"
 import "./scripts/pages/home"
 // const axios = require('axios'); 

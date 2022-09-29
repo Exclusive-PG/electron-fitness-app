@@ -8,6 +8,7 @@ export interface IExercise {
 	caloriesBurned:number
 	description:string
     image?:string;
+	linkForVideo?:string
 }
 
 export interface IDataExercise {
@@ -19,8 +20,9 @@ export type dataCurrentCourse = {
     id:string;
 	name: string;
 	muscleZone: string;
-	exercises: Array<IExercise>;
+	exercises: Array<IExercise> | any[];
     lvlDifficulty:number;
+	lastTimeExecution : string | Date
 };
 
 ///USER///
