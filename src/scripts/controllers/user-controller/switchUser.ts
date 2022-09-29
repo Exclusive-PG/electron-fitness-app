@@ -31,25 +31,25 @@ const renderUsers = (outWrapper: HTMLElement, data: Array<User>) => {
             </div>
         </div>`;
 		});
-
-		document.querySelectorAll(".user-item").forEach((item: HTMLElement) => {
-			item.addEventListener("click", () => {
-				if (item.hasAttribute("data-id")) {
-					console.log(item.getAttribute("data-id"));
-
-					let currentUser = usersManager.users.filter((user) => {
-						if (user.about.id === item.getAttribute("data-id")) {
-							return user;
-						}
-					});
-					usersManager.setActiveUser = currentUser[0];
-					acceptedRegisterUser();
-				}
-			});
-		});
 	} catch (e) {
 		console.info("Pagination:Not full page");
 	}
+
+	document.querySelectorAll(".user-item").forEach((item: HTMLElement) => {
+		item.addEventListener("click", () => {
+			if (item.hasAttribute("data-id")) {
+				console.log(item.getAttribute("data-id"));
+
+				let currentUser = usersManager.users.filter((user) => {
+					if (user.about.id === item.getAttribute("data-id")) {
+						return user;
+					}
+				});
+				usersManager.setActiveUser = currentUser[0];
+				acceptedRegisterUser();
+			}
+		});
+	});
 };
 
 document.querySelector(".next-page-swith-users").addEventListener("click", () => {
@@ -61,9 +61,6 @@ document.querySelector(".prev-page-swith-users").addEventListener("click", () =>
 	pagination.PreviousPage();
 	renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
 });
-
-
-
 
 renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
 

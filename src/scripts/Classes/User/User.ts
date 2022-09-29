@@ -43,18 +43,3 @@ export default class User {
 // 	}
 
 // });
-
-
-
-
-
-// const ABSCourse = new CourseBase({
-// 	name: "ABS Beginner",
-// 	muscleZone: "ABS",
-// 	exercises: [allExercises.getExercises[0].getData, allExercises.getExercises[1].getData],
-// 	lvlDifficulty: 1,
-// 	id: uuidv1(),
-// });
-
-// user.pushCourse(ABSCourse)
-// console.log(user.about)
