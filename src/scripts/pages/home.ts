@@ -50,8 +50,7 @@ const renderDailyIntakeHomePage = (outerPlace: HTMLElement, currentUser: User) =
                 </div>
             `;
 		});
-		//  <div class="nutrien_name">${item.title}</div>
-		//     <div class="nutrien_count">0 / ${item.value}g</div>
+
 		outerPlace.innerHTML = "";
 		outerPlace.innerHTML += `
         <div class="dailyIntake_home_page">

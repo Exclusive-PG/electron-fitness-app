@@ -7,22 +7,21 @@
 
 		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" defer></script>
 		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" defer></script>
-		<script src="https://kit.fontawesome.com/0be2400dbc.js" crossorigin="anonymous" defer></script>
 	</head>
 	<body>
 		<main class="app">
 			<section class="content_section">
 				<div class="tabs__content swiper">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide home_content_page page">
-							<div class="home_wrapper">
-								
+						<!-- <div class="swiper-slide home_content_page page"><div class="home_wrapper"></div></div> -->
+						<div class="swiper-slide train_content_page page">
+							<div class="training_wrapper">
+								<h2 class="hd_training">Abs courses</h2>
+								<div class="render_abs_training"></div>
 							</div>
 						</div>
-						<div class="swiper-slide train_content_page page">Training</div>
 						<div class="swiper-slide food_content_page page">Food</div>
-						<div class="swiper-slide profile_content_page page">Profile</div>
-					</div>
+						<div class="swiper-slide profile_content_page page">Profile</div></div>
 				</div>
 			</section>
 			<section>
@@ -54,7 +53,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="create_login_user">
+			<section class="create_login_user" style="display: none;">
 				<div class="wrapper_create_login_user">
 					<div class="cancel_reg_new_user"><i class="fa-solid fa-xmark fa-2x"></i></div>
 					<div class="add_new_user">
@@ -68,6 +67,7 @@
 							<i class="fa-solid fa-chevron-right fa-2x"></i>
 						</span>
 						<div class="txt_switch_account">Switch account</div>
+
 					</div>
 					<div class="form-create-user">
 						<div class="form__group field reg_user_field">
@@ -159,6 +159,10 @@
 				</div>
 			</section>
 			<section class="user"></section>
+			<section class="current_course_section">
+				<div class="close_win_current_course"><i class="fa-solid fa-xmark fa-2x"></i></div>
+				<div class="current_course_wrapper_render"></div>
+			</section>
 		</main>
 	</body>
 </html>

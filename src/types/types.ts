@@ -22,7 +22,9 @@ export type dataCurrentCourse = {
 	muscleZone: string;
 	exercises: Array<IExercise> | any[];
     lvlDifficulty:number;
-	lastTimeExecution : string | Date
+	lastTimeExecution : string | Date;
+	isCreateByUser: boolean
+	image?:string
 };
 
 ///USER///

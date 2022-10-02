@@ -34,7 +34,7 @@
 	align-items: center;
 	justify-content: center;
 	transition: 0.3s all;
-	i {
+	svg {
 		border-radius: 50%;
 		border: 3px solid $FOOD_PAGE_COLOR;
 		color: $FOOD_PAGE_COLOR;
@@ -58,11 +58,11 @@
 	transition: .3s all;
 	padding: 10px;
 	border-radius: 10px;
-	i {
+	svg {
 		border-radius: 50%;
 		color: $FOOD_PAGE_COLOR;
-
 	}
+	
 	.txt_switch_account{
 		font-size: 22px;
 		padding-left: 20px;

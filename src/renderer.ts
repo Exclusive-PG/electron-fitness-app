@@ -1,4 +1,5 @@
 
+import "@fortawesome/fontawesome-free/js/all";
 import './assets/styles/index.scss';
 import "./scripts/Classes/User/User"
 import "./scripts/Classes/Courses/CourseBase"
@@ -10,6 +11,8 @@ import "./scripts/controllers/user-controller/addUser"
 import "./scripts/controllers/user-controller/switchUser"
 import "./scripts/Classes/FileSystem/FileSystem"
 import "./scripts/pages/home"
+import "./scripts/pages/training"
+
 // const axios = require('axios'); 
 
 // let getData = () => {
