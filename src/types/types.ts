@@ -1,3 +1,5 @@
+import { Exercise } from './../scripts/Classes/Exercises/Exercises';
+
 export interface IExercise {
 	id: string;
 	name: string;
@@ -20,7 +22,7 @@ export type dataCurrentCourse = {
     id:string;
 	name: string;
 	muscleZone: string;
-	exercises: Array<IExercise> | any[];
+	exercises: Array<Exercise> ;
     lvlDifficulty:number;
 	lastTimeExecution : string | Date;
 	isCreateByUser: boolean

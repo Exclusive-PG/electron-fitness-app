@@ -6,9 +6,8 @@
 }
 .training_wrapper {
 	height: 80vh;
-    max-height: 80vh;
+	max-height: 80vh;
 	overflow-y: scroll;
-
 }
 
 .training_wrapper::-webkit-scrollbar {
@@ -27,80 +26,143 @@
 	width: 20px;
 }
 .course_item {
-    margin: 20px 15px;
-    position: relative;
-    max-width: 500px;
-    max-height: 300px;
-    transition: .3s all;
-   
-    .course_wrapper_img {
+	margin: 20px 15px;
+	position: relative;
+	max-width: 500px;
+	max-height: 300px;
+	transition: 0.3s all;
+
+	.course_wrapper_img {
 		img {
-            border-radius: 10px;
+			border-radius: 10px;
 			max-width: 500px;
 			max-height: 300px;
 		}
 	}
-    .course_name{
-        position: absolute;
-        right:0px;
-        bottom: 0px;
-        height: 15%;
-        border-radius: 10px;
-        color: #fff;
-        font-size: 25px;
-        background-color: rgba(0, 0, 0, .6);
-        width: 100%;
-        text-align: right;
-        padding: 5px 15px;
-    }
+	.course_name {
+		position: absolute;
+		right: 0px;
+		bottom: 0px;
+		height: 15%;
+		border-radius: 10px;
+		color: #fff;
+		font-size: 25px;
+		background-color: rgba(0, 0, 0, 0.6);
+		width: 100%;
+		text-align: right;
+		padding: 5px 15px;
+	}
 
-
-    &:hover{
-        cursor: pointer;
-        transform: scale(1.1);
-    }
+	&:hover {
+		cursor: pointer;
+		transform: scale(1.1);
+	}
 }
 
-.hd_training{
-    text-align: center;
-    max-height: 100px;
-    padding: 20px 0;
-    color: #fff;
-    text-transform: uppercase;
+.hd_training {
+	text-align: center;
+	max-height: 100px;
+	padding: 20px 0;
+	color: #fff;
+	text-transform: uppercase;
 }
 
-.current_course_section{
-    transition: .3s all;
-    position: absolute;
-    left: -100%;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: green;
-    z-index: 10;
-    
+.current_course_section {
+	transition: 0.3s all;
+	position: absolute;
+	left: -100%;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $FOOD_PAGE_COLOR;
+	z-index: 10;
 }
-.current_course_section.active{
-    left: 0%;
+.current_course_section.active {
+	left: 0%;
 }
 
-.close_win_current_course{
-    position: absolute;
-    right: 20px;
-    top:20px;
-    transition: .3s all;
-        &:hover{
-            cursor: pointer;
-            transform: scale(1.1);
-        }
+.close_win_current_course {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	transition: 0.3s all;
+	&:hover {
+		cursor: pointer;
+		transform: scale(1.1);
+	}
 }
-.render_current_course{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.render_current_course {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-        div{
-            margin: 0 20px;
-            ;
-        }
+	padding-top: 100px;
+	div {
+		margin: 0 20px;
+	}
+
+	.left_block {
+		font-size: 25px;
+		text-align: center;
+		width: 30%;
+	}
+	.right_block {
+		width: 70%;
+		overflow-y: scroll;
+		max-height: 80vh;
+		font-size: 18px;
+
+		.item_current_exercises {
+			height: 50px;
+			padding: 5px;
+			margin: 10px 0;
+			background-color: #fff;
+			border-radius: 10px;
+			transition: .2s all;
+			&:hover{
+				cursor: pointer;
+				transform: translateY(-5px);
+			}
+		}
+	}
+}
+
+.right_block::-webkit-scrollbar {
+	width: 20px;
+}
+.right_block::-webkit-scrollbar-thumb {
+	background-color: #fff;
+	border-radius: 20px;
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: content-box;
+	min-width: 32px;
+	min-height: 32px;
+	max-height: 50px;
+}
+
+.img_name_current_course {
+	transition: .2s all;
+	img {
+		border-radius: 10px;
+		max-width: 100%;
+		max-height: 300px;
+	}
+	&:hover{
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+}
+
+.name_current_course {
+	white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+	.render_current_course {
+		flex-wrap: wrap;
+	}
+	.right_block {
+		max-height: 50vh !important;
+		width: 100%;
+	}
 }

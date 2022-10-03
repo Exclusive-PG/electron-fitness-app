@@ -2,7 +2,7 @@ import { dataCurrentCourse, IExercise } from "../../../types/types";
 import { allExercises, Exercise, Exercises } from "../Exercises/Exercises";
 import { uuidv1 } from "./../../requiredLib/requiredLib";
 //@ts-ignore
-import logo from "./../../../assets/images/test.jpg"
+import logo from "./../../../assets/images/test.jpg";
 
 export class CourseBase {
 	protected _dataCourse: dataCurrentCourse;
@@ -10,9 +10,24 @@ export class CourseBase {
 	constructor(dataCourse: dataCurrentCourse) {
 		this._dataCourse = dataCourse;
 	}
-	public pushExercise(exercise: Exercise): void {
-		this._dataCourse.exercises.push(exercise.getData);
+	// public pushExercise(exercise: Exercise): void {
+	// 	this._dataCourse.exercises.push(exercise.getData);
+	// }
+
+	// public getAllTimeExercises():number{
+
+		
+
+	// }
+	public getAllTimeExercises(): number {
+		let totalExecutonTime =  this._dataCourse.exercises.reduce((acc,item)=>{
+			return acc + item.getData.ExecutionTime
+		 },0);
+
+		return Math.round(((this._dataCourse.exercises.length * 120 + (this._dataCourse.exercises.length - 1) * 30) - totalExecutonTime)/60)
 	}
+	
+
 	get data(): dataCurrentCourse {
 		return this._dataCourse;
 	}
@@ -27,8 +42,8 @@ export class CourseManager {
 	get allCourses() {
 		return this._allCourses;
 	}
-	public currentBaseById(id:string){
-		return [...this._allCourses.abs].filter(item=>item.data.id === id)[0];
+	public currentBaseById(id: string) {
+		return [...this._allCourses.abs].filter((item) => item.data.id === id)[0];
 	}
 }
 
@@ -42,34 +57,34 @@ function initAllCourses() {
 		muscleZone: "ABS",
 		exercises: allExercises.getExercises.filter((item) => item.getData.id.includes("abs-beginner")) || [],
 		lvlDifficulty: 1,
-		id: uuidv1(),
+		id: "efd92720-431a-11ed-8958-5f188e7ae6b8",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
-		image:logo
+		image: logo,
 	});
 	const ABSCourseIntermediate = new CourseBase({
 		name: "ABS Intermediate",
 		muscleZone: "ABS",
 		exercises: allExercises.getExercises.filter((item) => item.getData.id.includes("abs-intermediate")) || [],
 		lvlDifficulty: 2,
-		id: uuidv1(),
+		id: "efd92721-432b-11ed-8958-5f188e7ae6b8",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
-		image:logo
+		image: logo,
 	});
 	const ABSCourseAdvanced = new CourseBase({
 		name: "ABS Advanced",
 		muscleZone: "ABS",
 		exercises: allExercises.getExercises.filter((item) => item.getData.id.includes("abs-advanced")) || [],
 		lvlDifficulty: 3,
-		id: uuidv1(),
+		id: "efd92722-433c-11ed-8958-5f188e7ae6b8",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
-		image:logo
+		image: logo,
 	});
-
+	console.log(ABSCourseAdvanced.getAllTimeExercises());
 	return {
-		abs: [ABSCourseBeginner,ABSCourseIntermediate,ABSCourseAdvanced],
+		abs: [ABSCourseBeginner, ABSCourseIntermediate, ABSCourseAdvanced],
 	};
 }
 
@@ -77,3 +92,5 @@ function initAllCourses() {
 // sorted: {
 // 	abs:[ABSCourseAdvanced, ABSCourseBeginner, ABSCourseIntermediate]
 // },
+
+//.filter((item) => item.getData.id.includes("abs-advanced")) || []
