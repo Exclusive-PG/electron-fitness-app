@@ -101,8 +101,6 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
  
 }
 
-
-
 function renderlvlDifficulty(lvlDifficulty: number, maxLvlDifficulty: number): string {
 	let _iconCurrentCourseDiffic = `<i class="fa-solid fa-bolt" style="color:#2ECC71;"></i>`;
 	let _iconCurrentCourseTotal = `<i class="fa-solid fa-bolt" style="color:#FF595E;"></i>`;
@@ -121,3 +119,5 @@ return `
 
 
 renderTrainingCourse(document.querySelector(".render_abs_training"), courseManager.allCourses.abs);
+renderTrainingCourse(document.querySelector(".render_arm_training"), courseManager.allCourses.arm);
+renderTrainingCourse(document.querySelector(".render_leg_training"), courseManager.allCourses.leg);
