@@ -48,7 +48,8 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
     <div class="render_current_course" data-current-course-id="${data.id}">
         <div class="left_block">
         
-            <div class="img_name_current_course"><img src=${data.image}/></div>
+            <div class="img_name_current_course"><img src="${data.image}" 
+            /></div>
             <div class="wrapper_for_subtitle_img">
                 <div class="name_current_course">${data.name}</div>
                 <div class="current_diffic_course">${data.lvlDifficulty !== 0 && renderlvlDifficulty(data.lvlDifficulty, 3)}</div>
