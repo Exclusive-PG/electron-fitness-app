@@ -10,15 +10,9 @@ export class CourseBase {
 	constructor(dataCourse: dataCurrentCourse) {
 		this._dataCourse = dataCourse;
 	}
-	// public pushExercise(exercise: Exercise): void {
-	// 	this._dataCourse.exercises.push(exercise.getData);
-	// }
-
-	// public getAllTimeExercises():number{
-
-		
-
-	// }
+	public currentExerciseById(id: string): Exercise {
+		return this._dataCourse.exercises.filter((item) => item.getData.id === id)[0];
+	}
 	public getAllTimeExercises(): number {
 		let totalExecutonTime =  this._dataCourse.exercises.reduce((acc,item)=>{
 			return acc + item.getData.ExecutionTime

@@ -69,6 +69,7 @@
 
 .current_course_section {
 	transition: 0.3s all;
+	overflow: hidden;
 	position: absolute;
 	left: -100%;
 	top: 0;
@@ -98,7 +99,7 @@
 
 	padding-top: 100px;
 	div {
-		margin: 0 20px;
+		padding: 0 20px;
 	}
 
 	.left_block {
@@ -111,15 +112,15 @@
 		overflow-y: scroll;
 		max-height: 80vh;
 		font-size: 18px;
-
+		//position: relative;
 		.item_current_exercises {
 			height: 50px;
 			padding: 5px;
 			margin: 10px 0;
 			background-color: #fff;
 			border-radius: 10px;
-			transition: .2s all;
-			&:hover{
+			transition: 0.2s all;
+			&:hover {
 				cursor: pointer;
 				transform: translateY(-5px);
 			}
@@ -141,13 +142,13 @@
 }
 
 .img_name_current_course {
-	transition: .2s all;
+	transition: 0.2s all;
 	img {
 		border-radius: 10px;
 		max-width: 100%;
 		max-height: 300px;
 	}
-	&:hover{
+	&:hover {
 		cursor: pointer;
 		transform: scale(1.1);
 	}
@@ -157,12 +158,85 @@
 	white-space: nowrap;
 }
 
+.current_exercise_info_render {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 70%;
+	height: 100%;
+	background-color: $FOOD_PAGE_COLOR;
+	padding: 0;
+	margin: 0;
+	top: 100%;
+	transition: 0.3s all;
+}
+.current_exercise_info_render.active {
+	top: 0;
+}
+.close_current_exercise {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	transition: 0.3s all;
+
+	&:hover {
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+}
+
+.current-overview-exercise {
+	margin-top: 50px;
+}
+.current-overview-exercise-descr {
+	text-align: justify;
+}
+.current-overview-exercise-video{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 50px 0 !important;
+}
+.current-overview-exercise-execution,.current-overview-exercise-calories,.current-overview-exercise-lvl-diffic{
+	font-size: 20px;
+}
+
+.render_current_exercise{
+	overflow-y: scroll;
+	max-height: 95vh;
+}
+
+.render_current_exercise::-webkit-scrollbar {
+	width: 20px;
+}
+.render_current_exercise::-webkit-scrollbar-thumb {
+	background-color: #fff;
+	border-radius: 20px;
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: content-box;
+	min-width: 32px;
+	min-height: 32px;
+	max-height: 50px;
+}
+
+
+
+
+
 @media (max-width: 900px) {
 	.render_current_course {
 		flex-wrap: wrap;
 	}
 	.right_block {
 		max-height: 50vh !important;
-		width: 100%;
+		width: 100% !important;
+	}
+	.left_block {
+		* {
+			white-space: nowrap !important;
+			text-align: center !important;
+			margin: 0 auto !important;
+			padding: 0 !important;
+		}
 	}
 }
