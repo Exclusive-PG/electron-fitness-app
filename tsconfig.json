@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    
     "target": "ES2016",
     "allowJs": true,
     "module": "commonjs",
@@ -16,6 +17,6 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*","src/declaration.d.ts"
   ]
 }

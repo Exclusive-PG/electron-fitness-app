@@ -1,0 +1,53 @@
+.grid_meal_user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 90vh;
+	flex-wrap: wrap;
+	.meal_user {
+        overflow: hidden;
+        position: relative;
+        transition: .3s all ease-in-out;
+		margin: 5px;
+		img {
+			max-width: 400px;
+			min-width: 400px;
+			max-height: 500px;
+			border-radius: 10px;
+		}
+        &:hover{
+            cursor: pointer;
+            transform: translateY(-25px);
+            
+            .data_about_item{
+                top: 0;
+            }
+        }
+	}
+	.meal_user_lunch {
+		transform: translateY(-100px);
+        &:hover{
+            transform: translateY(-125px);
+        }
+	}
+}
+
+.data_about_item{
+    position: absolute;
+    left: 0;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    max-height: 500px;
+    background-color: rgba($color: #000000, $alpha: .6);
+    transition: .2s all ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div{
+        color: #fff;
+        font-size: 22px;
+    }
+}

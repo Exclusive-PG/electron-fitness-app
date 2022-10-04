@@ -59,6 +59,7 @@ function initAllCourses() {
 		id: "efd92720-431a-11ed-8958-5f188e7ae6b8",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: absImg,
 	});
 	const ABSCourseIntermediate = new CourseBase({
@@ -69,6 +70,7 @@ function initAllCourses() {
 		id: "efd92721-432b-11ed-8958-5f188e7ae6b8",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: absImg,
 	});
 	const ABSCourseAdvanced = new CourseBase({
@@ -79,6 +81,7 @@ function initAllCourses() {
 		id: "efd92722-433c-11ed-8958-5f188e7ae6b8",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: absImg,
 	});
 	//ARM
@@ -90,6 +93,7 @@ function initAllCourses() {
 		id: "efd92723-423c-12ed-8960-5f188e7ae6b1",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: armImg,
 	});
 	const ArmCourseIntermediate = new CourseBase({
@@ -100,6 +104,7 @@ function initAllCourses() {
 		id: "efd92724-424c-12ed-8960-5f188e7ae6b2",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: armImg,
 	});
 	const ArmCourseAdvanced = new CourseBase({
@@ -110,6 +115,7 @@ function initAllCourses() {
 		id: "efd92725-425c-12ed-8960-5f188e7ae6b3",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: armImg,
 	});
 	//FEET
@@ -121,6 +127,7 @@ function initAllCourses() {
 		id: "efd92725-426c-13ed-8960-5f188e7ae6b4",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: feetImg,
 	});
 	const LegCourseIntermediate = new CourseBase({
@@ -131,6 +138,7 @@ function initAllCourses() {
 		id: "efd92725-427c-14ed-8960-5f188e7ae6b5",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: feetImg,
 	});
 	const LegCourseAdvanced = new CourseBase({
@@ -141,6 +149,7 @@ function initAllCourses() {
 		id: "efd92725-428c-15ed-8960-5f188e7ae6b6",
 		lastTimeExecution: new Date().toLocaleString(),
 		isCreateByUser: false,
+		isUserFollow:false,
 		image: feetImg,
 	});
 	console.log(ABSCourseAdvanced.getAllTimeExercises());
@@ -151,9 +160,3 @@ function initAllCourses() {
 	};
 }
 
-// allCourses: [ABSCourseAdvanced, ABSCourseBeginner, ABSCourseIntermediate],
-// sorted: {
-// 	abs:[ABSCourseAdvanced, ABSCourseBeginner, ABSCourseIntermediate]
-// },
-
-//.filter((item) => item.getData.id.includes("abs-advanced")) || []

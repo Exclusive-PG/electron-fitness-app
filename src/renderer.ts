@@ -11,7 +11,8 @@ import "./scripts/controllers/user-controller/addUser"
 import "./scripts/controllers/user-controller/switchUser"
 import "./scripts/Classes/FileSystem/FileSystem"
 import "./scripts/pages/home"
-import "./scripts/pages/training"
+//import "./scripts/pages/training"
+import "./scripts/pages/food"
 
 // const axios = require('axios'); 
 

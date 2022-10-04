@@ -1,4 +1,5 @@
-import { Exercise } from './../scripts/Classes/Exercises/Exercises';
+import { Exercise } from "./../scripts/Classes/Exercises/Exercises";
+import { FoodItem } from "./../scripts/Classes/Food/FoodItem";
 
 export interface IExercise {
 	id: string;
@@ -6,11 +7,11 @@ export interface IExercise {
 	muscleType: string;
 	RepetitionСount: number;
 	ExecutionTime: number;
-    lvlDifficulty : {id:1|2|3, name:"Beginner"|"Intermediate"|"Advanced"},
-	caloriesBurned:number
-	description:string
-    image?:string;
-	linkForVideo?:string
+	lvlDifficulty: { id: 1 | 2 | 3; name: "Beginner" | "Intermediate" | "Advanced" };
+	caloriesBurned: number;
+	description: string;
+	image?: string;
+	linkForVideo?: string;
 }
 
 export interface IDataExercise {
@@ -19,14 +20,15 @@ export interface IDataExercise {
 }
 
 export type dataCurrentCourse = {
-    id:string;
+	id: string;
 	name: string;
 	muscleZone: string;
-	exercises: Array<Exercise> ;
-    lvlDifficulty:number;
-	lastTimeExecution : string | Date;
-	isCreateByUser: boolean
-	image?:string
+	exercises: Array<Exercise>;
+	lvlDifficulty: number;
+	lastTimeExecution: string | Date;
+	isCreateByUser: boolean;
+	isUserFollow:boolean;
+	image?: string;
 };
 
 ///USER///
@@ -39,25 +41,24 @@ export type dataUser = {
 	courses: Array<dataCurrentCourse> | any[];
 	goal: GoalUser;
 	lvlActivity: number;
-	food: Array<any>;
-	history : Array<any>;
-	gender:genderUser;
-	test:{
-		dailyCalorieIntake : foodUser
-		bodyMassIndex : {
-			bmi:number
-			lastUpdate : string
-		},
-
-	}
-	image?:string
-	dateRegister : string
+	food: FoodUserData;
+	history: Array<any>;
+	gender: genderUser;
+	test: {
+		dailyCalorieIntake: foodUser;
+		bodyMassIndex: {
+			bmi: number;
+			lastUpdate: string;
+		};
+	};
+	image?: string;
+	dateRegister: string;
 };
 
-export interface GoalUser  {
-	status:  EnumGoalUser
+export interface GoalUser {
+	status: EnumGoalUser;
 	txt: "Lose Weight" | "Maintain Weight" | "Gain Weight" | string;
-};
+}
 export type foodUser = {
 	calories: {
 		dailyCalorieIntake: number;
@@ -67,22 +68,38 @@ export type foodUser = {
 		eaten: number;
 		burned: number;
 	};
-	lastUpdate : string
+	lastUpdate: string;
 };
 export type genderUser = {
-	id:1|2,
-	txt:"male"|"female"|string
-}
+	id: 1 | 2;
+	txt: "male" | "female" | string;
+};
 
-export enum EnumGoalUser{
+export enum EnumGoalUser {
 	LoseWeight = 0,
 	MaintainWeight = 1,
-	GainWeight = 2
+	GainWeight = 2,
 }
 
 export type Nutrients = {
-	dailyCarbs:number,
-	dailyProtein:number,
-	dailyFat:number
-}
+	dailyCarbs: number;
+	dailyProtein: number;
+	dailyFat: number;
+};
+
+export type FoodUserData = {
+	breakfast: Array<FoodItem>;
+	lanch: Array<FoodItem>;
+	dinner: Array<FoodItem>;
+};
+
+export type FoodItemType = {
+	name: string;
+	id: string;
+	portion: number;
+	calories: number;
+	protein: number;
+	carbs: number;
+	fat: number;
+};
 // export let goalOfUserId = [EnumGoalUser.LoseWeight, EnumGoalUser.MaintainWeight, EnumGoalUser.GainWeight]
