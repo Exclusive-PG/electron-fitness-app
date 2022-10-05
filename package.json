@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
-    "test": "mocha -r ts-node/register src/scripts/test/*.ts"
+    "test": "mocha -r ts-node/register src/test/test.ts"
   },
   "keywords": [],
   "author": {

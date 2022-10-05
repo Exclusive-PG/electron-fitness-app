@@ -7,13 +7,14 @@ export class UsersManager {
 	private _users: User[] = [];
 	private _activeUser: User;
 	constructor() {
+		
 		try {
 			let _dataUser: Array<any> = FileSystem.loadData(FileSystem.PATHS.users) || [];
 			this._users = [];
 			_dataUser.forEach((user) => {
 				this._users.push(new User(user._data));
 			});
-			console.log(this._users);
+			//console.log(this._users);
 		} catch (e) {
 			console.log((e as Error).message);
 		}
@@ -22,7 +23,7 @@ export class UsersManager {
 	public addNewUser(user: User) {
 		this.setActiveUser = user;
 		this._users.push(user);
-		console.log(this._users);
+		//console.log(this._users);
 	}
 	public getIdUserGoal(userGoal: string) {
 		switch (userGoal) {
@@ -42,7 +43,9 @@ export class UsersManager {
 		let _pathFile = FileSystem.PATHS.users;
 		FileSystem.createJSONData(this._users, _pathFile);
 	}
-
+	public clearData(){
+		this._users = []
+	}
 	get users() {
 		return this._users;
 	}
@@ -51,7 +54,7 @@ export class UsersManager {
 	}
 	set setActiveUser(activeUserInput: User) {
 		this._activeUser = activeUserInput;
-		console.log("Active user", this._activeUser);
+		//console.log("Active user", this._activeUser);
 	}
 }
 

@@ -1,11 +1,7 @@
 import { dataCurrentCourse, IExercise } from "../../../types/types";
 import { allExercises, Exercise, Exercises } from "../Exercises/Exercises";
-import { uuidv1 } from "./../../requiredLib/requiredLib";
-//@ts-ignore
 import absImg from "./../../../assets/images/abs.jpg";
-//@ts-ignore
 import armImg from "./../../../assets/images/arm.jpg";
-//@ts-ignore
 import feetImg from "./../../../assets/images/feet.jpg";
 
 
