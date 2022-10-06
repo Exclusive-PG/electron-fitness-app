@@ -1,5 +1,6 @@
 import AppController from "../Classes/AppController/AppController";
-import { courseManager, CourseBase } from "./../Classes/Courses/CourseBase";
+import { courseManager } from "../Classes/Courses/CourseManager";
+import { CourseBase } from "./../Classes/Courses/CourseBase";
 import { Exercise } from "./../Classes/Exercises/Exercises";
 
 const currentCourseSection = document.querySelector(".current_course_section");

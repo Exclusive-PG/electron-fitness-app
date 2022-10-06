@@ -1,4 +1,5 @@
 export default class  AppController {
+	public static _scripts : Function[] | any[] = []
 	static isOnline(): { status: boolean; message: string } {
       // console.log(navigator.onLine)
 		return navigator.onLine ? { status: true, message: "online" } : { status: false, message: "offline" };
@@ -12,6 +13,9 @@ export default class  AppController {
 		console.log("App stopped watching the internet connection")
         window.removeEventListener("online", this.isOnline);
         window.removeEventListener("offline", this.isOnline);
+	}
+	static pushScript(script:Function){
+		this._scripts.push(script)
 	}
 }
 

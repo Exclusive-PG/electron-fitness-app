@@ -489,7 +489,7 @@ FileSystem.loadData(path.join("data","exercises.json")).forEach((item:any)=>{
   allExercises.pushExercise(new Exercise(item))
 })
 
-console.log(allExercises.getExercises)
+//console.log(allExercises.getExercises)
 // allExercises.getExercises.filter((element) => {
 //    if(element.getData.id.includes("abs-intermediate")){
 //     console.log(element.getData)

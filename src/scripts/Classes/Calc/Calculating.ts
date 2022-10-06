@@ -22,7 +22,7 @@ export default class Calculating {
 
 		data.gender === "female" ? (result = 10 * data.weight + 6.25 * data.height - 5 * data.age - 161) : (result = 10 * data.weight + 6.25 * data.height - 5 * data.age + 5);
 
-		return Math.round(result) * this.getCoefLvlActivity(data.lvlActivy);
+		return Math.round((result) * this.getCoefLvlActivity(data.lvlActivy));
 	}
 
 	public static determineRatioOfPFC(dailyCalorieIntake: number, goalUser: EnumGoalUser): Nutrients {
@@ -79,7 +79,7 @@ export default class Calculating {
 	}
 	public static getBodyMassIndex(data:EnterDataBodyMassIndex){
 		
-		return (data.weight)/(Math.pow((data.height/100),2))
+		return Math.round((data.weight)/(Math.pow((data.height/100),2)))
 	}
 }
 

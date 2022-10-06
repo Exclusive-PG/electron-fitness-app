@@ -58,3 +58,4 @@ export const UserTest1 = new User(data1)
 export const UserTest2 = new User(data2)
 export const UserManagerTest = new UsersManager();
 UserManagerTest.clearData();
+
