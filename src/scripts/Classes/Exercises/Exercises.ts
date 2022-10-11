@@ -22,6 +22,9 @@ export  class Exercises {
 	public pushExercise(exercise: Exercise): void {
 		this._list.push(exercise);
 	}
+	public findById(id: string){
+		return this._list.filter(item => item.getData.id === id)[0]
+	}
 	get getExercises() {
 		return this._list;
 	}

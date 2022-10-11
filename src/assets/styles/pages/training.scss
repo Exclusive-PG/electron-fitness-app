@@ -5,9 +5,10 @@
 	flex-wrap: wrap;
 }
 .training_wrapper {
-	height: 80vh;
-	max-height: 80vh;
+	height: 88vh;
+	max-height: 88vh;
 	overflow-y: scroll;
+	position: relative;
 }
 
 .training_wrapper::-webkit-scrollbar {
@@ -219,9 +220,118 @@
 	max-height: 50px;
 }
 
+.active_custom_course{
+	position: absolute;
+	right: 50px;
+	bottom: 50px;
+	transition: .1s all ease-in-out;
+	.txt_create_custom_course{
 
+		border-radius: 18px;
+		padding: 12px 14px;
+		font-size: 20px;
+		color: #fff;
+		background-color: $FOOD_PAGE_COLOR;
+	}
+	&:hover{
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+}
 
+.form_create_course{
+	transition: .3s all ease-in-out;
+	position: absolute;
+	left: 0;
+	top: -100%;
+	width: 100%;
+	height: 100%;
+	background-color: $PROFILE_PAGE_COLOR;
 
+}
+.form_create_course.active{
+	top: 0;
+}
+.cancel_create_course{
+	position: absolute;
+	right: 40px;
+	top: 40px;
+	color: #fff;
+	transition: .2s all;
+	&:hover{
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+}
+.wrapper_form_create_course{
+	background-color: #fff;
+	max-width: 1000px;
+	max-height: 90vh;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	border-radius: 20px;
+	display: flex;
+	.form_inputs_create_course,.list_exercise{
+		width: 50%;
+	}
+	
+}
+
+.hd_create_course{
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-bottom: 40px;
+}
+.hd_middle_create_course{
+	margin-left: 20px;
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+.render_all_exercises{
+	max-height: 80%;
+	overflow-y: scroll;
+}
+
+.render_all_exercises::-webkit-scrollbar {
+	width: 20px;
+}
+.render_all_exercises::-webkit-scrollbar-thumb {
+	background-color: #e1e1e1;
+	border-radius: 20px;
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: content-box;
+	min-width: 32px;
+	min-height: 32px;
+	max-height: 50px;
+}
+.exercise_item_create_course{
+	padding: 5px 10px;
+	border-radius: 10px;
+	background-color: #e1e1e1;
+	margin-bottom: 10px;
+	border: 1px solid #e1e1e1;
+	display: grid;
+	grid-template-columns: 200px 150px 100px;
+	.exercise_item_muscletype::first-letter{
+		text-transform: uppercase;
+	}
+	&:hover{
+		cursor: pointer;
+	}
+}
+
+.exercise_item_create_course.active{
+	border-color: $FOOD_PAGE_COLOR;
+	background-color: $FOOD_PAGE_COLOR;
+	color: #fff;
+
+}
+.create-custom-course{
+	display: flex;
+	justify-content: center;
+}
 
 @media (max-width: 900px) {
 	.render_current_course {

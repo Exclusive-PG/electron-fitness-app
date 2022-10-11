@@ -22,9 +22,6 @@ export const courseManager = new CourseManager();
 
 courseManager.initCourses(initAllCourses());
 
-
-
-
 function initAllCourses() {
 	const ABSCourseBeginner = new CourseBase({
 		name: "ABS Beginner",

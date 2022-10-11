@@ -1,13 +1,15 @@
 import AppController from "../Classes/AppController/AppController";
 import { courseManager } from "../Classes/Courses/CourseManager";
 import { CourseBase } from "./../Classes/Courses/CourseBase";
-import { Exercise } from "./../Classes/Exercises/Exercises";
+import { allExercises, Exercise, Exercises } from "./../Classes/Exercises/Exercises";
 
 const currentCourseSection = document.querySelector(".current_course_section");
 const currentCourseWrapperRender = document.querySelector<HTMLElement>(".current_course_wrapper_render");
 const closeWinCurrentCourse = document.querySelector<HTMLElement>(".close_win_current_course");
-
-
+const formCreateCourse = document.querySelector<HTMLElement>(".form_create_course");
+const activeCustomCourse = document.querySelector<HTMLElement>(".active_custom_course");
+const cancelCreateCourseBtn = document.querySelector<HTMLElement>(".cancel_create_course")
+const createCustomCourseBtn = document.querySelector<HTMLElement>(".create-custom-course")
 
 const renderTrainingCourse = (outerPlace: HTMLElement, courses: Array<CourseBase>) => {
 	outerPlace.innerHTML = "";
@@ -69,38 +71,41 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
     </div>
     `;
 
-    document.querySelectorAll(".item_current_exercises").forEach((item)=>{
-        item.addEventListener("click",()=>{
-            document.querySelector(".current_exercise_info_render").classList.add("active")
-            if(item.hasAttribute("data-id-exercise")){
-                let _exercise = currentCourse.currentExerciseById(item.getAttribute("data-id-exercise"));
-                let _render = `
+	document.querySelectorAll(".item_current_exercises").forEach((item) => {
+		item.addEventListener("click", () => {
+			document.querySelector(".current_exercise_info_render").classList.add("active");
+			if (item.hasAttribute("data-id-exercise")) {
+				let _exercise = currentCourse.currentExerciseById(item.getAttribute("data-id-exercise"));
+				let _render = `
                 <div class="current-overview-exercise">
                     <div class="current-overview-exercise-name"><h2>${_exercise.getData.name}</h2></div>
                     <div class="current-overview-exercise-descr">${_exercise.getData.description}</div>
-                    ${(_exercise.getData.linkForVideo !== "" && AppController.isOnline) ? 
-                    `<div class="current-overview-exercise-video">${renderYTplayer(_exercise.getData.linkForVideo)}</div>` : ""}
+                    ${
+											_exercise.getData.linkForVideo !== "" && AppController.isOnline
+												? `<div class="current-overview-exercise-video">${renderYTplayer(_exercise.getData.linkForVideo)}</div>`
+												: ""
+										}
                     
                     <div class="current-overview-exercise-lvl-diffic">Lvl Difficulty: ${_exercise.getData.lvlDifficulty.name}</div>
-                    ${(_exercise.getData.ExecutionTime !== 0) ? 
-                        `<div class="current-overview-exercise-execution">Execution Time: ${_exercise.getData.ExecutionTime} sec</div>` :
-                        `<div class="current-overview-exercise-execution">Repetition Сount: ${_exercise.getData.RepetitionСount} times</div>`
-                    }
+                    ${
+											_exercise.getData.ExecutionTime !== 0
+												? `<div class="current-overview-exercise-execution">Execution Time: ${_exercise.getData.ExecutionTime} sec</div>`
+												: `<div class="current-overview-exercise-execution">Repetition Сount: ${_exercise.getData.RepetitionСount} times</div>`
+										}
                     <div class="current-overview-exercise-calories">Burns Сalories: ${_exercise.getData.caloriesBurned} cal</div>
                 </div>
-                `
-               document.querySelector(".render_current_exercise").innerHTML = _render;
-            }
-        })
-    })
+                `;
+				document.querySelector(".render_current_exercise").innerHTML = _render;
+			}
+		});
+	});
 
 	closeWinCurrentCourse.addEventListener("click", () => currentCourseSection.classList.remove("active"));
 
-    document.querySelector(".close_current_exercise").addEventListener("click",()=>{
-        document.querySelector(".current_exercise_info_render").classList.remove("active")
-        document.querySelector(".render_current_exercise").innerHTML = "";
-    })
- 
+	document.querySelector(".close_current_exercise").addEventListener("click", () => {
+		document.querySelector(".current_exercise_info_render").classList.remove("active");
+		document.querySelector(".render_current_exercise").innerHTML = "";
+	});
 }
 
 function renderlvlDifficulty(lvlDifficulty: number, maxLvlDifficulty: number): string {
@@ -112,14 +117,64 @@ function renderlvlDifficulty(lvlDifficulty: number, maxLvlDifficulty: number): s
     `;
 }
 
-function renderYTplayer(ytLink:string){
-return `
+function renderYTplayer(ytLink: string) {
+	return `
 <iframe width="600" height="350" src="https://www.youtube.com/embed/${ytLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>;
-`
+`;
+}
+
+function createCustomCourse(outputPlace:HTMLElement,exercises:Exercises){
+    let arrayCurrentExercise :any[]= [];
+    outputPlace.innerHTML = "";
+    exercises.getExercises.forEach(({getData})=>{
+        outputPlace.innerHTML +=`
+            <div class="exercise_item_create_course" data-id-exercise-create-course="${getData.id}">
+            <div class="exercise_item_name">${getData.name}</div>
+            <div class="exercise_item_diff">${renderlvlDifficulty(getData.lvlDifficulty.id,3)}</div>
+            <div class="exercise_item_muscletype">${getData.muscleType}</div>
+            </div>
+        `
+    })
+    document.querySelectorAll(".exercise_item_create_course").forEach((item)=>{
+        item.addEventListener("click",()=>{
+            item.classList.toggle("active")
+            let _idExercise = item.getAttribute("data-id-exercise-create-course")
+            let element = exercises.findById(_idExercise);
+            (item.classList.contains("active")) ? arrayCurrentExercise.push(element) : arrayCurrentExercise.splice(arrayCurrentExercise.indexOf(_idExercise), 1);
+            console.log(arrayCurrentExercise)
+        })
+    })
+    activeCustomCourse.addEventListener("click", () => {
+        formCreateCourse.classList.add("active")
+        document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
+    })
+    cancelCreateCourseBtn.addEventListener("click",()=>{
+        formCreateCourse.classList.remove("active")
+        document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
+    })
+    const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
+        input.value = value;
+    };
+  
+        document.querySelectorAll(".muscle_type_wrapper > div").forEach((item: HTMLElement) => {
+            item.addEventListener("click", () => {
+                showTitleDropdown(item.getAttribute("data-value"), document.querySelector(".muscle_type_input"));
+            });
+        })
+        createCustomCourseBtn.addEventListener("click",()=>{
+            console.log("course created")
+        })
+
+}
+
+function renderTrainingPage() {
+
+	renderTrainingCourse(document.querySelector(".render_abs_training"), courseManager.allCourses.abs);
+	renderTrainingCourse(document.querySelector(".render_arm_training"), courseManager.allCourses.arm);
+	renderTrainingCourse(document.querySelector(".render_leg_training"), courseManager.allCourses.leg);
+    createCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"),allExercises);
 }
 
 
 
-renderTrainingCourse(document.querySelector(".render_abs_training"), courseManager.allCourses.abs);
-renderTrainingCourse(document.querySelector(".render_arm_training"), courseManager.allCourses.arm);
-renderTrainingCourse(document.querySelector(".render_leg_training"), courseManager.allCourses.leg);
+renderTrainingPage();
