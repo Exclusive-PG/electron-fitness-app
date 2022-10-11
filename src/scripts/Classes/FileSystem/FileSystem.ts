@@ -3,7 +3,9 @@ import { fs, path } from "../../../scripts/requiredLib/requiredLib";
 export default class FileSystem {
     private static paths = {
         images:path.resolve(path.join("data","users","images")),
-        users:path.resolve(path.join("data","users","users.json"))
+        users:path.resolve(path.join("data","users","users.json")),
+		exercises : path.resolve(path.join("data","exercises.json")),
+		customCourses : path.resolve(path.join("data","customCourses.json"))
     }
 	public static createJSONData(data: any, pathFile: string) {
 		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {

@@ -26,11 +26,14 @@ export type dataCurrentCourse = {
 	exercises: Array<Exercise>;
 	lvlDifficulty: number;
 	lastTimeExecution: string | Date;
-	isCreateByUser: boolean;
-	isUserFollow:boolean;
+	isCreateByUser: checkIsCreateByUser;
+	isUserFollow: boolean;
 	image?: string;
 };
-
+export type checkIsCreateByUser ={
+	state: boolean;
+	userId: string;
+}
 ///USER///
 export type dataUser = {
 	id: string;

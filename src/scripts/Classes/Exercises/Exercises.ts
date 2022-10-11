@@ -1,6 +1,6 @@
 import { IExercise, IDataExercise } from "../../../types/types";
 import { path, uuidv1 } from "./../../requiredLib/requiredLib";
-import FileSystem from './../FileSystem/FileSystem';
+import FileSystem from "./../FileSystem/FileSystem";
 
 export class Exercise implements IDataExercise {
 	private _data: IExercise;
@@ -16,14 +16,33 @@ export class Exercise implements IDataExercise {
 	}
 }
 
-export  class Exercises {
+export class Exercises {
 	private _list: Array<Exercise> = [];
+
+	constructor() {
+		FileSystem.loadData(path.join("data", "exercises.json")).forEach((item: any) => {
+			this.pushExercise(new Exercise(item));
+		});
+	}
 
 	public pushExercise(exercise: Exercise): void {
 		this._list.push(exercise);
 	}
-	public findById(id: string){
-		return this._list.filter(item => item.getData.id === id)[0]
+	public findById(id: string) {
+		return this._list.filter((item) => item.getData.id === id)[0];
+	}
+	public static averageLvlDiffuculty(data: Array<Exercise>): number {
+		let sumLvlDifficulty = data.reduce((acc, item) => {
+			return acc + item.getData.lvlDifficulty.id;
+		}, 0);
+		return Math.round(sumLvlDifficulty / data.length);
+	}
+	public static initExercises(data: any[] | Array<IExercise> ):Array<Exercise>{
+		let tempArray:any[] = [];
+		 data.forEach(item=>{
+			 tempArray.push(new Exercise(item._data));
+		})
+		return tempArray;
 	}
 	get getExercises() {
 		return this._list;
@@ -483,18 +502,4 @@ export const allExercises = new Exercises();
 // 	},
 // ];
 
-
-
 //FileSystem.createJSONData([...arrayExercisesABSBeginner,...arrayExercisesABSIntermediate,...arrayExercisesABSAdvanced],path.join("data","exercises.json"));
-
-FileSystem.loadData(path.join("data","exercises.json")).forEach((item:any)=>{
-    
-  allExercises.pushExercise(new Exercise(item))
-})
-
-//console.log(allExercises.getExercises)
-// allExercises.getExercises.filter((element) => {
-//    if(element.getData.id.includes("abs-intermediate")){
-//     console.log(element.getData)
-//    }
-// });

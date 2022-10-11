@@ -14,6 +14,8 @@ export class UsersManager {
 			_dataUser.forEach((user) => {
 				this._users.push(new User(user._data));
 			});
+			this.setActiveUser = this._users[0]
+			console.log(this.getctiveUser)
 			//console.log(this._users);
 		} catch (e) {
 			console.log((e as Error).message);

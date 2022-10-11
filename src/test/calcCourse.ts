@@ -137,7 +137,7 @@ export const ABSCourseTEST1 = new CourseBase({
 	lvlDifficulty: 1,
 	id: "123456767889test_course",
 	lastTimeExecution: new Date().toLocaleString(),
-	isCreateByUser: false,
+	isCreateByUser: {state:false,userId:null},
 	isUserFollow: false,
 	image: "",
 });
@@ -149,7 +149,7 @@ export const ABSCourseTEST2 = new CourseBase({
 	lvlDifficulty: 2,
 	id: "123456767889test_courseasdasd",
 	lastTimeExecution: new Date().toLocaleString(),
-	isCreateByUser: false,
+	isCreateByUser: {state:false,userId:null},
 	isUserFollow: false,
 	image: "",
 });
