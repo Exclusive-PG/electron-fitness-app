@@ -12,11 +12,10 @@ const closeWinCurrentCourse = document.querySelector<HTMLElement>(".close_win_cu
 const formCreateCourse = document.querySelector<HTMLElement>(".form_create_course");
 const activeCustomCourse = document.querySelector<HTMLElement>(".active_custom_course");
 const cancelCreateCourseBtn = document.querySelector<HTMLElement>(".cancel_create_course");
-const createCustomCourseBtn = document.querySelector<HTMLElement>(".create-custom-course");
 const nameCustomCourseInput = document.getElementById("nameCourse") as HTMLInputElement;
 const muscleTypeInput = document.getElementById("muscle_type") as HTMLInputElement;
 
-const renderTrainingCourse = (outerPlace: HTMLElement, headlineForSection: string, courses: Array<CourseBase>,hotReload:boolean = false) => {
+const renderTrainingCourse = (outerPlace: HTMLElement, headlineForSection: string, courses: Array<CourseBase>, hotReload: boolean = false) => {
 	if (courses.length === 0 && !hotReload) return;
 	let renderedCourseItem = "";
 	courses.forEach(({ data }) => {
@@ -29,14 +28,13 @@ const renderTrainingCourse = (outerPlace: HTMLElement, headlineForSection: strin
         `;
 		}
 	});
-	outerPlace.innerHTML = `<h2 class="hd_training">${courses.length !==0 ? headlineForSection : ""}</h2>
+	outerPlace.innerHTML = `<h2 class="hd_training">${courses.length !== 0 ? headlineForSection : ""}</h2>
                             <div class="course_items_wrapper">${renderedCourseItem}</div>
 `;
 
 	document.querySelectorAll(".course_item").forEach((item: HTMLDivElement) => {
 		item.addEventListener("click", () => {
 			if (item.hasAttribute("data-course-id")) {
-				console.log(item.getAttribute("data-course-id"));
 				renderCurrentCourse(currentCourseWrapperRender, courseManager.currentBaseById(item.getAttribute("data-course-id")));
 				currentCourseSection.classList.add("active");
 			}
@@ -45,14 +43,11 @@ const renderTrainingCourse = (outerPlace: HTMLElement, headlineForSection: strin
 };
 
 function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase) {
-	console.log(currentCourse);
 	const { data } = currentCourse;
-	console.log(data.exercises);
 	outerPlace.innerHTML = "";
 
 	let renderedExercises = "";
 	currentCourse.data.exercises.forEach((item: Exercise, index: number) => {
-		console.log(item);
 		renderedExercises += `
         <div class="item_current_exercises" data-id-exercise=${item.getData.id}>
             <h1 class="item_current_name_exercises"><label for="faq-3">${index + 1}. ${item.getData.name}</label></h1>
@@ -73,8 +68,12 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
             <div class="name_current_course">Muscle type: ${data.muscleZone}</div>
             <div class="data_about_current_course">${currentCourse.getAllTimeExercises()} minutes</div>
             ${
-                CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser) && `<div class="delete_my_custom_course" data-id-for-delete=${data.id}><i class="fa-solid fa-trash"></i></div>`
-            }
+							CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser) &&
+							`<div class="controls_for_custom_course">
+				<div class="delete_my_custom_course" data-id-for-delete=${data.id}><i class="fa-regular fa-trash-can"></i></div>
+				<div class="edit_my_custom_course" data-id-for-edit=${data.id}><i class="fa-regular fa-pen-to-square"></i></div>
+				</div>`
+						}
         </div>
         <div class="right_block">
             <div class="exercises">${renderedExercises}</div>
@@ -85,12 +84,25 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
         </div>
     </div>
     `;
-    document.querySelector(".delete_my_custom_course").addEventListener("click",()=>{
-        console.log("delete")
-        courseManager.removeCustomCourse(document.querySelector(".delete_my_custom_course").getAttribute("data-id-for-delete"));
-        renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom,true);
-        closeWinCurrentCourse.click();
-    })
+	if (CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser)) {
+		document.querySelector(".delete_my_custom_course").addEventListener("click", () => {
+			console.log("delete");
+			courseManager.removeCustomCourse(document.querySelector(".delete_my_custom_course").getAttribute("data-id-for-delete"));
+			renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom, true);
+			closeWinCurrentCourse.click();
+		});
+		document.querySelector(".edit_my_custom_course").addEventListener("click", () => {
+			console.log("edit");
+			formCreateCourse.classList.add("active");
+			currentCourseSection.classList.remove("active");
+			document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
+			setTimeout(() => {
+				let _idCourseForEdit = document.querySelector(".edit_my_custom_course").getAttribute("data-id-for-edit");
+				editCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises, courseManager.currentBaseById(_idCourseForEdit));
+			}, 400);
+		});
+	}
+
 	document.querySelectorAll(".item_current_exercises").forEach((item) => {
 		item.addEventListener("click", () => {
 			document.querySelector(".current_exercise_info_render").classList.add("active");
@@ -142,8 +154,20 @@ function renderYTplayer(ytLink: string) {
 <iframe width="600" height="350" src="https://www.youtube.com/embed/${ytLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>;
 `;
 }
-
+function checkId(id: string,array:Exercise[]){
+let _validate = false;
+array.every((item) => {
+	if (item.getData.id === id) {
+		_validate = false;
+	} else {
+		_validate = true;
+		return true;
+	}
+});
+return !_validate;
+}
 function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
+	document.querySelector(".render_btn_controls_form").innerHTML = `<button class="btn btn-fill create-custom-course active"><span>create</span></button>`;
 	let arrayCurrentExercise: any[] = [];
 	outputPlace.innerHTML = "";
 	exercises.getExercises.forEach(({ getData }) => {
@@ -160,18 +184,13 @@ function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 			item.classList.toggle("active");
 			let _idExercise = item.getAttribute("data-id-exercise-create-course");
 			let element = exercises.findById(_idExercise);
-			item.classList.contains("active") ? arrayCurrentExercise.push(element) : arrayCurrentExercise.splice(arrayCurrentExercise.indexOf(_idExercise), 1);
-			console.log(arrayCurrentExercise);
+			let index = arrayCurrentExercise.map(e => e.getData.id).indexOf(_idExercise)
+			console.log(index)
+			item.classList.contains("active") ? arrayCurrentExercise.push(element) : (index > -1 && arrayCurrentExercise.splice(index, 1));
+			console.log(_idExercise)
 		});
 	});
-	activeCustomCourse.addEventListener("click", () => {
-		formCreateCourse.classList.add("active");
-		document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
-	});
-	cancelCreateCourseBtn.addEventListener("click", () => {
-		formCreateCourse.classList.remove("active");
-		document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
-	});
+
 	const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
 		input.value = value;
 	};
@@ -181,14 +200,105 @@ function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 			showTitleDropdown(item.getAttribute("data-value"), document.querySelector(".muscle_type_input"));
 		});
 	});
-	createCustomCourseBtn.addEventListener("click", () => {
+	document.querySelector(".create-custom-course").addEventListener("click", validateForCreate);
+
+	function validateForCreate() {
+		{
+			let _validate = false;
+			let _errors = [...document.querySelectorAll(".error-icon-create-course")];
+
+			[nameCustomCourseInput, muscleTypeInput].forEach((item, index) => {
+				item.value === "" ? _errors[index].classList.add("active") : _errors[index].classList.remove("active");
+			});
+			console.log(arrayCurrentExercise);
+			arrayCurrentExercise.length === 0 ? _errors[2].classList.add("active") : _errors[2].classList.remove("active");
+			_errors.every((item) => {
+				if (item.classList.contains("active")) {
+					_validate = false;
+					return;
+				} else {
+					_validate = true;
+					return true;
+				}
+			});
+			if (!_validate) return;
+
+			let createdCourse = new CourseBase({
+				id: uuidv4(),
+				exercises: arrayCurrentExercise,
+				isCreateByUser: { state: true, userId: "70995e80-3fc5-11ed-8ce0-edfdd542509d" },
+				isUserFollow: false,
+				lastTimeExecution: new Date().toLocaleString(),
+				lvlDifficulty: Exercises.averageLvlDiffuculty(arrayCurrentExercise),
+				muscleZone: muscleTypeInput.value.toLowerCase(),
+				name: nameCustomCourseInput.value,
+				image: customImg,
+			});
+			courseManager.pushCustomCourse(createdCourse);
+			renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom);
+			console.log(courseManager.allCourses);
+			readyForCreate();
+		}
+	}
+}
+function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, customCourse: CourseBase) {
+	document.querySelector(".render_btn_controls_form").innerHTML = `<button class="btn btn-fill edit-custom-course active"><span>edit</span></button>`;
+	document.querySelector(".hd_create_course").textContent = "Edit Course";
+	
+	nameCustomCourseInput.value = customCourse.data.name;
+	muscleTypeInput.value = customCourse.data.muscleZone.charAt(0).toUpperCase() + customCourse.data.muscleZone.slice(1);
+	let arrayCurrentExerciseEdit: Exercise[] = customCourse.data.exercises;
+	outputPlace.innerHTML = "";
+
+	customCourse.data.exercises.forEach(item=>{
+		console.log(item.getData.id)
+	})
+	// render list of exercises
+	exercises.getExercises.forEach((itemExercise) => {
+		const { getData } = itemExercise;
+		
+		outputPlace.innerHTML += `
+            <div class="exercise_item_create_course ${
+				checkId (itemExercise.getData.id,customCourse.data.exercises) ? "active" : ""
+						}" data-id-exercise-create-course="${getData.id}">
+            <div class="exercise_item_name">${getData.name}</div>
+            <div class="exercise_item_diff">${renderlvlDifficulty(getData.lvlDifficulty.id, 3)}</div>
+            <div class="exercise_item_muscletype">${getData.muscleType}</div>
+            </div>
+        `;
+	});
+	// add event for every exercise item
+	document.querySelectorAll(".exercise_item_create_course").forEach((item) => {
+		item.addEventListener("click", () => {
+			item.classList.toggle("active");
+			let _idExercise = item.getAttribute("data-id-exercise-create-course");
+			let element = exercises.findById(_idExercise);
+			let index = arrayCurrentExerciseEdit.map(e => e.getData.id).indexOf(_idExercise)
+			console.log(index)
+			item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : (index > -1 && arrayCurrentExerciseEdit.splice(index, 1));
+			console.log(_idExercise)
+			console.log(arrayCurrentExerciseEdit)
+		});
+	});
+	// show title for dropdown element
+	const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
+		input.value = value;
+	};
+	// add event for dropdown
+	document.querySelectorAll(".muscle_type_wrapper > div").forEach((item: HTMLElement) => {
+		item.addEventListener("click", () => {
+			showTitleDropdown(item.getAttribute("data-value"), document.querySelector(".muscle_type_input"));
+		});
+	});
+	//TO DO
+	document.querySelector(".edit-custom-course").addEventListener("click", () => {
 		let _validate = false;
 		let _errors = [...document.querySelectorAll(".error-icon-create-course")];
 
 		[nameCustomCourseInput, muscleTypeInput].forEach((item, index) => {
 			item.value === "" ? _errors[index].classList.add("active") : _errors[index].classList.remove("active");
 		});
-		arrayCurrentExercise.length === 0 ? _errors[2].classList.add("active") : _errors[2].classList.remove("active");
+		arrayCurrentExerciseEdit.length === 0 ? _errors[2].classList.add("active") : _errors[2].classList.remove("active");
 		_errors.every((item) => {
 			if (item.classList.contains("active")) {
 				_validate = false;
@@ -198,32 +308,43 @@ function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 				return true;
 			}
 		});
+		console.log(arrayCurrentExerciseEdit);
 
 		if (!_validate) return;
 
-		let createdCourse = new CourseBase({
-			id: uuidv4(),
-			exercises: arrayCurrentExercise,
-			isCreateByUser: { state: true, userId: "70995e80-3fc5-11ed-8ce0-edfdd542509d" },
-			isUserFollow: false,
-			lastTimeExecution: new Date().toLocaleString(),
-			lvlDifficulty: Exercises.averageLvlDiffuculty(arrayCurrentExercise),
-			muscleZone: muscleTypeInput.value.toLowerCase(),
-			name: nameCustomCourseInput.value,
-			image: customImg,
-		});
-		courseManager.pushCustomCourse(createdCourse);
+		courseManager.editCustomCourse(customCourse.data.id, { editExercises: arrayCurrentExerciseEdit, muscleType: muscleTypeInput.value, name: nameCustomCourseInput.value });
 		renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom);
+		readyForCreate();
+		arrayCurrentExerciseEdit = [];
 		console.log(courseManager.allCourses);
 	});
 }
-
+function readyForCreate() {
+	formCreateCourse.classList.remove("active");
+	document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
+	setTimeout(() => {
+		document.querySelector(".hd_create_course").textContent = "Create Course";
+		nameCustomCourseInput.value = "";
+		muscleTypeInput.value = "";
+		createCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises);
+	}, 400);
+}
 function renderTrainingPage() {
 	renderTrainingCourse(document.querySelector(".render_abs_training"), "Abs courses", courseManager.allCourses.abs);
 	renderTrainingCourse(document.querySelector(".render_arm_training"), "Arm courses", courseManager.allCourses.arm);
 	renderTrainingCourse(document.querySelector(".render_leg_training"), "Leg courses", courseManager.allCourses.leg);
 	renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom);
 	createCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises);
+
+	activeCustomCourse.addEventListener("click", () => {
+		formCreateCourse.classList.add("active");
+		document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
+	});
+	cancelCreateCourseBtn.addEventListener("click", () => {
+		if (document.querySelector(".hd_create_course").textContent === "Edit Course") readyForCreate();
+		formCreateCourse.classList.remove("active");
+		document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
+	});
 }
 
 renderTrainingPage();

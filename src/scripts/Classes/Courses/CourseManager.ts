@@ -3,7 +3,7 @@ import absImg from "./../../../assets/images/abs.jpg";
 import armImg from "./../../../assets/images/arm.jpg";
 import feetImg from "./../../../assets/images/feet.jpg";
 import customImg from "./../../../assets/images/custom.jpg";
-import { allExercises, Exercises } from "../Exercises/Exercises";
+import { allExercises, Exercise, Exercises } from "../Exercises/Exercises";
 import FileSystem from "../FileSystem/FileSystem";
 import { dataCurrentCourse } from "../../../types/types";
 import User from "../User/User";
@@ -57,6 +57,12 @@ export class CourseManager {
 		this._allCourses.custom.splice(this._allCourses.custom.indexOf(this.currentBaseById(idCourse)), 1);
 		FileSystem.createJSONData(this._allCourses.custom,FileSystem.PATHS.customCourses);
 		console.log(this._allCourses.custom)
+	}
+	public editCustomCourse(idCourse:string,dataEdit:{name:string,muscleType:string,editExercises:Array<Exercise>}){
+		let index:number = this._allCourses.custom.findIndex(item=>item.data.id === idCourse);
+		this._allCourses.custom[index].setData = dataEdit;
+		FileSystem.createJSONData(this._allCourses.custom,FileSystem.PATHS.customCourses);
+		console.log(index)
 	}
 	get allCourses() {
 		return this._allCourses;

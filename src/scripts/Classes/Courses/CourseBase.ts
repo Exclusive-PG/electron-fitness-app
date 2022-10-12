@@ -19,7 +19,11 @@ export class CourseBase {
 
 		return Math.round(((this._dataCourse.exercises.length * 120 + (this._dataCourse.exercises.length - 1) * 30) - totalExecutonTime)/60)
 	}
-	
+	set setData(editData:{name:string,muscleType:string,editExercises:Array<Exercise>}){
+		this._dataCourse.name = editData.name;
+		this._dataCourse.muscleZone = editData.muscleType;
+		this._dataCourse.exercises = editData.editExercises;
+	}
 
 	get data(): dataCurrentCourse {
 		return this._dataCourse;

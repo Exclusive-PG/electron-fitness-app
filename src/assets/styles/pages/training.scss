@@ -136,8 +136,30 @@
 		}
 	}
 }
+.controls_for_custom_course{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+	div{
+		transform: scale(1.3);
+	}
+}
 .delete_my_custom_course{
-	color: $MAIN_RED_COLOR;
+	color: $HOME_PAGE_COLOR;
+	transition: .2s all ease-in-out;
+	&:hover{
+		cursor: pointer;
+		transform: scale(1.5);
+	}
+}
+.edit_my_custom_course{
+	color: $TRAIN_PAGE_COLOR;
+	transition: .2s all ease-in-out;
+	&:hover{
+		cursor: pointer;
+		transform: scale(1.5);
+	}
 }
 .right_block::-webkit-scrollbar {
 	width: 20px;
@@ -338,7 +360,14 @@
 	color: #fff;
 
 }
-.create-custom-course{
+.create-custom-course,.edit-custom-course{
+	display: none;
+}
+.create-custom-course.active{
+	display: flex;
+	justify-content: center;
+}
+.edit-custom-course.active{
 	display: flex;
 	justify-content: center;
 }
@@ -351,7 +380,9 @@
 .error-icon-create-course.active{
 	display: inline-block;
 }
-
+.nameCourse{
+	text-transform: capitalize;
+}
 
 @media (max-width: 900px) {
 	.render_current_course {
