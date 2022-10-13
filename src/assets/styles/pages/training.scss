@@ -338,7 +338,7 @@
 	min-height: 32px;
 	max-height: 50px;
 }
-.exercise_item_create_course{
+.exercise_item_create_course,.exercise_item_edit_course{
 	padding: 5px 10px;
 	border-radius: 10px;
 	background-color: #e1e1e1;
@@ -355,6 +355,11 @@
 }
 
 .exercise_item_create_course.active{
+	border-color: $FOOD_PAGE_COLOR;
+	background-color: $FOOD_PAGE_COLOR;
+	color: #fff;
+}
+.exercise_item_edit_course.active{
 	border-color: $FOOD_PAGE_COLOR;
 	background-color: $FOOD_PAGE_COLOR;
 	color: #fff;

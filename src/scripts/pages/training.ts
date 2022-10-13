@@ -154,17 +154,17 @@ function renderYTplayer(ytLink: string) {
 <iframe width="600" height="350" src="https://www.youtube.com/embed/${ytLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>;
 `;
 }
-function checkId(id: string,array:Exercise[]){
-let _validate = false;
-array.every((item) => {
-	if (item.getData.id === id) {
-		_validate = false;
-	} else {
-		_validate = true;
-		return true;
-	}
-});
-return !_validate;
+function checkId(id: string, array: Exercise[]) {
+	let _validate = false;
+	array.every((item) => {
+		if (item.getData.id === id) {
+			_validate = false;
+		} else {
+			_validate = true;
+			return true;
+		}
+	});
+	return !_validate;
 }
 function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 	document.querySelector(".render_btn_controls_form").innerHTML = `<button class="btn btn-fill create-custom-course active"><span>create</span></button>`;
@@ -184,22 +184,13 @@ function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 			item.classList.toggle("active");
 			let _idExercise = item.getAttribute("data-id-exercise-create-course");
 			let element = exercises.findById(_idExercise);
-			let index = arrayCurrentExercise.map(e => e.getData.id).indexOf(_idExercise)
-			console.log(index)
-			item.classList.contains("active") ? arrayCurrentExercise.push(element) : (index > -1 && arrayCurrentExercise.splice(index, 1));
-			console.log(_idExercise)
+			let index = arrayCurrentExercise.map((e) => e.getData.id).indexOf(_idExercise);
+			console.log(index);
+			item.classList.contains("active") ? arrayCurrentExercise.push(element) : index > -1 && arrayCurrentExercise.splice(index, 1);
+			console.log(_idExercise);
 		});
 	});
 
-	const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
-		input.value = value;
-	};
-
-	document.querySelectorAll(".muscle_type_wrapper > div").forEach((item: HTMLElement) => {
-		item.addEventListener("click", () => {
-			showTitleDropdown(item.getAttribute("data-value"), document.querySelector(".muscle_type_input"));
-		});
-	});
 	document.querySelector(".create-custom-course").addEventListener("click", validateForCreate);
 
 	function validateForCreate() {
@@ -244,52 +235,44 @@ function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, customCourse: CourseBase) {
 	document.querySelector(".render_btn_controls_form").innerHTML = `<button class="btn btn-fill edit-custom-course active"><span>edit</span></button>`;
 	document.querySelector(".hd_create_course").textContent = "Edit Course";
-	
 	nameCustomCourseInput.value = customCourse.data.name;
 	muscleTypeInput.value = customCourse.data.muscleZone.charAt(0).toUpperCase() + customCourse.data.muscleZone.slice(1);
-	let arrayCurrentExerciseEdit: Exercise[] = customCourse.data.exercises;
+	let arrayCurrentExerciseEdit: Exercise[] = [];
+	customCourse.data.exercises.forEach(item=>{
+		arrayCurrentExerciseEdit.push(item)
+	})
 	outputPlace.innerHTML = "";
 
-	customCourse.data.exercises.forEach(item=>{
-		console.log(item.getData.id)
-	})
+	customCourse.data.exercises.forEach((item) => {
+		console.log(item.getData.id);
+	});
 	// render list of exercises
 	exercises.getExercises.forEach((itemExercise) => {
 		const { getData } = itemExercise;
-		
+
 		outputPlace.innerHTML += `
-            <div class="exercise_item_create_course ${
-				checkId (itemExercise.getData.id,customCourse.data.exercises) ? "active" : ""
-						}" data-id-exercise-create-course="${getData.id}">
+            <div class="exercise_item_edit_course ${checkId(itemExercise.getData.id, customCourse.data.exercises) ? "active" : ""}" data-id-exercise-edit-course="${getData.id}">
             <div class="exercise_item_name">${getData.name}</div>
             <div class="exercise_item_diff">${renderlvlDifficulty(getData.lvlDifficulty.id, 3)}</div>
             <div class="exercise_item_muscletype">${getData.muscleType}</div>
             </div>
         `;
 	});
+	console.log(document.querySelectorAll(".exercise_item_edit_course"));
 	// add event for every exercise item
-	document.querySelectorAll(".exercise_item_create_course").forEach((item) => {
+	document.querySelectorAll(".exercise_item_edit_course").forEach((item) => {
 		item.addEventListener("click", () => {
 			item.classList.toggle("active");
-			let _idExercise = item.getAttribute("data-id-exercise-create-course");
+			let _idExercise = item.getAttribute("data-id-exercise-edit-course");
 			let element = exercises.findById(_idExercise);
-			let index = arrayCurrentExerciseEdit.map(e => e.getData.id).indexOf(_idExercise)
-			console.log(index)
-			item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : (index > -1 && arrayCurrentExerciseEdit.splice(index, 1));
-			console.log(_idExercise)
-			console.log(arrayCurrentExerciseEdit)
+			let index = arrayCurrentExerciseEdit.map((e) => e.getData.id).indexOf(_idExercise);
+			console.log(index);
+			item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : index > -1 && arrayCurrentExerciseEdit.splice(index, 1);
+			console.log(_idExercise);
+			console.log(arrayCurrentExerciseEdit);
 		});
 	});
-	// show title for dropdown element
-	const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
-		input.value = value;
-	};
-	// add event for dropdown
-	document.querySelectorAll(".muscle_type_wrapper > div").forEach((item: HTMLElement) => {
-		item.addEventListener("click", () => {
-			showTitleDropdown(item.getAttribute("data-value"), document.querySelector(".muscle_type_input"));
-		});
-	});
+
 	//TO DO
 	document.querySelector(".edit-custom-course").addEventListener("click", () => {
 		let _validate = false;
@@ -320,12 +303,10 @@ function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, custom
 	});
 }
 function readyForCreate() {
+	console.log("ready");
 	formCreateCourse.classList.remove("active");
 	document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
 	setTimeout(() => {
-		document.querySelector(".hd_create_course").textContent = "Create Course";
-		nameCustomCourseInput.value = "";
-		muscleTypeInput.value = "";
 		createCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises);
 	}, 400);
 }
@@ -341,9 +322,22 @@ function renderTrainingPage() {
 		document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
 	});
 	cancelCreateCourseBtn.addEventListener("click", () => {
+		console.log("click");
 		if (document.querySelector(".hd_create_course").textContent === "Edit Course") readyForCreate();
 		formCreateCourse.classList.remove("active");
 		document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
+		console.log(courseManager.allCourses);
+	});
+
+	// show title for dropdown element
+	const showTitleDropdown = (value: string, input: HTMLInputElement): void => {
+		input.value = value;
+	};
+	// add event for dropdown
+	document.querySelectorAll(".muscle_type_wrapper > div").forEach((item: HTMLElement) => {
+		item.addEventListener("click", () => {
+			showTitleDropdown(item.getAttribute("data-value"), document.querySelector(".muscle_type_input"));
+		});
 	});
 }
 

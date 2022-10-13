@@ -59,6 +59,7 @@ export class CourseManager {
 		console.log(this._allCourses.custom)
 	}
 	public editCustomCourse(idCourse:string,dataEdit:{name:string,muscleType:string,editExercises:Array<Exercise>}){
+		console.log("edited")
 		let index:number = this._allCourses.custom.findIndex(item=>item.data.id === idCourse);
 		this._allCourses.custom[index].setData = dataEdit;
 		FileSystem.createJSONData(this._allCourses.custom,FileSystem.PATHS.customCourses);
