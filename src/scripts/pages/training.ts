@@ -74,6 +74,7 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
 				<div class="edit_my_custom_course" data-id-for-edit=${data.id}><i class="fa-regular fa-pen-to-square"></i></div>
 				</div>`
 						}
+						<div class="btn_follow_user"><span class="txt_for_btn_follow_user">${usersManager.getctiveUser.hasCurrentCourse(currentCourse.data.id) ? "Unfollow" : "Follow"}</span></div>
         </div>
         <div class="right_block">
             <div class="exercises">${renderedExercises}</div>
@@ -96,12 +97,28 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
 			formCreateCourse.classList.add("active");
 			currentCourseSection.classList.remove("active");
 			document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
-			setTimeout(() => {
+		//	setTimeout(() => {
 				let _idCourseForEdit = document.querySelector(".edit_my_custom_course").getAttribute("data-id-for-edit");
 				editCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises, courseManager.currentBaseById(_idCourseForEdit));
-			}, 400);
+			//}, 400);
 		});
 	}
+	//add event for <Follow-Unfollow> Button 
+	document.querySelector(".txt_for_btn_follow_user").addEventListener("click",()=>{
+		const activeUser = usersManager.getctiveUser
+		const _btnText = document.querySelector(".txt_for_btn_follow_user")
+		console.log(activeUser.hasCurrentCourse(currentCourse.data.id))
+		if(activeUser.hasCurrentCourse(currentCourse.data.id)){
+			activeUser.UnfollowCourse(currentCourse.data.id)
+			_btnText.textContent = "Follow"
+		}else{
+			activeUser.FollowCourse(currentCourse.data.id)
+			_btnText.textContent = "Unfollow"
+		}
+		usersManager.saveUsers();
+		console.log(usersManager.getctiveUser)
+	})
+
 
 	document.querySelectorAll(".item_current_exercises").forEach((item) => {
 		item.addEventListener("click", () => {
@@ -154,6 +171,7 @@ function renderYTplayer(ytLink: string) {
 <iframe width="600" height="350" src="https://www.youtube.com/embed/${ytLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>;
 `;
 }
+//REFACTORING METHOD SOME
 function checkId(id: string, array: Exercise[]) {
 	let _validate = false;
 	array.every((item) => {
@@ -168,6 +186,9 @@ function checkId(id: string, array: Exercise[]) {
 }
 function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 	document.querySelector(".render_btn_controls_form").innerHTML = `<button class="btn btn-fill create-custom-course active"><span>create</span></button>`;
+	document.querySelector(".hd_create_course").textContent = "Create Course";
+	nameCustomCourseInput.value = "";
+	muscleTypeInput.value = "";
 	let arrayCurrentExercise: any[] = [];
 	outputPlace.innerHTML = "";
 	exercises.getExercises.forEach(({ getData }) => {
@@ -217,7 +238,7 @@ function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 			let createdCourse = new CourseBase({
 				id: uuidv4(),
 				exercises: arrayCurrentExercise,
-				isCreateByUser: { state: true, userId: "70995e80-3fc5-11ed-8ce0-edfdd542509d" },
+				isCreateByUser: { state: true, userId: usersManager.getctiveUser.about.id },
 				isUserFollow: false,
 				lastTimeExecution: new Date().toLocaleString(),
 				lvlDifficulty: Exercises.averageLvlDiffuculty(arrayCurrentExercise),
@@ -247,7 +268,7 @@ function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, custom
 		console.log(item.getData.id);
 	});
 	// render list of exercises
-	exercises.getExercises.forEach((itemExercise) => {
+	exercises.getExercises.forEach((itemExercise,index:number) => {
 		const { getData } = itemExercise;
 
 		outputPlace.innerHTML += `
@@ -257,21 +278,26 @@ function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, custom
             <div class="exercise_item_muscletype">${getData.muscleType}</div>
             </div>
         `;
+		document.querySelectorAll(".exercise_item_edit_course")[index].addEventListener("click",()=>{
+			
+		})
+
 	});
 	console.log(document.querySelectorAll(".exercise_item_edit_course"));
 	// add event for every exercise item
-	document.querySelectorAll(".exercise_item_edit_course").forEach((item) => {
-		item.addEventListener("click", () => {
-			item.classList.toggle("active");
-			let _idExercise = item.getAttribute("data-id-exercise-edit-course");
-			let element = exercises.findById(_idExercise);
-			let index = arrayCurrentExerciseEdit.map((e) => e.getData.id).indexOf(_idExercise);
-			console.log(index);
-			item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : index > -1 && arrayCurrentExerciseEdit.splice(index, 1);
-			console.log(_idExercise);
-			console.log(arrayCurrentExerciseEdit);
+		document.querySelectorAll(".exercise_item_edit_course").forEach((item) => {
+			item.addEventListener("click", () => {
+				item.classList.toggle("active");
+				let _idExercise = item.getAttribute("data-id-exercise-edit-course");
+				let element = exercises.findById(_idExercise);
+				let index = arrayCurrentExerciseEdit.map((e) => e.getData.id).indexOf(_idExercise);
+				console.log(index);
+				item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : index > -1 && arrayCurrentExerciseEdit.splice(index, 1);
+				console.log(_idExercise);
+				console.log(arrayCurrentExerciseEdit);
+			});
 		});
-	});
+
 
 	//TO DO
 	document.querySelector(".edit-custom-course").addEventListener("click", () => {
@@ -303,14 +329,15 @@ function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, custom
 	});
 }
 function readyForCreate() {
-	console.log("ready");
+	console.log("ready for create");
 	formCreateCourse.classList.remove("active");
 	document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
 	setTimeout(() => {
 		createCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises);
+
 	}, 400);
 }
-function renderTrainingPage() {
+export function renderTrainingPage() {
 	renderTrainingCourse(document.querySelector(".render_abs_training"), "Abs courses", courseManager.allCourses.abs);
 	renderTrainingCourse(document.querySelector(".render_arm_training"), "Arm courses", courseManager.allCourses.arm);
 	renderTrainingCourse(document.querySelector(".render_leg_training"), "Leg courses", courseManager.allCourses.leg);
@@ -323,7 +350,7 @@ function renderTrainingPage() {
 	});
 	cancelCreateCourseBtn.addEventListener("click", () => {
 		console.log("click");
-		if (document.querySelector(".hd_create_course").textContent === "Edit Course") readyForCreate();
+		if (document.querySelector(".hd_create_course").textContent === "Edit Course") {console.log("YES"); readyForCreate()};
 		formCreateCourse.classList.remove("active");
 		document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
 		console.log(courseManager.allCourses);
@@ -341,4 +368,4 @@ function renderTrainingPage() {
 	});
 }
 
-renderTrainingPage();
+

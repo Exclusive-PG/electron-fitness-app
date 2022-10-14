@@ -1,8 +1,7 @@
-import {  dataUser, EnumGoalUser } from "../../../types/types";
+import { dataUser, EnumGoalUser } from "../../../types/types";
 import { allExercises } from "../Exercises/Exercises";
 import { uuidv1 } from "./../../requiredLib/requiredLib";
 import { CourseBase } from "../Courses/CourseBase";
-
 
 export default class User {
 	private _data: dataUser;
@@ -13,10 +12,31 @@ export default class User {
 	get about() {
 		return this._data;
 	}
-	public pushCourse(course: CourseBase): void {
-		this._data.courses.push(course.data);
+	public FollowCourse(courseId: string): void {
+		this._data.courses.push(courseId);
+	}
+	public UnfollowCourse(courseId: string): void {
+		const index = this._data.courses.indexOf(courseId);
+		console.log(index)
+		index > -1 &&  this._data.courses.splice(index, 1); 
+	}
+	public hasCurrentCourse(idCourse: string): boolean {
+		return this._data.courses.some((id) => id === idCourse);
 	}
 }
+//REFACTORING
+//BEFORE
+// public pushCourse(course:CourseBASE): void {
+// 	this._data.courses.push(course.data);
+// }
+
+//AFTER
+// public pushCourse(courseId:string): void {
+// 	this._data.courses.push(course.data);
+// }
+
+
+//pushCourse -> followCourse ->correctName
 
 // const user = new User({
 // 	username:"Vitaliy",

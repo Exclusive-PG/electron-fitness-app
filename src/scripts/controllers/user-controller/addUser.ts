@@ -6,7 +6,7 @@ import { usersManager } from "../../Classes/User/UsersManager";
 import { path, uuidv1 } from "../../requiredLib/requiredLib";
 import Calculating from "../../Classes/Calc/Calculating";
 import { renderUsersList } from "./switchUser";
-import { renderApp } from "../../pages/pageController";
+import { rendererApp } from "../../../renderer";
 
 const addNewUserBtn = document.querySelector<HTMLElement>(".add_new_user");
 const switchUserBtn = document.querySelector<HTMLElement>(".choose_another_user");
@@ -183,7 +183,7 @@ export function acceptedRegisterUser(){
 	cancelRegLogin();
 	setTimeout(() => {
 		WrapperLoginForm.style.display = 'none'
-		renderApp(usersManager.getctiveUser);
+		rendererApp.renderAllPages();
 	}, 1000);
 
 	

@@ -1,4 +1,5 @@
 import User from "../Classes/User/User";
+import { usersManager } from "../Classes/User/UsersManager";
 
 const renderDailyIntakeHomePage = (outerPlace: HTMLElement, currentUser: User) => {
 	const { dailyCalorieIntake } = currentUser.about.test;
@@ -81,7 +82,6 @@ function circleProgressBar(progressPercent: number, color?: string) {
 	return `conic-gradient( ${color === undefined ? "#4d5bf9" : color} ${_value}deg, #e1e1e1 ${_value}deg ) `;
 }
 
-export const renderHomePage = (currentUser: User) => {
-	console.log(currentUser);
+export const renderHomePage = (currentUser: User = usersManager.getctiveUser) => {
 	renderDailyIntakeHomePage(document.querySelector(".home_wrapper"), currentUser);
 };

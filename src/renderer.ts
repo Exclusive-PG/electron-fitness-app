@@ -10,9 +10,18 @@ import "./scripts/controllers/user-controller/switcherPages/switcherPages"
 import "./scripts/controllers/user-controller/addUser"
 import "./scripts/controllers/user-controller/switchUser"
 import "./scripts/Classes/FileSystem/FileSystem"
-import "./scripts/pages/home"
-import "./scripts/pages/training"
-import "./scripts/pages/food"
+import Renderer from './scripts/Classes/Renderer/Renderer';
+import { renderHomePage } from './scripts/pages/home';
+import { renderTrainingPage } from './scripts/pages/training';
+import { renderFoodPage } from './scripts/pages/food';
+
+
+export const rendererApp = new Renderer(renderHomePage,renderTrainingPage,renderFoodPage,null);
+
+
+
+
+
 
 // const axios = require('axios'); 
 

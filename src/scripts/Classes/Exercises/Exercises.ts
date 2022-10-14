@@ -503,3 +503,4 @@ export const allExercises = new Exercises();
 // ];
 
 //FileSystem.createJSONData([...arrayExercisesABSBeginner,...arrayExercisesABSIntermediate,...arrayExercisesABSAdvanced],path.join("data","exercises.json"));
+

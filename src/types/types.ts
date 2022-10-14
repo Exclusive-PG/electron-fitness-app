@@ -41,7 +41,7 @@ export type dataUser = {
 	height: number;
 	weight: number;
 	age: number;
-	courses: Array<dataCurrentCourse> | any[];
+	courses: Array<string> | any[];
 	goal: GoalUser;
 	lvlActivity: number;
 	food: FoodUserData;
