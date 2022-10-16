@@ -39,7 +39,8 @@ export class Exercises {
 	}
 	public static initExercises(data: any[] | Array<IExercise> ):Array<Exercise>{
 		let tempArray:any[] = [];
-		 data.forEach(item=>{
+		 data.forEach((item:any)=>{
+			
 			 tempArray.push(new Exercise(item._data));
 		})
 		return tempArray;
@@ -49,7 +50,7 @@ export class Exercises {
 	}
 }
 
-export const allExercises = new Exercises();
+
 
 // const arrayExercisesABSBeginner: Array<IExercise> = [
 // 	{

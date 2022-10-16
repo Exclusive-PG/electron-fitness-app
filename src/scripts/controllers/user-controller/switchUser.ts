@@ -11,12 +11,6 @@ const switchUserForm = document.querySelector<HTMLElement>(".form-switch-user");
 const pagination = new PaginationData(5);
 pagination.setOutputPageStatus(document.querySelector(".outer-pagination-switch-user"), true);
 
-switchUserBtn.addEventListener("click", () => {
-	WrapperLoginForm.classList.add("active");
-	addNewUserBtn.style.display = "none";
-	cancelRegForm.classList.add("active");
-	switchUserForm.classList.add("active");
-});
 
 const renderUsers = (outWrapper: HTMLElement, data: Array<User>) => {
 	if (data.length === 0 || pagination.isEnd) return;
@@ -52,18 +46,26 @@ const renderUsers = (outWrapper: HTMLElement, data: Array<User>) => {
 	});
 };
 
-document.querySelector(".next-page-swith-users").addEventListener("click", () => {
-	pagination.NextPage(usersManager.users);
-	renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
-});
-
-document.querySelector(".prev-page-swith-users").addEventListener("click", () => {
-	pagination.PreviousPage();
-	renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
-});
-
-renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
-
 export const renderUsersList = () => {
 	renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
 };
+
+export const switchUserControllers = () =>{
+	switchUserBtn.addEventListener("click", () => {
+		WrapperLoginForm.classList.add("active");
+		addNewUserBtn.style.display = "none";
+		cancelRegForm.classList.add("active");
+		switchUserForm.classList.add("active");
+	});
+	document.querySelector(".next-page-swith-users").addEventListener("click", () => {
+		pagination.NextPage(usersManager.users);
+		renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
+	});
+	document.querySelector(".prev-page-swith-users").addEventListener("click", () => {
+		pagination.PreviousPage();
+		renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
+	});
+	renderUsers(document.querySelector(".render_switch_users"), pagination.renderPagination(usersManager.users));
+
+}
+

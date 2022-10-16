@@ -1,11 +1,12 @@
 import AppController from "../Classes/AppController/AppController";
-import { courseManager } from "../Classes/Courses/CourseManager";
+
 import { uuidv4 } from "../requiredLib/requiredLib";
 import { CourseBase } from "./../Classes/Courses/CourseBase";
-import { allExercises, Exercise, Exercises } from "./../Classes/Exercises/Exercises";
+import {  Exercise, Exercises } from "./../Classes/Exercises/Exercises";
 import customImg from "./../../assets/images/custom.jpg";
 import { usersManager } from "../Classes/User/UsersManager";
 import { CourseManager } from "./../Classes/Courses/CourseManager";
+import { allExercises, courseManager } from "../../renderer";
 const currentCourseSection = document.querySelector(".current_course_section");
 const currentCourseWrapperRender = document.querySelector<HTMLElement>(".current_course_wrapper_render");
 const closeWinCurrentCourse = document.querySelector<HTMLElement>(".close_win_current_course");
@@ -66,13 +67,14 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
                 <div class="current_diffic_course">${data.lvlDifficulty !== 0 && renderlvlDifficulty(data.lvlDifficulty, 3)}</div>
             </div>
             <div class="name_current_course">Muscle type: ${data.muscleZone}</div>
-            <div class="data_about_current_course">${currentCourse.getAllTimeExercises()} minutes</div>
+            <div class="data_about_current_course">${currentCourse.getAllTimeExercisesWithBreakes()} minutes</div>
             ${
-							CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser) &&
+							CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser) ?
 							`<div class="controls_for_custom_course">
 				<div class="delete_my_custom_course" data-id-for-delete=${data.id}><i class="fa-regular fa-trash-can"></i></div>
 				<div class="edit_my_custom_course" data-id-for-edit=${data.id}><i class="fa-regular fa-pen-to-square"></i></div>
 				</div>`
+				: ""
 						}
 						<div class="btn_follow_user"><span class="txt_for_btn_follow_user">${usersManager.getctiveUser.hasCurrentCourse(currentCourse.data.id) ? "Unfollow" : "Follow"}</span></div>
         </div>
@@ -168,22 +170,22 @@ function renderlvlDifficulty(lvlDifficulty: number, maxLvlDifficulty: number): s
 
 function renderYTplayer(ytLink: string) {
 	return `
-<iframe width="600" height="350" src="https://www.youtube.com/embed/${ytLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>;
+<iframe width="600" height="350" src="https://www.youtube.com/embed/${ytLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 `;
 }
 //REFACTORING METHOD SOME
-function checkId(id: string, array: Exercise[]) {
-	let _validate = false;
-	array.every((item) => {
-		if (item.getData.id === id) {
-			_validate = false;
-		} else {
-			_validate = true;
-			return true;
-		}
-	});
-	return !_validate;
-}
+// function checkId(id: string, array: Exercise[]) {
+// 	let _validate = false;
+// 	array.every((item) => {
+// 		if (item.getData.id === id) {
+// 			_validate = false;
+// 		} else {
+// 			_validate = true;
+// 			return true;
+// 		}
+// 	});
+// 	return !_validate;
+// }
 function createCustomCourse(outputPlace: HTMLElement, exercises: Exercises) {
 	document.querySelector(".render_btn_controls_form").innerHTML = `<button class="btn btn-fill create-custom-course active"><span>create</span></button>`;
 	document.querySelector(".hd_create_course").textContent = "Create Course";
@@ -270,9 +272,8 @@ function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, custom
 	// render list of exercises
 	exercises.getExercises.forEach((itemExercise,index:number) => {
 		const { getData } = itemExercise;
-
 		outputPlace.innerHTML += `
-            <div class="exercise_item_edit_course ${checkId(itemExercise.getData.id, customCourse.data.exercises) ? "active" : ""}" data-id-exercise-edit-course="${getData.id}">
+            <div class="exercise_item_edit_course ${customCourse.data.exercises.some((item)=>item.getData.id === itemExercise.getData.id) ? "active" : ""}" data-id-exercise-edit-course="${getData.id}">
             <div class="exercise_item_name">${getData.name}</div>
             <div class="exercise_item_diff">${renderlvlDifficulty(getData.lvlDifficulty.id, 3)}</div>
             <div class="exercise_item_muscletype">${getData.muscleType}</div>

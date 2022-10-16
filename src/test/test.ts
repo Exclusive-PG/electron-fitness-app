@@ -137,11 +137,11 @@ describe("Courses module", () => {
 		expect(ABSCourseTEST1.data.exercises).to.be.a("array").not.be.empty;
 	})
 	it("should return bool (the course was created by app)",()=>{
-		expect(ABSCourseTEST1.data.isCreateByUser).to.be.false;
+		expect(ABSCourseTEST1.data.isCreateByUser.state).to.be.false;
 	})
 	it("should return int number | count minutes course ( with breaks)",()=>{
-		const _countCountMinutes = 22
-		expect(ABSCourseTEST1.getAllTimeExercises()).to.be.equal(_countCountMinutes);
+		const _countCountMinutes = 108
+		expect(ABSCourseTEST1.getAllTimeExercisesWithBreakes()).to.be.equal(_countCountMinutes);
 	})
 	it("should return bool (true) | founded exercise by id",()=>{
 		expect(ABSCourseTEST1.currentExerciseById("abs-beginner-01")).to.be.an("object").that.is.not.empty;

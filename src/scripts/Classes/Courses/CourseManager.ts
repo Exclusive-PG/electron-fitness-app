@@ -3,17 +3,13 @@ import absImg from "./../../../assets/images/abs.jpg";
 import armImg from "./../../../assets/images/arm.jpg";
 import feetImg from "./../../../assets/images/feet.jpg";
 import customImg from "./../../../assets/images/custom.jpg";
-import { allExercises, Exercise, Exercises } from "../Exercises/Exercises";
+import {  Exercise, Exercises } from "../Exercises/Exercises";
 import FileSystem from "../FileSystem/FileSystem";
-import { dataCurrentCourse } from "../../../types/types";
+import { allCoursesType } from "../../../types/types";
 import User from "../User/User";
+import { allExercises } from "../../../renderer";
 
-type allCoursesType = {
-	abs: Array<CourseBase>;
-	arm: Array<CourseBase>;
-	leg: Array<CourseBase>;
-	custom: Array<CourseBase> | any[];
-};
+
 
 export class CourseManager {
 	protected _allCourses: allCoursesType;
@@ -73,11 +69,8 @@ export class CourseManager {
 	}
 }
 
-export const courseManager = new CourseManager();
 
-courseManager.initCourses(initAllCourses());
-
-function initAllCourses(): allCoursesType {
+export function initAllCourses(): allCoursesType {
 	const ABSCourseBeginner = new CourseBase({
 		name: "ABS Beginner",
 		muscleZone: "Abs",

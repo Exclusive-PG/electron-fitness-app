@@ -1,3 +1,4 @@
+import { CourseBase } from "../scripts/Classes/Courses/CourseBase";
 import { Exercise } from "./../scripts/Classes/Exercises/Exercises";
 import { FoodItem } from "./../scripts/Classes/Food/FoodItem";
 
@@ -104,5 +105,30 @@ export type FoodItemType = {
 	protein: number;
 	carbs: number;
 	fat: number;
+};
+
+export type renderPagesType = {
+	 renderHomePage: Function
+	 renderTrainingPage: Function
+	 renderFoodPage: Function
+     renderProfilePage: Function
+}
+
+export type enterDataForDCI = {
+	gender: "male" | "female" | string;
+	age: number;
+	weight: number;
+	height: number;
+	lvlActivy: number;
+};
+export type EnterDataBodyMassIndex = {
+	weight: number;
+	height: number;
+};
+export type allCoursesType = {
+	abs: Array<CourseBase>;
+	arm: Array<CourseBase>;
+	leg: Array<CourseBase>;
+	custom: Array<CourseBase> | any[];
 };
 // export let goalOfUserId = [EnumGoalUser.LoseWeight, EnumGoalUser.MaintainWeight, EnumGoalUser.GainWeight]

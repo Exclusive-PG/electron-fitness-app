@@ -1,21 +1,26 @@
-
+import { renderPagesType } from "../../../types/types";
 
 export default class Renderer {
-	private renderHomePage: Function;
-	private renderTrainingPage: Function;
-	private renderFoodPage: Function;
-    private renderProfilePage: Function;
+	private renderPages: renderPagesType;
 
-	 constructor(renderHomePage:Function, renderTrainingPage:Function, renderFoodPage:Function,renderProfilePage:Function) {
-        this.renderHomePage = renderHomePage;
-        this.renderTrainingPage = renderTrainingPage
-        this.renderFoodPage = renderFoodPage
-        this.renderProfilePage = renderProfilePage
-     }
-     public renderAllPages(){
-        this.renderHomePage();
-        this.renderTrainingPage();
-        this.renderFoodPage();
-        this.renderProfilePage();
-     }
+	private controllersUI: Array<Function>;
+
+	public initRenderPages(renderPages: renderPagesType) {
+		this.renderPages = renderPages;
+	}
+	public renderAllPages() {
+		this.renderPages.renderFoodPage();
+		this.renderPages.renderHomePage();
+		this.renderPages.renderTrainingPage();
+		this.renderPages.renderProfilePage();
+	}
+
+	public initControllers(controllersUI: Array<Function>) {
+		this.controllersUI = controllersUI;
+	}
+	public startControllers() {
+		this.controllersUI.forEach((callback) => {
+			callback();
+		});
+	}
 }

@@ -1,22 +1,33 @@
 
 import "@fortawesome/fontawesome-free/js/all";
 import './assets/styles/index.scss';
-import "./scripts/Classes/User/User"
-import "./scripts/Classes/Courses/CourseBase"
 import './scripts/Classes/Exercises/Exercises';
-import './scripts/Classes/Calc/Calculating';
 import AppController from './scripts/Classes/AppController/AppController';
-import "./scripts/controllers/user-controller/switcherPages/switcherPages"
-import "./scripts/controllers/user-controller/addUser"
-import "./scripts/controllers/user-controller/switchUser"
-import "./scripts/Classes/FileSystem/FileSystem"
 import Renderer from './scripts/Classes/Renderer/Renderer';
 import { renderHomePage } from './scripts/pages/home';
 import { renderTrainingPage } from './scripts/pages/training';
 import { renderFoodPage } from './scripts/pages/food';
+import { addUserController } from "./scripts/controllers/user-controller/addUser";
+import { switchUserControllers } from "./scripts/controllers/user-controller/switchUser";
+import { switcherPagesController } from "./scripts/controllers/pages-controllers/switcherPages";
+import { renderPagesType } from './types/types';
+import FileSystem from './scripts/Classes/FileSystem/FileSystem';
+import { Exercises } from "./scripts/Classes/Exercises/Exercises";
+import { CourseManager, initAllCourses } from "./scripts/Classes/Courses/CourseManager";
 
+FileSystem.createDirectory(FileSystem.PATHS.images);
+AppController.watchInternetConnection();
+const controllersUI = [addUserController,switchUserControllers,switcherPagesController]
+const pages:renderPagesType = {renderFoodPage,renderHomePage,renderTrainingPage,renderProfilePage:()=>console.log("Hello from Profile Page")}
 
-export const rendererApp = new Renderer(renderHomePage,renderTrainingPage,renderFoodPage,null);
+export const allExercises = new Exercises();
+export const rendererApp = new Renderer();
+export const courseManager = new CourseManager();
+
+courseManager.initCourses(initAllCourses());
+rendererApp.initRenderPages(pages)
+rendererApp.initControllers(controllersUI)
+rendererApp.startControllers();
 
 
 

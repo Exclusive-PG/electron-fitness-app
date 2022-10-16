@@ -1,16 +1,6 @@
-import { Nutrients, EnumGoalUser, GoalUser } from "../../../types/types";
+import { Nutrients, EnumGoalUser, GoalUser, enterDataForDCI, EnterDataBodyMassIndex } from "../../../types/types";
 
-type enterDataForDCI = {
-	gender: "male" | "female" | string;
-	age: number;
-	weight: number;
-	height: number;
-	lvlActivy: number;
-};
-type EnterDataBodyMassIndex = {
-	weight:number;
-	height:number
-}
+
 export default class Calculating {
 	static readonly PercentRatio = {
 		PROTEIN: 4,
@@ -22,36 +12,34 @@ export default class Calculating {
 
 		data.gender === "female" ? (result = 10 * data.weight + 6.25 * data.height - 5 * data.age - 161) : (result = 10 * data.weight + 6.25 * data.height - 5 * data.age + 5);
 
-		return Math.round((result) * this.getCoefLvlActivity(data.lvlActivy));
+		return Math.round(result * this.getCoefLvlActivity(data.lvlActivy));
 	}
 
 	public static determineRatioOfPFC(dailyCalorieIntake: number, goalUser: EnumGoalUser): Nutrients {
+		switch (goalUser) {
+			case EnumGoalUser.LoseWeight: {
+				return this.calcRationOfPFC({ protein: 0.3, fats: 0.2, carbs: 0.5 }, dailyCalorieIntake);
+			}
+			case EnumGoalUser.MaintainWeight: {
+				return this.calcRationOfPFC({ protein: 0.3, fats: 0.3, carbs: 0.4 }, dailyCalorieIntake);
+			}
+
+			case EnumGoalUser.GainWeight: {
+				return this.calcRationOfPFC({ protein: 0.35, fats: 0.3, carbs: 0.55 }, dailyCalorieIntake);
+			}
+		}
+	}
+	private static calcRationOfPFC(coef: { protein: number; fats: number; carbs: number }, dailyCalorieIntake: number): Nutrients {
 		let _ratio: Nutrients = {
 			dailyProtein: 0,
 			dailyFat: 0,
 			dailyCarbs: 0,
 		};
-		switch (goalUser) {
-			case EnumGoalUser.LoseWeight: {
-				_ratio.dailyProtein = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.PROTEIN);
-				_ratio.dailyFat = Math.round((dailyCalorieIntake * 0.2) / this.PercentRatio.FAT);
-				_ratio.dailyCarbs = Math.round((dailyCalorieIntake * 0.5) / this.PercentRatio.GARBS);
-				return _ratio;
-			}
-			case EnumGoalUser.MaintainWeight: {
-				_ratio.dailyProtein = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.PROTEIN);
-				_ratio.dailyFat = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.FAT);
-				_ratio.dailyCarbs = Math.round((dailyCalorieIntake * 0.4) / this.PercentRatio.GARBS);
-				return _ratio;
-			}
-
-			case EnumGoalUser.GainWeight: {
-				_ratio.dailyProtein = Math.round((dailyCalorieIntake * 0.35) / this.PercentRatio.PROTEIN);
-				_ratio.dailyFat = Math.round((dailyCalorieIntake * 0.3) / this.PercentRatio.FAT);
-				_ratio.dailyCarbs = Math.round((dailyCalorieIntake * 0.55) / this.PercentRatio.GARBS);
-				return _ratio;
-			}
-		}
+		const { protein, fats, carbs } = coef;
+		_ratio.dailyProtein = Math.round((dailyCalorieIntake * protein) / this.PercentRatio.PROTEIN);
+		_ratio.dailyFat = Math.round((dailyCalorieIntake * fats) / this.PercentRatio.FAT);
+		_ratio.dailyCarbs = Math.round((dailyCalorieIntake * carbs) / this.PercentRatio.GARBS);
+		return _ratio;
 	}
 
 	public static getCoefLvlActivity(lvlActivity: number) {
@@ -68,33 +56,17 @@ export default class Calculating {
 				return 1.9;
 		}
 	}
-	public static getFullTestDailyCalorieIntake(data:enterDataForDCI,goalUser:EnumGoalUser){
+	public static getFullTestDailyCalorieIntake(data: enterDataForDCI, goalUser: EnumGoalUser) {
 		let _dailyCalories = this.determineDailyCalorieIntake(data);
-		let _ratioOfPfc:Nutrients = this.determineRatioOfPFC(_dailyCalories,goalUser);
-		
-		return{
+		let _ratioOfPfc: Nutrients = this.determineRatioOfPFC(_dailyCalories, goalUser);
+
+		return {
 			_dailyCalories,
-			_ratioOfPfc
-		}
+			_ratioOfPfc,
+		};
 	}
-	public static getBodyMassIndex(data:EnterDataBodyMassIndex){
-		
-		return Math.round((data.weight)/(Math.pow((data.height/100),2)))
+	public static getBodyMassIndex(data: EnterDataBodyMassIndex) {
+		return Math.round(data.weight / Math.pow(data.height / 100, 2));
 	}
 }
 
-
-
-
-
-// let res = Calculating.determineDailyCalorieIntake({ age: 21, weight: 65, height: 172, gender: "female", lvlActivy: 2 });
-// console.log(res);
-
-// let loseRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.LoseWeight);
-// console.log("LoseWeight", loseRatio);
-
-// let MaintainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.MaintainWeight);
-// console.log("MaintainWeight", MaintainRatio);
-
-// let gainRatio = Calculating.determineRatioOfPFC(res, EnumGoalUser.GainWeight);
-// console.log("GainWeight", gainRatio);

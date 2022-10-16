@@ -30,6 +30,7 @@ const validateAndCreateUser = () => {
 	let _error = [...document.querySelectorAll(".error-icon"), ...document.querySelectorAll(".error-icon-dropdown")];
 	let isValidate = false;
 	//let _data: { name: string; age: number; weight: number; height: number; gender: string; goal: string; activity: string } ;
+	console.log(_error);
 	let _data: dataUser;
 	[...document.querySelectorAll(".reg_user_field > input"), ...document.querySelectorAll(".text-box-reg-user")].forEach((item: HTMLInputElement, index: number) => {
 		if (item.hasAttribute("data-type")) {
@@ -40,6 +41,7 @@ const validateAndCreateUser = () => {
 					return;
 				}
 				case "string": {
+					console.log(index);
 					item.value === "" ? _error[index].classList.add("active") : _error[index].classList.remove("active");
 					return;
 				}
@@ -66,7 +68,7 @@ const validateAndCreateUser = () => {
 
 		if (avatarUser.isAvatar) {
 			pathForAvatar = path.join(FileSystem.PATHS.images, path.basename(avatarUser.src));
-			FileSystem.copyAvatarUser(avatarUser.src, pathForAvatar);
+			FileSystem.copyData(avatarUser.src, pathForAvatar);
 		}
 
 		let lvlActivity = parseInt((document.getElementById("activity") as HTMLInputElement).getAttribute("data-activity"));
@@ -87,9 +89,9 @@ const validateAndCreateUser = () => {
 				dailyFat: dailyCalorieIntake._ratioOfPfc.dailyFat,
 				dailyProtein: dailyCalorieIntake._ratioOfPfc.dailyProtein,
 			},
-			lastUpdate : date
+			lastUpdate: date,
 		};
-	
+
 		_data = {
 			username: (document.getElementById("name") as HTMLInputElement).value,
 			age,
@@ -100,24 +102,23 @@ const validateAndCreateUser = () => {
 			goal: { txt: (document.getElementById("goal") as HTMLInputElement).value, status: IdUserGoal },
 			lvlActivity: lvlActivity,
 			courses: [],
-			food: {breakfast:[],dinner:[],lanch:[]},
+			food: { breakfast: [], dinner: [], lanch: [] },
 			history: [],
 			test: {
 				dailyCalorieIntake: _food,
 				bodyMassIndex: {
 					bmi: resultBodyMassIndex,
-					lastUpdate : date
+					lastUpdate: date,
 				},
 			},
 			image: pathForAvatar,
 			dateRegister: date,
 		};
-		
+
 		usersManager.addNewUser(new User(_data));
 		usersManager.saveUsers();
 		renderUsersList();
 		usersManager.getctiveUser && acceptedRegisterUser();
-		
 	}
 };
 
@@ -142,54 +143,18 @@ const initEvents = () => {
 	dropdowns.forEach((item: HTMLElement) => {
 		item.addEventListener("click", () => item.classList.toggle("active"));
 	});
-
-	// genderRation.forEach((item: any) => {
-	// 	item.addEventListener("click", () => {
-	// 		if (item.checked) {
-	// 			console.log(item.getAttribute("data-gender"));
-	// 		}
-	// 	});
-	// });
 };
 
-initEvents();
 
-addNewUserBtn.addEventListener("click", () => {
-	WrapperLoginForm.classList.add("active");
-	FormElement.classList.add("active");
-	cancelRegForm.classList.add("active");
-	switchUserBtn.style.display = "none";
-});
-
-cancelRegForm.addEventListener("click", cancelRegLogin);
-
-document.querySelector(".add_user_image").addEventListener("click", () => {
-	ipcRenderer.send("upload_file");
-});
-
-createUserAccountBtn.addEventListener("click", validateAndCreateUser);
-
-///upload_file event
-ipcRenderer.on("upload_file", (event, arg) => {
-	console.log(arg.filePath);
-	addImageUserBtn.innerHTML = `<img src="${arg.filePath}" height="80px" width="80px" alt="" class="image_user">`;
-	avatarUser = {
-		isAvatar: true,
-		src: arg.filePath,
-	};
-});
-
-export function acceptedRegisterUser(){
+export function acceptedRegisterUser() {
 	cancelRegLogin();
 	setTimeout(() => {
-		WrapperLoginForm.style.display = 'none'
+		WrapperLoginForm.style.display = "none";
 		rendererApp.renderAllPages();
 	}, 1000);
-
-	
 }
 
-export function cancelRegLogin(){
+function cancelRegLogin() {
 	WrapperLoginForm.classList.remove("active");
 	FormElement.classList.remove("active");
 	cancelRegForm.classList.remove("active");
@@ -198,7 +163,32 @@ export function cancelRegLogin(){
 	switchUserForm.classList.remove("active");
 	addImageUserBtn.innerHTML = `<i class="fa-solid fa-user-plus fa-2x "></i>`;
 	avatarUser = {
-		isAvatar:false,
-		src : ""
-	}
+		isAvatar: false,
+		src: "",
+	};
 }
+
+export const addUserController = () => {
+	initEvents();
+	ipcRenderer.on("upload_file", (event, arg) => {
+		console.log(arg.filePath);
+		addImageUserBtn.innerHTML = `<img src="${arg.filePath}" height="80px" width="80px" alt="" class="image_user">`;
+		avatarUser = {
+			isAvatar: true,
+			src: arg.filePath,
+		};
+	});
+	createUserAccountBtn.addEventListener("click", validateAndCreateUser);
+
+	cancelRegForm.addEventListener("click", cancelRegLogin);
+
+	document.querySelector(".add_user_image").addEventListener("click", () => {
+		ipcRenderer.send("upload_file");
+	});
+	addNewUserBtn.addEventListener("click", () => {
+		WrapperLoginForm.classList.add("active");
+		FormElement.classList.add("active");
+		cancelRegForm.classList.add("active");
+		switchUserBtn.style.display = "none";
+	});
+};

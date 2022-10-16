@@ -1,12 +1,12 @@
 import { fs, path } from "../../../scripts/requiredLib/requiredLib";
 
 export default class FileSystem {
-    private static paths = {
-        images:path.resolve(path.join("data","users","images")),
-        users:path.resolve(path.join("data","users","users.json")),
-		exercises : path.resolve(path.join("data","exercises.json")),
-		customCourses : path.resolve(path.join("data","customCourses.json"))
-    }
+	private static paths = {
+		images: path.resolve(path.join("data", "users", "images")),
+		users: path.resolve(path.join("data", "users", "users.json")),
+		exercises: path.resolve(path.join("data", "exercises.json")),
+		customCourses: path.resolve(path.join("data", "customCourses.json")),
+	};
 	public static createJSONData(data: any, pathFile: string) {
 		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {
 			if (err) throw err;
@@ -19,31 +19,27 @@ export default class FileSystem {
 		}
 	}
 
-	public static createDirectory(pathDir: string = this.paths.images) {
+	public static createDirectory(pathDir: string) {
 		if (!fs.existsSync(pathDir)) {
-            fs.mkdirSync(pathDir, { recursive: true })
+			fs.mkdirSync(pathDir, { recursive: true });
 		}
 	}
-    public static copyAvatarUser(srcDir:string,destDir:string){
-        //console.log("srcDir",srcDir);
-       // console.log("destDir",destDir);
-        try {
-            fs.copyFileSync(srcDir, destDir)
-          } catch (err) {
-            console.error(err)
-          }
-    }
-    public static loadData(pathToFile: string, ext: string = ".json") {
+	public static copyData(srcDir: string, destDir: string) {
+		try {
+			fs.copyFileSync(srcDir, destDir);
+		} catch (err) {
+			console.error(err);
+		}
+	}
+	public static loadData(pathToFile: string, ext: string = ".json") {
 		let _loadData;
 		if (fs.existsSync(pathToFile) && path.extname(pathToFile) === ext) {
 			_loadData = JSON.parse(fs.readFileSync(pathToFile, { encoding: "utf-8" }));
-			
 		}
 
 		return _loadData;
 	}
-    static get PATHS(){
-        return this.paths;
-    }
+	static get PATHS() {
+		return this.paths;
+	}
 }
-FileSystem.createDirectory();

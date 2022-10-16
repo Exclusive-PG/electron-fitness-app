@@ -32,10 +32,10 @@ const initTabs = () => {
 	});
 };
 
-export const headerController = () => {
+export const switcherPagesController = () => {
 	initTabs();
 	initTabControls(tabsSwiper);
 };
 
-headerController();
+
 
