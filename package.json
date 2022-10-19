@@ -12,10 +12,10 @@
     "lint": "eslint --ext .ts,.tsx .",
     "test": "mocha -r ts-node/register src/test/test.ts"
   },
-  "keywords": [],
+  "keywords": ["fitness","workout","diet","exercises","fitness app"],
   "author": {
     "name": "Exclusive-PG",
-    "email": "dimchik_231@mail.ru"
+    "email": "daymerexc@gmail.com"
   },
   "license": "MIT",
   "config": {

@@ -1,4 +1,4 @@
-import { Nutrients, EnumGoalUser, GoalUser, enterDataForDCI, EnterDataBodyMassIndex } from "../../../types/types";
+import { Nutrients, EnumGoalUser, GoalUser, enterDataForDCI, EnterDataBodyMassIndex, RecommendedMealCalorieIntakeType, RecommendedMealCalorieIntakeItem } from "../../../types/types";
 
 
 export default class Calculating {
@@ -68,5 +68,43 @@ export default class Calculating {
 	public static getBodyMassIndex(data: EnterDataBodyMassIndex) {
 		return Math.round(data.weight / Math.pow(data.height / 100, 2));
 	}
+	public static calculateFullRecommendedMealCalorieIntake(dailyCalorieIntake: number,percent:{breakfast:number,lunch:number,dinner:number},goalUser: EnumGoalUser) : RecommendedMealCalorieIntakeType {
+		let recommendedCalorie :RecommendedMealCalorieIntakeType = {
+			breakfast: this.calculateItemRecommendedMealCalorieIntake(dailyCalorieIntake,percent.breakfast,goalUser),
+			lunch:this.calculateItemRecommendedMealCalorieIntake(dailyCalorieIntake,percent.lunch,goalUser),
+			dinner:this.calculateItemRecommendedMealCalorieIntake(dailyCalorieIntake,percent.dinner,goalUser),
+		}
+		
+		return recommendedCalorie;
+	}
+	private static calculateItemRecommendedMealCalorieIntake(dailyCalorieIntake: number,percent:number,goalUser: EnumGoalUser) :RecommendedMealCalorieIntakeItem {
+		let recommendedMealCalorieIntakeItem : RecommendedMealCalorieIntakeItem = {
+			calories:Math.round((dailyCalorieIntake/100)*percent),
+			protein:Math.round((this.determineRatioOfPFC( dailyCalorieIntake,goalUser).dailyProtein/100)*percent),
+			carbs:Math.round((this.determineRatioOfPFC(dailyCalorieIntake,goalUser).dailyCarbs/100)*percent),
+			fat:Math.round((this.determineRatioOfPFC( dailyCalorieIntake,goalUser).dailyFat/100)*percent),
+		}
+		return recommendedMealCalorieIntakeItem;
+	}
+	
 }
+console.log(Calculating.calculateFullRecommendedMealCalorieIntake(2400,{breakfast:30,lunch:45,dinner:25},1))
+//console.log(Calculating.calculateFullRecommendedMealCalorieIntake(2400,{breakfast:30,lunch:30,dinner:25},1))
 
+
+
+//REFACTORING
+// public static calculateFullRecommendedMealCalorieIntake(dailyCalorieIntake: number,percent:{breakfast:number,lunch:number,dinner:number}) : RecommendedMealCalorieIntakeType {
+// 	let recommendedCalorie :RecommendedMealCalorieIntakeType = {
+// 		breakfast: (dailyCalorieIntake/100)*percent.breakfast,
+// 		lunch:(dailyCalorieIntake/100)*percent.lunch,
+// 		dinner:(dailyCalorieIntake/100)*percent.dinner,
+// 	}
+	
+// 	return recommendedCalorie;
+// }
+// private static calculateItemRecommendedMealCalorieIntake(dailyCalorieIntake: number,percent:number) :RecommendedMealCalorieIntakeItem {
+// 	let rcommendedMealCalorieIntakeItem : RecommendedMealCalorieIntakeItem = {
+// 		calories:dailyCalorieIntake/
+// 	}
+// }

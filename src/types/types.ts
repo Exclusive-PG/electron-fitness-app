@@ -31,10 +31,10 @@ export type dataCurrentCourse = {
 	isUserFollow: boolean;
 	image?: string;
 };
-export type checkIsCreateByUser ={
+export type checkIsCreateByUser = {
 	state: boolean;
 	userId: string;
-}
+};
 ///USER///
 export type dataUser = {
 	id: string;
@@ -92,6 +92,11 @@ export type Nutrients = {
 };
 
 export type FoodUserData = {
+	recommendedCalorie: {
+		breakfast: RecommendedMealCalorieIntakeItem;
+		lanch: RecommendedMealCalorieIntakeItem;
+		dinner: RecommendedMealCalorieIntakeItem;
+	};
 	breakfast: Array<FoodItem>;
 	lanch: Array<FoodItem>;
 	dinner: Array<FoodItem>;
@@ -108,11 +113,11 @@ export type FoodItemType = {
 };
 
 export type renderPagesType = {
-	 renderHomePage: Function
-	 renderTrainingPage: Function
-	 renderFoodPage: Function
-     renderProfilePage: Function
-}
+	renderHomePage: Function;
+	renderTrainingPage: Function;
+	renderFoodPage: Function;
+	renderProfilePage: Function;
+};
 
 export type enterDataForDCI = {
 	gender: "male" | "female" | string;
@@ -130,5 +135,17 @@ export type allCoursesType = {
 	arm: Array<CourseBase>;
 	leg: Array<CourseBase>;
 	custom: Array<CourseBase> | any[];
+};
+export type RecommendedMealCalorieIntakeType = {
+	breakfast: RecommendedMealCalorieIntakeItem;
+	lunch: RecommendedMealCalorieIntakeItem;
+	dinner: RecommendedMealCalorieIntakeItem;
+};
+
+export type RecommendedMealCalorieIntakeItem = {
+	calories: number;
+	protein: number;
+	carbs: number;
+	fat: number;
 };
 // export let goalOfUserId = [EnumGoalUser.LoseWeight, EnumGoalUser.MaintainWeight, EnumGoalUser.GainWeight]

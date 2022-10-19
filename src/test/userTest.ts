@@ -14,7 +14,7 @@ const data1 : dataUser = {
     goal: { txt: "", status: EnumGoalUser.MaintainWeight },
     lvlActivity: 3,
     courses: [],
-    food: {breakfast:[],dinner:[],lanch:[]},
+    food: {breakfast:[],dinner:[],lanch:[],recommendedCalorie:{breakfast:{calories:400,carbs:20,fat:20,protein:50},dinner:{calories:400,carbs:20,fat:20,protein:50},lanch:{calories:400,carbs:20,fat:20,protein:50}}},
     history: [],
     test: {
         dailyCalorieIntake: {calories:{burned:0,dailyCalorieIntake:2350,dailyCarbs:110,dailyProtein:120,dailyFat:54,eaten:0},lastUpdate:new Date().toDateString()},
@@ -37,7 +37,7 @@ const data2 : dataUser = {
     goal: { txt: "", status: EnumGoalUser.LoseWeight },
     lvlActivity: 1,
     courses: [],
-    food: {breakfast:[],dinner:[],lanch:[]},
+    food: {breakfast:[],dinner:[],lanch:[],recommendedCalorie:{breakfast:{calories:400,carbs:20,fat:20,protein:50},dinner:{calories:400,carbs:20,fat:20,protein:50},lanch:{calories:400,carbs:20,fat:20,protein:50}}},
     history: [],
     test: {
         dailyCalorieIntake: {calories:{burned:0,dailyCalorieIntake:1800,dailyCarbs:130,dailyProtein:100,dailyFat:34,eaten:0},lastUpdate:new Date().toDateString()},

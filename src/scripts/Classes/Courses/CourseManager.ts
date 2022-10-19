@@ -11,6 +11,17 @@ import { allExercises } from "../../../renderer";
 
 
 
+// function importAll(r:any) {
+//   return r.keys().map(r);
+// }
+
+// //@ts-ignore
+// const images = importAll(require.context('./../../../assets/images', false, /\.(png|jpe?g|svg)$/));
+// console.log(images[0].default)
+
+
+
+
 export class CourseManager {
 	protected _allCourses: allCoursesType;
 

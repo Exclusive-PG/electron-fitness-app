@@ -78,9 +78,10 @@ const validateAndCreateUser = () => {
 		let IdUserGoal = usersManager.getIdUserGoal((document.getElementById("goal") as HTMLInputElement).value);
 		let dailyCalorieIntake = Calculating.getFullTestDailyCalorieIntake({ age: age, gender: _gender, height: height, lvlActivy: lvlActivity, weight: weight }, IdUserGoal);
 		let resultBodyMassIndex = Calculating.getBodyMassIndex({ weight, height });
+		let recommendedCalorieIntake = Calculating.calculateFullRecommendedMealCalorieIntake(dailyCalorieIntake._dailyCalories,{breakfast:30,lunch:45,dinner:25},IdUserGoal)
 		let date = new Date().toDateString();
 
-		let _food: foodUser = {
+		let _testDailyCalorieIntake: foodUser = {
 			calories: {
 				burned: 0,
 				eaten: 0,
@@ -92,6 +93,7 @@ const validateAndCreateUser = () => {
 			lastUpdate: date,
 		};
 
+
 		_data = {
 			username: (document.getElementById("name") as HTMLInputElement).value,
 			age,
@@ -102,10 +104,10 @@ const validateAndCreateUser = () => {
 			goal: { txt: (document.getElementById("goal") as HTMLInputElement).value, status: IdUserGoal },
 			lvlActivity: lvlActivity,
 			courses: [],
-			food: { breakfast: [], dinner: [], lanch: [] },
+			food: { breakfast: [], dinner: [], lanch: [],recommendedCalorie:{breakfast:recommendedCalorieIntake.breakfast,dinner:recommendedCalorieIntake.dinner,lanch:recommendedCalorieIntake.lunch} },
 			history: [],
 			test: {
-				dailyCalorieIntake: _food,
+				dailyCalorieIntake: _testDailyCalorieIntake,
 				bodyMassIndex: {
 					bmi: resultBodyMassIndex,
 					lastUpdate: date,
