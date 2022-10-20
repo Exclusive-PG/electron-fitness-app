@@ -110,6 +110,8 @@ export type FoodItemType = {
 	protein: number;
 	carbs: number;
 	fat: number;
+	pricePerKg :number;
+	image?: string | any;
 };
 
 export type renderPagesType = {

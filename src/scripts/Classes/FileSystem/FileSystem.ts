@@ -6,6 +6,7 @@ export default class FileSystem {
 		users: path.resolve(path.join("data", "users", "users.json")),
 		exercises: path.resolve(path.join("data", "exercises.json")),
 		customCourses: path.resolve(path.join("data", "customCourses.json")),
+		foodItem: path.resolve(path.join("data", "foodItem.json")),
 	};
 	public static createJSONData(data: any, pathFile: string) {
 		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {

@@ -14,7 +14,7 @@ import { renderPagesType } from './types/types';
 import FileSystem from './scripts/Classes/FileSystem/FileSystem';
 import { Exercises } from "./scripts/Classes/Exercises/Exercises";
 import { CourseManager, initAllCourses } from "./scripts/Classes/Courses/CourseManager";
-
+import "./scripts/Classes/Food/FoodManager"
 FileSystem.createDirectory(FileSystem.PATHS.images);
 AppController.watchInternetConnection();
 const controllersUI = [addUserController,switchUserControllers,switcherPagesController]
