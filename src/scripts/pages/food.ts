@@ -4,12 +4,12 @@ import lunchImg from "./../../assets/images/lunch.jpg";
 import dinnerImg from "./../../assets/images/dinner.jpg";
 import { usersManager } from "../Classes/User/UsersManager";
 import { RecommendedMealCalorieIntakeItem } from "../../types/types";
-import FoodManager, { foodManager } from './../Classes/Food/FoodManager';
+import FoodManager, { foodManager } from "./../Classes/Food/FoodManager";
 
 const currentMealSection = document.querySelector<HTMLElement>(".current_meal_section");
 const renderZoneFood = document.querySelector<HTMLElement>(".render_zone_for_user_data");
-type Data = Array<{ food: RecommendedMealCalorieIntakeItem; nameMeal: string; img: any; id: string}>;
-type dataItem = { food: RecommendedMealCalorieIntakeItem; nameMeal: string; img: any; id: string}
+type Data = Array<{ food: RecommendedMealCalorieIntakeItem; nameMeal: string; img: any; id: string }>;
+type dataItem = { food: RecommendedMealCalorieIntakeItem; nameMeal: string; img: any; id: string };
 
 const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) => {
 	console.log(outerPlace);
@@ -18,10 +18,10 @@ const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) =
 
 	const card: Data = [
 		{ food: food.recommendedCalorie.breakfast, nameMeal: "Breakfast", img: breakFastImg, id: "1" },
-		{ food: food.recommendedCalorie.lanch, nameMeal: "Lunch", img: lunchImg, id: "2" },
+		{ food: food.recommendedCalorie.lunch, nameMeal: "Lunch", img: lunchImg, id: "2" },
 		{ food: food.recommendedCalorie.dinner, nameMeal: "Dinner", img: dinnerImg, id: "3" },
 	];
-
+console.log(card)
 	let _rendererCard = "";
 
 	card.forEach((item) => {
@@ -51,58 +51,101 @@ const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) =
 
 	document.querySelectorAll(".meal_user").forEach((item) => {
 		item.addEventListener("click", () => {
-            let _id = item.getAttribute("data-id-meal")
-            renderCurrentMeal(document.querySelector(".current_meal_wrapper_render"),card.filter((item=>item.id === _id))[0],usersManager.getctiveUser,foodManager)
-            currentMealSection.classList.add("active");    
+			let _id = item.getAttribute("data-id-meal");
+			renderCurrentMeal(document.querySelector(".current_meal_wrapper_render"), card.filter((item) => item.id === _id)[0], usersManager.getctiveUser, foodManager);
+			currentMealSection.classList.add("active");
 		});
 	});
 	document.querySelector(".close_win_current_meal").addEventListener("click", () => currentMealSection.classList.remove("active"));
 };
 
-const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: User | null,foodManager:FoodManager) => {
+const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: User | null, foodManager: FoodManager) => {
 	outerPlace.innerHTML = "";
-    let rendererAllFoodList = "";
-    let arrayForMyActiveArray :any[] = [];
-
-    foodManager.getListFood.forEach((item)=>{
-        rendererAllFoodList += `
-       <div class="food-item-list" data-id-current-food=${item.getData.id}>
+	let rendererAllFoodList = "";
+	let rendererUsersFoodList = "";
+	let arrayForMyActiveFood: any[] = [];
+    
+    activeUser.getCurrentMeal(data.id).forEach(item=>{
+        arrayForMyActiveFood.push(item)
+    })
+   
+	foodManager.getListFood.forEach((item) => {
+		rendererAllFoodList += `
+       <div class="food-item-list ${activeUser.getCurrentMeal(data.id).includes(item.getData.id) ? "active" : ""}" data-id-current-food=${item.getData.id}>
             <div class="food-item-list-name">${item.getData.name}</div>
             <div class="food-item-list-image"><img src="${item.getData.image}"/></div>
        </div>
-        `
-    })
+        `;
+	});
 
-
+	foodManager.getListFood.forEach((item) => {
+		rendererUsersFoodList += `
+        ${activeUser.getCurrentMeal(data.id).includes(item.getData.id) ? `
+        <div class="user-food-item-list" data-id-current-food=${item.getData.id}>
+             <div class="user-food-item-list-name">${item.getData.name}</div>
+             <div class="user-food-item-list-image "><img src="${item.getData.image}"/></div>
+        </div>`
+        : ""
+        }
+         `;
+	});
 	outerPlace.innerHTML = `
     <h2 class="header_current_meal_user">${data.nameMeal}</h2>
+    <div class="total_nutriens_calories_users_meal"></div>
     <div class="wrapper_food">
         <div class="current_food_list">
-        <div>My food</div>
-        <div class="render_current_food_list_user ">None</div>
+        <div class="hd_food_current_meal">My food</div>
+        <div class="render_current_food_list_user">${rendererUsersFoodList === "" ? "None" : rendererUsersFoodList}</div>
         </div>
         <div class="all_food_list">
-        <div>All food</div>
+        <div class="hd_food_current_meal">All food</div>
         <div class="render_all_food_list ">${rendererAllFoodList}</div>
         </div>
     </div>
+    <div class="footer_wrapper_current_meal">
+    <button class="btn btn-shine save-for-current-meal"><span>save</span></button>
+    </div>
     `;
 
-    document.querySelectorAll(".food-item-list").forEach((item)=>{
-        item.addEventListener("click",()=>{
-            let _id = item.getAttribute("data-id-current-food")
-            let foodItem = foodManager.currentFoodById(_id)
-            arrayForMyActiveArray.push(foodItem)
-            console.log(arrayForMyActiveArray)
-        })
-    })
+    showTotalNutriensAndCalories(document.querySelector(".total_nutriens_calories_users_meal"),arrayForMyActiveFood)
 
+	document.querySelectorAll(".food-item-list").forEach((item) => {
+		item.addEventListener("click", () => {
+			item.classList.toggle("active");
+			let _idFood = item.getAttribute("data-id-current-food");
+			let foodElement = foodManager.currentFoodById(_idFood).getData.id;
+			let index = arrayForMyActiveFood.indexOf(_idFood);
+			item.classList.contains("active") ? arrayForMyActiveFood.push(foodElement) : index > -1 && arrayForMyActiveFood.splice(index, 1);
+            showTotalNutriensAndCalories(document.querySelector(".total_nutriens_calories_users_meal"),arrayForMyActiveFood)
+
+			console.log(arrayForMyActiveFood);
+		});
+	});
+
+	document.querySelector(".save-for-current-meal").addEventListener("click", () => {
+		usersManager.editMealForActiveUser(data.id, arrayForMyActiveFood);
+        rendererMyFoodList(document.querySelector(".render_current_food_list_user"),foodManager,activeUser,data)
+	});
 };
 
+function showTotalNutriensAndCalories(outerPlace:HTMLElement,id:Array<string>){
+    const {calories,carbs,fats,protein,portion} = foodManager.calculateTotalNutriens(id)
+    outerPlace.innerHTML = `Calories: ${calories} | Portion: ${portion} g<br/><i class="fa-solid fa-wheat-awn"></i>protein: ${protein} <i class="fa-solid fa-wheat-awn"></i>carbs: ${carbs} <i class="fa-solid fa-wheat-awn"></i>fats: ${fats}`;
+}
+function rendererMyFoodList(outerPlace:HTMLElement,foodManager:FoodManager,activeUser: User | null,data:dataItem){
+     outerPlace.innerHTML = "";
+     foodManager.getListFood.forEach((item) => {
+		outerPlace.innerHTML += `
+        ${activeUser.getCurrentMeal(data.id).includes(item.getData.id) ? `
+        <div class="user-food-item-list" data-id-current-food=${item.getData.id}>
+             <div class="user-food-item-list-name">${item.getData.name}</div>
+             <div class="user-food-item-list-image "><img src="${item.getData.image}"/></div>
+        </div>`
+        : ""
+        }
+         `;
+	});
+}
 export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => {
 	renderFoodPageLocal(renderZoneFood, activeUser);
 };
-
-
-
-

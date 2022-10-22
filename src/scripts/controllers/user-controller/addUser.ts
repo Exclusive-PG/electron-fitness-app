@@ -104,7 +104,7 @@ const validateAndCreateUser = () => {
 			goal: { txt: (document.getElementById("goal") as HTMLInputElement).value, status: IdUserGoal },
 			lvlActivity: lvlActivity,
 			courses: [],
-			food: { breakfast: [], dinner: [], lanch: [],recommendedCalorie:{breakfast:recommendedCalorieIntake.breakfast,dinner:recommendedCalorieIntake.dinner,lanch:recommendedCalorieIntake.lunch} },
+			food: { breakfast: [], dinner: [], lunch: [],recommendedCalorie:{breakfast:recommendedCalorieIntake.breakfast,dinner:recommendedCalorieIntake.dinner,lunch:recommendedCalorieIntake.lunch} },
 			history: [],
 			test: {
 				dailyCalorieIntake: _testDailyCalorieIntake,

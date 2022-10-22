@@ -2,6 +2,7 @@ import { dataUser, EnumGoalUser } from "../../../types/types";
 import FileSystem from "../FileSystem/FileSystem";
 import User from "./User";
 import { fs, path } from "../../../scripts/requiredLib/requiredLib";
+import { FoodItem } from "../Food/FoodItem";
 
 export class UsersManager {
 	private _users: User[] = [];
@@ -45,6 +46,31 @@ export class UsersManager {
 		let _pathFile = FileSystem.PATHS.users;
 		FileSystem.createJSONData(this._users, _pathFile);
 	}
+	public editMealForActiveUser(idMeal: string, data: string[]){
+		let index = this._users.findIndex(item=>item.about.id === this._activeUser.about.id);
+		
+			switch (idMeal) {
+				case "1": {
+					this._users[index].about.food.breakfast = data;
+					console.log("breakfast user");
+					break;
+				}
+				case "2": {
+					this._users[index].about.food.lunch = data;
+					console.log("lunch user");
+					break;
+				}
+				case "3": {
+					this._users[index].about.food.dinner = data;
+					console.log("dinner user");
+					break;
+				}
+			}
+		console.log(this._activeUser.about.food)
+		this.saveUsers();
+		
+	}
+
 	public clearData(){
 		this._users = []
 	}

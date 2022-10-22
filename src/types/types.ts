@@ -94,12 +94,12 @@ export type Nutrients = {
 export type FoodUserData = {
 	recommendedCalorie: {
 		breakfast: RecommendedMealCalorieIntakeItem;
-		lanch: RecommendedMealCalorieIntakeItem;
+		lunch: RecommendedMealCalorieIntakeItem;
 		dinner: RecommendedMealCalorieIntakeItem;
 	};
-	breakfast: Array<FoodItem>;
-	lanch: Array<FoodItem>;
-	dinner: Array<FoodItem>;
+	breakfast: Array<string>;
+	lunch: Array<string>;
+	dinner: Array<string>;
 };
 
 export type FoodItemType = {
@@ -111,6 +111,7 @@ export type FoodItemType = {
 	carbs: number;
 	fat: number;
 	pricePerKg :number;
+	isCreateByUser: boolean
 	image?: string | any;
 };
 

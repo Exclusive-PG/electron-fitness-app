@@ -1,6 +1,5 @@
-import { dataUser, EnumGoalUser } from "../../../types/types";
-import { uuidv1 } from "./../../requiredLib/requiredLib";
-import { CourseBase } from "../Courses/CourseBase";
+import { dataUser } from "../../../types/types";
+import { FoodItem } from "./../Food/FoodItem";
 
 export default class User {
 	private _data: dataUser;
@@ -16,10 +15,22 @@ export default class User {
 	}
 	public UnfollowCourse(courseId: string): void {
 		const index = this._data.courses.indexOf(courseId);
-		console.log(index)
-		index > -1 &&  this._data.courses.splice(index, 1); 
+		console.log(index);
+		index > -1 && this._data.courses.splice(index, 1);
 	}
 	public hasCurrentCourse(idCourse: string): boolean {
 		return this._data.courses.some((id) => id === idCourse);
+	}
+	public getCurrentMeal(idMeal: string) {
+		switch (idMeal) {
+			case "1":
+				return this._data.food.breakfast;
+
+			case "2":
+				return this._data.food.lunch;
+
+			case "3":
+				return this._data.food.dinner;
+		}
 	}
 }

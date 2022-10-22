@@ -88,23 +88,4 @@ export default class Calculating {
 	}
 	
 }
-console.log(Calculating.calculateFullRecommendedMealCalorieIntake(2400,{breakfast:30,lunch:45,dinner:25},1))
-//console.log(Calculating.calculateFullRecommendedMealCalorieIntake(2400,{breakfast:30,lunch:30,dinner:25},1))
 
-
-
-//REFACTORING
-// public static calculateFullRecommendedMealCalorieIntake(dailyCalorieIntake: number,percent:{breakfast:number,lunch:number,dinner:number}) : RecommendedMealCalorieIntakeType {
-// 	let recommendedCalorie :RecommendedMealCalorieIntakeType = {
-// 		breakfast: (dailyCalorieIntake/100)*percent.breakfast,
-// 		lunch:(dailyCalorieIntake/100)*percent.lunch,
-// 		dinner:(dailyCalorieIntake/100)*percent.dinner,
-// 	}
-	
-// 	return recommendedCalorie;
-// }
-// private static calculateItemRecommendedMealCalorieIntake(dailyCalorieIntake: number,percent:number) :RecommendedMealCalorieIntakeItem {
-// 	let rcommendedMealCalorieIntakeItem : RecommendedMealCalorieIntakeItem = {
-// 		calories:dailyCalorieIntake/
-// 	}
-// }
