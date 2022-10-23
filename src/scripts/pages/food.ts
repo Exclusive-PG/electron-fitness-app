@@ -146,6 +146,46 @@ function rendererMyFoodList(outerPlace:HTMLElement,foodManager:FoodManager,activ
          `;
 	});
 }
+function addFoodItemWindow(){
+    document.querySelector(".add-food-item").addEventListener("click", () => {
+		let _validate = false;
+        let numbers = /^[0-9]+$/;
+		let _errors = [...document.querySelectorAll(".error-icon-create-food")];
+        let inputs = [...document.querySelectorAll(".add_custom_food > input")]
+        console.log(inputs)
+      
+        inputs.forEach((item:HTMLInputElement, index) => {
+            !item.value.match(numbers) ? _errors[index].classList.add("active") : _errors[index].classList.remove("active");
+		});
+	
+		_errors.every((item) => {
+			if (item.classList.contains("active")) {
+				_validate = false;
+				return;
+			} else {
+				_validate = true;
+				return true;
+			}
+		});
+	
+
+		// if (!_validate) return;
+
+		// courseManager.editCustomCourse(customCourse.data.id, { editExercises: arrayCurrentExerciseEdit, muscleType: muscleTypeInput.value, name: nameCustomCourseInput.value });
+		// renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom);
+		// readyForCreate();
+		// arrayCurrentExerciseEdit = [];
+		// console.log(courseManager.allCourses);
+	});
+}
 export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => {
+    const createCustomFoodItemWin = document.querySelector(".create_custom_food_item")
 	renderFoodPageLocal(renderZoneFood, activeUser);
+    document.querySelector(".close_win_create_food_item").addEventListener("click", () =>{
+        createCustomFoodItemWin.classList.remove("active")
+    })
+    document.querySelector(".btn_for_create_your_food_item").addEventListener("click", () =>{
+        createCustomFoodItemWin.classList.add("active")
+    })
+    addFoodItemWindow()
 };

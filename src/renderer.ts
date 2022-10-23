@@ -5,7 +5,7 @@ import './scripts/Classes/Exercises/Exercises';
 import AppController from './scripts/Classes/AppController/AppController';
 import Renderer from './scripts/Classes/Renderer/Renderer';
 import { renderHomePage } from './scripts/pages/home';
-import { renderTrainingPage } from './scripts/pages/training';
+//import { renderTrainingPage } from './scripts/pages/training';
 import { renderFoodPage } from './scripts/pages/food';
 import { addUserController } from "./scripts/controllers/user-controller/addUser";
 import { switchUserControllers } from "./scripts/controllers/user-controller/switchUser";
@@ -19,7 +19,7 @@ import "./scripts/Classes/Food/FoodManager"
 FileSystem.createDirectory(FileSystem.PATHS.images);
 AppController.watchInternetConnection();
 const controllersUI = [addUserController,switchUserControllers,switcherPagesController]
-const pages:renderPagesType = {renderFoodPage,renderHomePage,renderTrainingPage,renderProfilePage:()=>console.log("Hello from Profile Page")}
+const pages:renderPagesType = {renderFoodPage,renderHomePage,renderTrainingPage:()=>console.log("Hello from Profile Page"),renderProfilePage:()=>console.log("Hello from Profile Page")}
 
 export const allExercises = new Exercises();
 export const rendererApp = new Renderer();

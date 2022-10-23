@@ -13,8 +13,8 @@
 			<section class="content_section">
 				<div class="tabs__content swiper">
 					<div class="swiper-wrapper">
-					 <div class="swiper-slide home_content_page page"><div class="home_wrapper"></div></div> 
-						 <div class="swiper-slide train_content_page page">
+						<!-- <div class="swiper-slide home_content_page page"><div class="home_wrapper"></div></div>  -->
+						<!-- <div class="swiper-slide train_content_page page">
 							<div class="training_wrapper">
 								<div class="render_custom_training render_zone_courses"></div>
 								<div class="render_abs_training render_zone_courses"></div>
@@ -56,7 +56,7 @@
 									</div>
 								</div>
 							</div>
-						</div> 
+						</div>  -->
 						<div class="swiper-slide food_content_page page">
 							<div class="main_wrapper_food_page">
 								<div class="render_zone_for_user_data"></div>
@@ -68,7 +68,7 @@
 				</div>
 			</section>
 			<section>
-				<div class="container_switcher" >
+				<div class="container_switcher">
 					<div class="bottom-nav tabs__controls">
 						<input type="radio" name="radio" value="1" id="tab-1" checked />
 						<label class="icon home label-switch-page" for="tab-1" data-tab="0">
@@ -96,7 +96,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="create_login_user" style="display:none;">
+			<section class="create_login_user" style="display: none">
 				<div class="wrapper_create_login_user">
 					<div class="cancel_reg_new_user"><i class="fa-solid fa-xmark fa-2x"></i></div>
 					<div class="add_new_user">
@@ -208,6 +208,60 @@
 			<section class="current_meal_section">
 				<div class="close_win_current_meal"><i class="fa-solid fa-xmark fa-2x" style="color: #fff"></i></div>
 				<div class="current_meal_wrapper_render"></div>
+			</section>
+			<section class="create_custom_food_item active">
+				<div class="close_win_create_food_item"><i class="fa-solid fa-xmark fa-2x" style="color: #fff"></i></div>
+				<div class="create_custom_food_item_wrapper">
+					<div class="form_for_create_custom_food">
+						<h3 class="hd_custom_food">Add food item:</h3>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="Name" name="name" id="nameFood" required data-type="string" />
+							<label for="name" class="form__label"
+								>Name food <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="portion" name="portion" id="portionFood" required data-type="number" />
+							<label for="portion" class="form__label"
+								>Portion (g) <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="calories" name="calories" id="caloriesFood" required data-type="number" />
+							<label for="calories" class="form__label"
+								>Calories <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="protein" name="protein" id="proteinFood" required data-type="number" />
+							<label for="protein" class="form__label"
+								>Protein <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="carbs" name="carbs" id="carbsFood" required data-type="number" />
+							<label for="carbs" class="form__label"
+								>Carbs <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="fat" name="fat" id="fatFood" required data-type="number" />
+							<label for="fat" class="form__label"
+								>Fats <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="pricePerKg" name="pricePerKg" id="pricePerKgFood" required data-type="number" />
+							<label for="pricePerKg" class="form__label"
+								>Price per kg <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<button class="btn btn-pulse add-food-item"><span>add</span></button>
+					</div>
+					<div class="all_list_custom_food">
+						<h3 class="hd_custom_food">All custom food:</h3>
+					</div>
+				</div>
 			</section>
 		</main>
 	</body>
