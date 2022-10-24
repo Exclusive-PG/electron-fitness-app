@@ -9,6 +9,7 @@ import { ipcRenderer } from "electron";
 import { path, uuidv4 } from "../requiredLib/requiredLib";
 import FileSystem from "../Classes/FileSystem/FileSystem";
 import { FoodItem } from "../Classes/Food/FoodItem";
+import "./../mmdo/init"
 
 const currentMealSection = document.querySelector<HTMLElement>(".current_meal_section");
 const renderZoneFood = document.querySelector<HTMLElement>(".render_zone_for_user_data");
