@@ -5,12 +5,19 @@ import dinnerImg from "./../../assets/images/dinner.jpg";
 import { usersManager } from "../Classes/User/UsersManager";
 import { RecommendedMealCalorieIntakeItem } from "../../types/types";
 import FoodManager, { foodManager } from "./../Classes/Food/FoodManager";
+import { ipcRenderer } from "electron";
+import { path, uuidv4 } from "../requiredLib/requiredLib";
+import FileSystem from "../Classes/FileSystem/FileSystem";
+import { FoodItem } from "../Classes/Food/FoodItem";
 
 const currentMealSection = document.querySelector<HTMLElement>(".current_meal_section");
 const renderZoneFood = document.querySelector<HTMLElement>(".render_zone_for_user_data");
 type Data = Array<{ food: RecommendedMealCalorieIntakeItem; nameMeal: string; img: any; id: string }>;
 type dataItem = { food: RecommendedMealCalorieIntakeItem; nameMeal: string; img: any; id: string };
-
+let avatarFoodItem = {
+	isAvatar: false,
+	src: "",
+};
 const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) => {
 	console.log(outerPlace);
 	outerPlace.innerHTML = "";
@@ -21,7 +28,7 @@ const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) =
 		{ food: food.recommendedCalorie.lunch, nameMeal: "Lunch", img: lunchImg, id: "2" },
 		{ food: food.recommendedCalorie.dinner, nameMeal: "Dinner", img: dinnerImg, id: "3" },
 	];
-console.log(card)
+	console.log(card);
 	let _rendererCard = "";
 
 	card.forEach((item) => {
@@ -57,6 +64,15 @@ console.log(card)
 		});
 	});
 	document.querySelector(".close_win_current_meal").addEventListener("click", () => currentMealSection.classList.remove("active"));
+	
+	const minCostDuringDietWin = document.querySelector(".calculate_min_cost_during_diet_win");
+	const closeMinCostDuringDietWin = document.querySelector(".close_win_calculate_min_cost")
+	document.querySelector(".btn_for_calc_min_cost_for_diet").addEventListener("click",()=>{
+		minCostDuringDietWin.classList.add("active")
+	})
+	closeMinCostDuringDietWin.addEventListener("click",()=>{
+		minCostDuringDietWin.classList.remove("active")
+	})
 };
 
 const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: User | null, foodManager: FoodManager) => {
@@ -64,29 +80,32 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
 	let rendererAllFoodList = "";
 	let rendererUsersFoodList = "";
 	let arrayForMyActiveFood: any[] = [];
-    
-    activeUser.getCurrentMeal(data.id).forEach(item=>{
-        arrayForMyActiveFood.push(item)
-    })
-   
+
+	activeUser.getCurrentMeal(data.id).forEach((item) => {
+		arrayForMyActiveFood.push(item);
+	});
+
 	foodManager.getListFood.forEach((item) => {
 		rendererAllFoodList += `
        <div class="food-item-list ${activeUser.getCurrentMeal(data.id).includes(item.getData.id) ? "active" : ""}" data-id-current-food=${item.getData.id}>
             <div class="food-item-list-name">${item.getData.name}</div>
-            <div class="food-item-list-image"><img src="${item.getData.image}"/></div>
+			${item.getData.image !== undefined ? `<div class="food-item-list-image"><img src="${item.getData.image}"/></div>` : '<i class="fa-solid fa-bowl-food"></i>'}
        </div>
         `;
 	});
 
 	foodManager.getListFood.forEach((item) => {
 		rendererUsersFoodList += `
-        ${activeUser.getCurrentMeal(data.id).includes(item.getData.id) ? `
+        ${
+					activeUser.getCurrentMeal(data.id).includes(item.getData.id)
+						? `
         <div class="user-food-item-list" data-id-current-food=${item.getData.id}>
              <div class="user-food-item-list-name">${item.getData.name}</div>
-             <div class="user-food-item-list-image "><img src="${item.getData.image}"/></div>
+			 ${item.getData.image !== undefined ? `<div class="user-food-item-list-image "><img src="${item.getData.image}"/></div>` : '<i class="fa-solid fa-bowl-food"></i>'}
+         
         </div>`
-        : ""
-        }
+						: ""
+				}
          `;
 	});
 	outerPlace.innerHTML = `
@@ -107,7 +126,7 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
     </div>
     `;
 
-    showTotalNutriensAndCalories(document.querySelector(".total_nutriens_calories_users_meal"),arrayForMyActiveFood)
+	showTotalNutriensAndCalories(document.querySelector(".total_nutriens_calories_users_meal"), arrayForMyActiveFood);
 
 	document.querySelectorAll(".food-item-list").forEach((item) => {
 		item.addEventListener("click", () => {
@@ -116,7 +135,7 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
 			let foodElement = foodManager.currentFoodById(_idFood).getData.id;
 			let index = arrayForMyActiveFood.indexOf(_idFood);
 			item.classList.contains("active") ? arrayForMyActiveFood.push(foodElement) : index > -1 && arrayForMyActiveFood.splice(index, 1);
-            showTotalNutriensAndCalories(document.querySelector(".total_nutriens_calories_users_meal"),arrayForMyActiveFood)
+			showTotalNutriensAndCalories(document.querySelector(".total_nutriens_calories_users_meal"), arrayForMyActiveFood);
 
 			console.log(arrayForMyActiveFood);
 		});
@@ -124,40 +143,55 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
 
 	document.querySelector(".save-for-current-meal").addEventListener("click", () => {
 		usersManager.editMealForActiveUser(data.id, arrayForMyActiveFood);
-        rendererMyFoodList(document.querySelector(".render_current_food_list_user"),foodManager,activeUser,data)
+		rendererMyFoodList(document.querySelector(".render_current_food_list_user"), foodManager, activeUser, data);
 	});
 };
 
-function showTotalNutriensAndCalories(outerPlace:HTMLElement,id:Array<string>){
-    const {calories,carbs,fats,protein,portion} = foodManager.calculateTotalNutriens(id)
-    outerPlace.innerHTML = `Calories: ${calories} | Portion: ${portion} g<br/><i class="fa-solid fa-wheat-awn"></i>protein: ${protein} <i class="fa-solid fa-wheat-awn"></i>carbs: ${carbs} <i class="fa-solid fa-wheat-awn"></i>fats: ${fats}`;
+function showTotalNutriensAndCalories(outerPlace: HTMLElement, id: Array<string>) {
+	const { calories, carbs, fats, protein, portion } = foodManager.calculateTotalNutriens(id);
+	outerPlace.innerHTML = `Calories: ${calories} | Portion: ${portion} g<br/><i class="fa-solid fa-wheat-awn"></i>protein: ${protein} <i class="fa-solid fa-wheat-awn"></i>carbs: ${carbs} <i class="fa-solid fa-wheat-awn"></i>fats: ${fats}`;
 }
-function rendererMyFoodList(outerPlace:HTMLElement,foodManager:FoodManager,activeUser: User | null,data:dataItem){
-     outerPlace.innerHTML = "";
-     foodManager.getListFood.forEach((item) => {
+function rendererMyFoodList(outerPlace: HTMLElement, foodManager: FoodManager, activeUser: User | null, data: dataItem) {
+	outerPlace.innerHTML = "";
+	foodManager.getListFood.forEach((item) => {
 		outerPlace.innerHTML += `
-        ${activeUser.getCurrentMeal(data.id).includes(item.getData.id) ? `
+        ${
+					activeUser.getCurrentMeal(data.id).includes(item.getData.id)
+						? `
         <div class="user-food-item-list" data-id-current-food=${item.getData.id}>
              <div class="user-food-item-list-name">${item.getData.name}</div>
              <div class="user-food-item-list-image "><img src="${item.getData.image}"/></div>
         </div>`
-        : ""
-        }
+						: ""
+				}
          `;
 	});
 }
-function addFoodItemWindow(){
-    document.querySelector(".add-food-item").addEventListener("click", () => {
+function addFoodItemWindow() {
+	document.querySelector(".add-food-item").addEventListener("click", () => {
 		let _validate = false;
-        let numbers = /^[0-9]+$/;
+		let numbers = /^[0-9]+$/;
 		let _errors = [...document.querySelectorAll(".error-icon-create-food")];
-        let inputs = [...document.querySelectorAll(".add_custom_food > input")]
-        console.log(inputs)
-      
-        inputs.forEach((item:HTMLInputElement, index) => {
-            !item.value.match(numbers) ? _errors[index].classList.add("active") : _errors[index].classList.remove("active");
+		let inputs = [...document.querySelectorAll(".add_custom_food > input")];
+		console.log(inputs);
+
+		inputs.forEach((item: HTMLInputElement, index) => {
+			if (item.hasAttribute("data-type")) {
+				switch (item.getAttribute("data-type")) {
+					case "number": {
+						!item.value.match(numbers) ? _errors[index].classList.add("active") : _errors[index].classList.remove("active");
+
+						return;
+					}
+					case "string": {
+						console.log(index);
+						item.value === "" ? _errors[index].classList.add("active") : _errors[index].classList.remove("active");
+						return;
+					}
+				}
+			}
 		});
-	
+
 		_errors.every((item) => {
 			if (item.classList.contains("active")) {
 				_validate = false;
@@ -167,25 +201,88 @@ function addFoodItemWindow(){
 				return true;
 			}
 		});
-	
 
-		// if (!_validate) return;
+		if (!_validate) return;
 
-		// courseManager.editCustomCourse(customCourse.data.id, { editExercises: arrayCurrentExerciseEdit, muscleType: muscleTypeInput.value, name: nameCustomCourseInput.value });
-		// renderTrainingCourse(document.querySelector(".render_custom_training"), "Your custom courses", courseManager.allCourses.custom);
-		// readyForCreate();
-		// arrayCurrentExerciseEdit = [];
-		// console.log(courseManager.allCourses);
+		let pathForFoodItemImg;
+
+		if (avatarFoodItem.isAvatar) {
+			pathForFoodItemImg = path.join(FileSystem.PATHS.imagesFood, path.basename(avatarFoodItem.src));
+			FileSystem.copyData(avatarFoodItem.src, pathForFoodItemImg);
+		}
+
+		foodManager.addFoodItem(new FoodItem({
+		    name:(document.getElementById("nameFood") as HTMLInputElement).value,
+            calories: parseInt((document.getElementById("caloriesFood") as HTMLInputElement).value),
+            carbs:parseInt((document.getElementById("carbsFood") as HTMLInputElement).value),
+            fat:parseInt((document.getElementById("fatFood") as HTMLInputElement).value),
+            id:`custom_food_${uuidv4()}`,
+            isCreateByUser:true,
+            portion:parseInt((document.getElementById("portionFood") as HTMLInputElement).value),
+            pricePerKg:parseInt((document.getElementById("pricePerKgFood") as HTMLInputElement).value),
+            protein:parseInt((document.getElementById("proteinFood") as HTMLInputElement).value),
+			vitamins : parseInt((document.getElementById("vitaminsFood") as HTMLInputElement).value),
+            image:pathForFoodItemImg
+			
+		}))
+        console.log(foodManager.getListFood)
+        foodManager.saveFoodItemsList();
+        renderCustomFoodItems(document.querySelector(".all_list_custom_food_render"),foodManager)
+
 	});
 }
+
+function renderCustomFoodItems (outerPlace:HTMLElement,foodManager:FoodManager){
+    outerPlace.innerHTML = "";
+    
+    foodManager.getListFood.forEach(item=>{
+        if(item.getData.isCreateByUser){
+            outerPlace.innerHTML+=`
+            <div class="custom_food_item" >
+                <div class="custom_food_image_wrapper">
+                 ${item.getData.image ? `<img src="${item.getData.image}"/>` : '<i class="fa-solid fa-bowl-food"></i>'}
+                </div>
+				<div class="custom_food_name">${item.getData.name}</div>
+                <div class="delete_custom_food_item" data-id-custom-food = ${item.getData.id}><i class="fa-regular fa-trash-can"></i></div>
+            </div>
+            `
+        }
+    })
+
+	document.querySelectorAll(".delete_custom_food_item").forEach((item)=>{
+		item.addEventListener("click",()=>{
+			let _id = item.getAttribute("data-id-custom-food")
+			foodManager.removeCurrentFoodItem(_id)
+			renderCustomFoodItems(document.querySelector(".all_list_custom_food_render"),foodManager)
+		})
+	})
+
+}
+
 export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => {
-    const createCustomFoodItemWin = document.querySelector(".create_custom_food_item")
+	const createCustomFoodItemWin = document.querySelector(".create_custom_food_item");
 	renderFoodPageLocal(renderZoneFood, activeUser);
-    document.querySelector(".close_win_create_food_item").addEventListener("click", () =>{
-        createCustomFoodItemWin.classList.remove("active")
-    })
-    document.querySelector(".btn_for_create_your_food_item").addEventListener("click", () =>{
-        createCustomFoodItemWin.classList.add("active")
-    })
-    addFoodItemWindow()
+	document.querySelector(".close_win_create_food_item").addEventListener("click", () => {
+		createCustomFoodItemWin.classList.remove("active");
+	});
+	document.querySelector(".btn_for_create_your_food_item").addEventListener("click", () => {
+		createCustomFoodItemWin.classList.add("active");
+	});
+	addFoodItemWindow();
+	ipcRenderer.on("upload_file", (event, arg) => {
+		console.log(arg.filePath);
+		document.querySelector(".img_add_custom_food").innerHTML = `<img src="${arg.filePath}" height="150px" width="250px" alt="" class="image_food">`;
+		avatarFoodItem = {
+			isAvatar: true,
+			src: arg.filePath,
+		};
+	});
+
+	document.querySelector(".img_add_custom_food").addEventListener("click", () => {
+		ipcRenderer.send("upload_file");
+	});
+    renderCustomFoodItems(document.querySelector(".all_list_custom_food_render"),foodManager)
+	
+	
 };
+

@@ -110,6 +110,7 @@ export type FoodItemType = {
 	protein: number;
 	carbs: number;
 	fat: number;
+	vitamins:number
 	pricePerKg :number;
 	isCreateByUser: boolean
 	image?: string | any;

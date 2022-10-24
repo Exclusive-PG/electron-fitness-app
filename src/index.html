@@ -209,11 +209,12 @@
 				<div class="close_win_current_meal"><i class="fa-solid fa-xmark fa-2x" style="color: #fff"></i></div>
 				<div class="current_meal_wrapper_render"></div>
 			</section>
-			<section class="create_custom_food_item active">
+			<section class="create_custom_food_item ">
 				<div class="close_win_create_food_item"><i class="fa-solid fa-xmark fa-2x" style="color: #fff"></i></div>
 				<div class="create_custom_food_item_wrapper">
 					<div class="form_for_create_custom_food">
 						<h3 class="hd_custom_food">Add food item:</h3>
+						<div class="img_add_custom_food"><i class="fa-solid fa-cloud-arrow-up"></i> Add image</div>
 						<div class="form__group field add_custom_food">
 							<input type="input" class="form__field" placeholder="Name" name="name" id="nameFood" required data-type="string" />
 							<label for="name" class="form__label"
@@ -251,6 +252,12 @@
 							></label>
 						</div>
 						<div class="form__group field add_custom_food">
+							<input type="input" class="form__field" placeholder="vitamins" name="vitamins" id="vitaminsFood" required data-type="number" />
+							<label for="vitaminsFood" class="form__label"
+								>Vitamins <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
+							></label>
+						</div>
+						<div class="form__group field add_custom_food">
 							<input type="input" class="form__field" placeholder="pricePerKg" name="pricePerKg" id="pricePerKgFood" required data-type="number" />
 							<label for="pricePerKg" class="form__label"
 								>Price per kg <span class="error-icon-create-food"><i class="fa-solid fa-circle-exclamation"></i></span
@@ -260,8 +267,13 @@
 					</div>
 					<div class="all_list_custom_food">
 						<h3 class="hd_custom_food">All custom food:</h3>
+						<div class="all_list_custom_food_render"></div>
 					</div>
 				</div>
+			</section>
+			<section class="calculate_min_cost_during_diet_win">
+				<div class="close_win_calculate_min_cost"><i class="fa-solid fa-xmark fa-2x" style="color: #fff"></i></div>
+				<div class="calculate_min_cost_diet_win_render"></div>
 			</section>
 		</main>
 	</body>

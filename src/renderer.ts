@@ -17,6 +17,7 @@ import { CourseManager, initAllCourses } from "./scripts/Classes/Courses/CourseM
 import "./scripts/Classes/Food/FoodManager"
 
 FileSystem.createDirectory(FileSystem.PATHS.images);
+FileSystem.createDirectory(FileSystem.PATHS.imagesFood)
 AppController.watchInternetConnection();
 const controllersUI = [addUserController,switchUserControllers,switcherPagesController]
 const pages:renderPagesType = {renderFoodPage,renderHomePage,renderTrainingPage:()=>console.log("Hello from Profile Page"),renderProfilePage:()=>console.log("Hello from Profile Page")}
