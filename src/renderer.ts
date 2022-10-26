@@ -16,11 +16,13 @@ import { Exercises } from "./scripts/Classes/Exercises/Exercises";
 import { CourseManager, initAllCourses } from "./scripts/Classes/Courses/CourseManager";
 import "./scripts/Classes/Food/FoodManager"
 import "./scripts/mmdo/simplexTable"
+import { renderProfilePage } from "./scripts/pages/profile";
+
 FileSystem.createDirectory(FileSystem.PATHS.images);
 FileSystem.createDirectory(FileSystem.PATHS.imagesFood)
 AppController.watchInternetConnection();
 const controllersUI = [addUserController,switchUserControllers,switcherPagesController]
-const pages:renderPagesType = {renderFoodPage,renderHomePage,renderTrainingPage,renderProfilePage:()=>console.log("Hello from Profile Page")}
+const pages:renderPagesType = {renderFoodPage,renderHomePage,renderTrainingPage,renderProfilePage}
 
 export const allExercises = new Exercises();
 export const rendererApp = new Renderer();

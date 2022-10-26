@@ -96,7 +96,7 @@ function fillMatrix(dataLimLeft: Array<number>, dataLimRight: Array<number>, dat
 	// dataSymbol.forEach((item,index)=>{
 	// 	console.log(matrix[index])
 	// })
-	moduleSimplexTable(matrix,arrayMainFunction)
+	moduleSimplexTable(matrix,arrayMainFunction,countX,countLimitation)
 //	console.log(matrix,arrayMainFunction);
 }
 

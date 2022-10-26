@@ -1,0 +1,50 @@
+.header_data_user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	.wrapper_img_data_user {
+		img {
+			border-radius: 50%;
+			max-width: 200px;
+			min-width: 200px;
+			max-height: 200px;
+			min-height: 200px;
+		}
+	}
+
+	.name_data_user {
+		font-weight: bold;
+		font-size: 25px;
+	}
+    .id_data_user{
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}
+.render_zone_for_current_user_data {
+	padding: 100px 0;
+}
+.detail_data_user{
+    margin-top: 50px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2,1fr);
+    margin-left: auto;
+    margin-right: auto;
+    grid-gap: 10px;
+    div{
+        background-color: #fff;
+        border-radius: 20px;
+        //max-width: 70%;
+        padding: 25px 10px;
+    }
+}
+.date_register_current_user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 20px;
+}

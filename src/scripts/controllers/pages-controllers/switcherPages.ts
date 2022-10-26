@@ -15,6 +15,7 @@ const initTabControls = (swiper: any) => {
 			swiper.slideTo(tab.dataset.tab);
 		});
 	});
+	swiper.slideTo(4)
 };
 
 const initTabs = () => {
@@ -22,9 +23,10 @@ const initTabs = () => {
 		speed: 800,
 		autoHeight: true,
 		allowTouchMove: true,
+
 	
 	});
-
+	
 	tabsSwiper.on('slideChange', function () {
 		//console.log(tabsSwiper.activeIndex)
 		let tab = switchers[tabsSwiper.activeIndex]
@@ -35,6 +37,7 @@ const initTabs = () => {
 export const switcherPagesController = () => {
 	initTabs();
 	initTabControls(tabsSwiper);
+
 };
 
 
