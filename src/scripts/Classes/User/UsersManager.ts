@@ -70,7 +70,12 @@ export class UsersManager {
 		this.saveUsers();
 		
 	}
-
+	public removeCurrentUser(){
+		let index = this._users.indexOf(this._activeUser);
+		console.log(index)
+		this._users.splice(index, 1);
+		this.saveUsers();
+	}
 	public clearData(){
 		this._users = []
 	}

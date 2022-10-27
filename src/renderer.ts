@@ -32,7 +32,7 @@ courseManager.initCourses(initAllCourses());
 rendererApp.initRenderPages(pages)
 rendererApp.initControllers(controllersUI)
 rendererApp.startControllers();
-rendererApp.renderAllPages();
+//rendererApp.renderAllPages();
 
 
 

@@ -6,7 +6,7 @@ import {  Exercise, Exercises } from "./../Classes/Exercises/Exercises";
 import customImg from "./../../assets/images/custom.jpg";
 import { usersManager } from "../Classes/User/UsersManager";
 import { CourseManager } from "./../Classes/Courses/CourseManager";
-import { allExercises, courseManager } from "../../renderer";
+import { allExercises, courseManager, rendererApp } from "../../renderer";
 const currentCourseSection = document.querySelector(".current_course_section");
 const currentCourseWrapperRender = document.querySelector<HTMLElement>(".current_course_wrapper_render");
 const closeWinCurrentCourse = document.querySelector<HTMLElement>(".close_win_current_course");
@@ -117,6 +117,7 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
 			activeUser.FollowCourse(currentCourse.data.id)
 			_btnText.textContent = "Unfollow"
 		}
+		rendererApp.getPage.renderProfilePage();
 		usersManager.saveUsers();
 		console.log(usersManager.getctiveUser)
 	})

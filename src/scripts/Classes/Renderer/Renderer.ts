@@ -23,4 +23,7 @@ export default class Renderer {
 			callback();
 		});
 	}
+	public get getPage(){
+		return this.renderPages;
+	}
 }

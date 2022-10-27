@@ -10,6 +10,7 @@ import { path, uuidv4 } from "../requiredLib/requiredLib";
 import FileSystem from "../Classes/FileSystem/FileSystem";
 import { FoodItem } from "../Classes/Food/FoodItem";
 import "./../mmdo/init"
+import { rendererApp } from "./../../renderer";
 
 const currentMealSection = document.querySelector<HTMLElement>(".current_meal_section");
 const renderZoneFood = document.querySelector<HTMLElement>(".render_zone_for_user_data");
@@ -145,6 +146,7 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
 	document.querySelector(".save-for-current-meal").addEventListener("click", () => {
 		usersManager.editMealForActiveUser(data.id, arrayForMyActiveFood);
 		rendererMyFoodList(document.querySelector(".render_current_food_list_user"), foodManager, activeUser, data);
+		rendererApp.getPage.renderProfilePage();
 	});
 };
 

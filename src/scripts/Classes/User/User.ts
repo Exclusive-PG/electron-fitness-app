@@ -33,4 +33,19 @@ export default class User {
 				return this._data.food.dinner;
 		}
 	}
+	public getCurrentUserActivity() {
+		switch (this._data.lvlActivity) {
+			case 0:
+				return "Sedentary";
+			case 1:
+				return "Workout 1-3 times a week";
+			case 2:
+				return "Workout 3-5 times a week";
+			case 3:
+				return "Workout 6-7 times a week";
+			case 4:
+				return "High loads every day";
+		}
+	}
+	
 }
