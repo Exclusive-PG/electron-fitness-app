@@ -7,11 +7,13 @@ import { path, uuidv1 } from "../../requiredLib/requiredLib";
 import Calculating from "../../Classes/Calc/Calculating";
 import { renderUsersList } from "./switchUser";
 import { rendererApp } from "../../../renderer";
+import { logoutUserSection } from "./logoutUser";
 
 const addNewUserBtn = document.querySelector<HTMLElement>(".add_new_user");
 const switchUserBtn = document.querySelector<HTMLElement>(".choose_another_user");
 const cancelRegForm = document.querySelector<HTMLElement>(".cancel_reg_new_user");
 const WrapperLoginForm = document.querySelector<HTMLElement>(".wrapper_create_login_user");
+const LoginSection = document.querySelector<HTMLElement>(".create_login_user");
 const FormElement = document.querySelector<HTMLElement>(".form-create-user");
 const dropdowns = document.querySelectorAll<HTMLElement>(".dropdown");
 const addImageUserBtn = document.querySelector<HTMLElement>(".add_user_image");
@@ -78,7 +80,7 @@ const validateAndCreateUser = () => {
 		let IdUserGoal = usersManager.getIdUserGoal((document.getElementById("goal") as HTMLInputElement).value);
 		let dailyCalorieIntake = Calculating.getFullTestDailyCalorieIntake({ age: age, gender: _gender, height: height, lvlActivy: lvlActivity, weight: weight }, IdUserGoal);
 		let resultBodyMassIndex = Calculating.getBodyMassIndex({ weight, height });
-		let recommendedCalorieIntake = Calculating.calculateFullRecommendedMealCalorieIntake(dailyCalorieIntake._dailyCalories,{breakfast:30,lunch:45,dinner:25},IdUserGoal)
+		let recommendedCalorieIntake = Calculating.calculateFullRecommendedMealCalorieIntake(dailyCalorieIntake._dailyCalories, { breakfast: 30, lunch: 45, dinner: 25 }, IdUserGoal);
 		let date = new Date().toDateString();
 
 		let _testDailyCalorieIntake: foodUser = {
@@ -93,7 +95,6 @@ const validateAndCreateUser = () => {
 			lastUpdate: date,
 		};
 
-
 		_data = {
 			username: (document.getElementById("name") as HTMLInputElement).value,
 			age,
@@ -104,7 +105,12 @@ const validateAndCreateUser = () => {
 			goal: { txt: (document.getElementById("goal") as HTMLInputElement).value, status: IdUserGoal },
 			lvlActivity: lvlActivity,
 			courses: [],
-			food: { breakfast: [], dinner: [], lunch: [],recommendedCalorie:{breakfast:recommendedCalorieIntake.breakfast,dinner:recommendedCalorieIntake.dinner,lunch:recommendedCalorieIntake.lunch} },
+			food: {
+				breakfast: [],
+				dinner: [],
+				lunch: [],
+				recommendedCalorie: { breakfast: recommendedCalorieIntake.breakfast, dinner: recommendedCalorieIntake.dinner, lunch: recommendedCalorieIntake.lunch },
+			},
 			history: [],
 			test: {
 				dailyCalorieIntake: _testDailyCalorieIntake,
@@ -147,12 +153,13 @@ const initEvents = () => {
 	});
 };
 
-
 export function acceptedRegisterUser() {
 	cancelRegLogin();
 	setTimeout(() => {
 		WrapperLoginForm.style.display = "none";
+		LoginSection.style.display = "none";
 		rendererApp.renderAllPages();
+		logoutUserSection();
 	}, 1000);
 }
 
@@ -162,6 +169,7 @@ function cancelRegLogin() {
 	cancelRegForm.classList.remove("active");
 	switchUserBtn.style.display = "flex";
 	addNewUserBtn.style.display = "flex";
+	LoginSection.style.display="block"
 	switchUserForm.classList.remove("active");
 	addImageUserBtn.innerHTML = `<i class="fa-solid fa-user-plus fa-2x "></i>`;
 	avatarUser = {

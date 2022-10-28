@@ -2,11 +2,15 @@ import User from "../Classes/User/User";
 import { usersManager } from "../Classes/User/UsersManager";
 import FoodManager, { foodManager } from './../Classes/Food/FoodManager';
 
+
+
+
 function renderCurrentProfile(outerPlace: HTMLElement, activeUser: User,foodManager:FoodManager) {
     //breakfast
     const  caloriesBreakfast  = foodManager.calculateTotalNutriens(activeUser.about.food.breakfast);
     const  caloriesLunch  = foodManager.calculateTotalNutriens(activeUser.about.food.lunch);
     const  caloriesDinner  = foodManager.calculateTotalNutriens(activeUser.about.food.dinner);
+
     outerPlace.innerHTML = "";
 	outerPlace.innerHTML = `
     <div class="block_data_user">
@@ -14,6 +18,7 @@ function renderCurrentProfile(outerPlace: HTMLElement, activeUser: User,foodMana
             <div class="wrapper_img_data_user"><img src="${activeUser.about.image}"/></div>
             <div class="name_data_user">${activeUser.about.username}</div>
             <div class="id_data_user"><b>ID:</b> ${activeUser.about.id}</div>
+            <div class="date_register_current_user">Date register account: ${activeUser.about.dateRegister}</div>
             <div class="delete_account_current_user"><i class="fa-solid fa-trash-can fa-2x"></i></div>
         </header>
         <section class="detail_data_user">
@@ -27,7 +32,7 @@ function renderCurrentProfile(outerPlace: HTMLElement, activeUser: User,foodMana
             <div class="">Food: <br/><i class="fa-solid fa-wheat-awn"></i> Breakfast: ${caloriesBreakfast.calories} cal<br/><i class="fa-solid fa-wheat-awn"></i> Lunch: ${caloriesLunch.calories} cal<br/><i class="fa-solid fa-wheat-awn"></i> Dinner: ${caloriesDinner.calories} cal</div>
         </section>
         <footer>
-            <div class="date_register_current_user">Date register account: ${activeUser.about.dateRegister}</div>
+        
         </footer>
     </div>
 `;

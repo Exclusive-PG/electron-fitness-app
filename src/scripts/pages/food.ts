@@ -20,8 +20,17 @@ let avatarFoodItem = {
 	isAvatar: false,
 	src: "",
 };
+function toDateTime() {
+    let normalDate = new Date().toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
+    return normalDate;
+}
+
+
 const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) => {
 	console.log(outerPlace);
+	
+	console.log(toDateTime() === "10/28/2022")
+	
 	outerPlace.innerHTML = "";
 	const { food } = activeUser.about;
 
@@ -124,6 +133,7 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
         </div>
     </div>
     <div class="footer_wrapper_current_meal">
+	<button class="btn btn-shadow  eat_current_meal"><span>eat</span></button>
     <button class="btn btn-shine save-for-current-meal"><span>save</span></button>
     </div>
     `;

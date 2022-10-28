@@ -1,0 +1,44 @@
+
+.profile_logout_render{
+    position: absolute;
+    right: 80px;
+    top: 100px;
+    z-index: 9;
+
+    .block_logout_user{
+        background-color: #fff;
+        padding: 8px 25px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .logout_user_img_wrapper{
+        img{
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+        }
+    }
+    .logout_user_name{
+        font-size: 20px;
+        margin: 0 15px;
+        text-overflow: ellipsis;
+        overflow: hidden; 
+        width: 100px; 
+        white-space: nowrap;
+    }
+    .logout_user_btn{
+        transition:.2s all;
+        &:hover{
+            color: $MAIN_RED_COLOR;
+            cursor: pointer;
+        }
+    }
+    .logout_user_btn{
+        svg{
+            font-size: 20px;
+        }
+    }
+}

@@ -58,7 +58,22 @@ export type dataUser = {
 	image?: string;
 	dateRegister: string;
 };
-
+export type historyItemType = {
+	date:string | Date
+	burnedCalories:number
+	food:{
+		breakfast:historyItemForFoodType
+		lunch:historyItemForFoodType
+		dinner: historyItemForFoodType
+	}
+}
+export type historyItemForFoodType={
+	status:boolean
+	calories: number;
+	protein: number;
+	carbs: number;
+	fat: number;
+}
 export interface GoalUser {
 	status: EnumGoalUser;
 	txt: "Lose Weight" | "Maintain Weight" | "Gain Weight" | string;
