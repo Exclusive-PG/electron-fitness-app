@@ -46,7 +46,7 @@ export type dataUser = {
 	goal: GoalUser;
 	lvlActivity: number;
 	food: FoodUserData;
-	history: Array<any>;
+	history: Array<any> | Array<historyItemType>;
 	gender: genderUser;
 	test: {
 		dailyCalorieIntake: foodUser;

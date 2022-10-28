@@ -11,7 +11,7 @@ const renderDailyIntakeHomePage = (outerPlace: HTMLElement, currentUser: User) =
 				value: dailyCalorieIntake.calories.dailyCalorieIntake,
 				color: "#f44336",
 				eaten: dailyCalorieIntake.calories.eaten,
-				burned: dailyCalorieIntake.calories.burned,
+				burned:usersManager.getCurrentHistoryItem().burnedCalories,
 			},
 		];
 

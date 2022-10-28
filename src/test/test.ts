@@ -141,7 +141,7 @@ describe("Courses module", () => {
 	})
 	it("should return int number | count minutes course ( with breaks)",()=>{
 		const _countCountMinutes = 108
-		expect(ABSCourseTEST1.getAllTimeExercisesWithBreakes()).to.be.equal(_countCountMinutes);
+		expect(ABSCourseTEST1.getAllTimeExercisesWithBreaks()).to.be.equal(_countCountMinutes);
 	})
 	it("should return bool (true) | founded exercise by id",()=>{
 		expect(ABSCourseTEST1.currentExerciseById("abs-beginner-01")).to.be.an("object").that.is.not.empty;

@@ -3,20 +3,32 @@ import { Exercise } from "../Exercises/Exercises";
 
 export class CourseBase {
 	protected _dataCourse: dataCurrentCourse;
-	
+
 	constructor(dataCourse: dataCurrentCourse) {
 		this._dataCourse = dataCourse;
-		
 	}
 	public currentExerciseById(id: string): Exercise {
 		return this._dataCourse.exercises.filter((item) => item.getData.id === id)[0];
 	}
-	public getAllTimeExercisesWithBreakes(): number {
+	public getAllTimeExercisesWithBreaks(): number {
 		let totalExecutonTime = this._dataCourse.exercises.reduce((acc, item) => {
 			return acc + item.getData.ExecutionTime;
 		}, 0);
 
 		return this.calculateAllTimeExercisesWithBreaks(totalExecutonTime);
+	}
+	public getAllTimeExercises(): number {
+		let totalExecutonTime = this._dataCourse.exercises.reduce((acc, item) => {
+			return acc + item.getData.ExecutionTime;
+		}, 0);
+
+		return Math.round(totalExecutonTime / 60);
+	}
+	public getAllCaloriesCourse(): number {
+		let totalCalories = this._dataCourse.exercises.reduce((acc, item) => {
+			return acc + item.getData.caloriesBurned;
+		}, 0);
+		return totalCalories*2;
 	}
 	private calculateAllTimeExercisesWithBreaks(inputTotalExecutonTime: number): number {
 		return Math.round((this._dataCourse.exercises.length * 120 + (this._dataCourse.exercises.length - 1) * 30 - inputTotalExecutonTime) / 60);

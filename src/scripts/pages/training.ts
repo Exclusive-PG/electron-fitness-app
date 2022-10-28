@@ -2,7 +2,7 @@ import AppController from "../Classes/AppController/AppController";
 
 import { uuidv4 } from "../requiredLib/requiredLib";
 import { CourseBase } from "./../Classes/Courses/CourseBase";
-import {  Exercise, Exercises } from "./../Classes/Exercises/Exercises";
+import { Exercise, Exercises } from "./../Classes/Exercises/Exercises";
 import customImg from "./../../assets/images/custom.jpg";
 import { usersManager } from "../Classes/User/UsersManager";
 import { CourseManager } from "./../Classes/Courses/CourseManager";
@@ -67,17 +67,19 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
                 <div class="current_diffic_course">${data.lvlDifficulty !== 0 && renderlvlDifficulty(data.lvlDifficulty, 3)}</div>
             </div>
             <div class="name_current_course">Muscle type: ${data.muscleZone}</div>
-            <div class="data_about_current_course">${currentCourse.getAllTimeExercisesWithBreakes()} minutes</div>
+            <div class="data_about_current_course">${currentCourse.getAllTimeExercisesWithBreaks()} minutes with breaks</div>
             ${
-							CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser) ?
-							`<div class="controls_for_custom_course">
+							CourseManager.isCurrentUserCourse(currentCourse, usersManager.getctiveUser)
+								? `<div class="controls_for_custom_course">
 				<div class="delete_my_custom_course" data-id-for-delete=${data.id}><i class="fa-regular fa-trash-can"></i></div>
 				<div class="edit_my_custom_course" data-id-for-edit=${data.id}><i class="fa-regular fa-pen-to-square"></i></div>
 				</div>`
-				: ""
+								: ""
 						}
 						<div class="btn_follow_user"><span class="txt_for_btn_follow_user">${usersManager.getctiveUser.hasCurrentCourse(currentCourse.data.id) ? "Unfollow" : "Follow"}</span></div>
-        </div>
+						<button class="btn btn-shine btn_complete_workout">Complete</button>
+						</div>
+						
         <div class="right_block">
             <div class="exercises">${renderedExercises}</div>
             <div class="current_exercise_info_render">
@@ -99,30 +101,36 @@ function renderCurrentCourse(outerPlace: HTMLElement, currentCourse: CourseBase)
 			formCreateCourse.classList.add("active");
 			currentCourseSection.classList.remove("active");
 			document.querySelector<HTMLElement>(".container_switcher").style.display = "none";
-		//	setTimeout(() => {
-				let _idCourseForEdit = document.querySelector(".edit_my_custom_course").getAttribute("data-id-for-edit");
-				editCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises, courseManager.currentBaseById(_idCourseForEdit));
+			//	setTimeout(() => {
+			let _idCourseForEdit = document.querySelector(".edit_my_custom_course").getAttribute("data-id-for-edit");
+			editCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises, courseManager.currentBaseById(_idCourseForEdit));
 			//}, 400);
 		});
 	}
-	//add event for <Follow-Unfollow> Button 
-	document.querySelector(".txt_for_btn_follow_user").addEventListener("click",()=>{
-		const activeUser = usersManager.getctiveUser
-		const _btnText = document.querySelector(".txt_for_btn_follow_user")
-		console.log(activeUser.hasCurrentCourse(currentCourse.data.id))
-		if(activeUser.hasCurrentCourse(currentCourse.data.id)){
-			activeUser.UnfollowCourse(currentCourse.data.id)
-			_btnText.textContent = "Follow"
-		}else{
-			activeUser.FollowCourse(currentCourse.data.id)
-			_btnText.textContent = "Unfollow"
+	//add event for <Follow-Unfollow> Button
+	document.querySelector(".txt_for_btn_follow_user").addEventListener("click", () => {
+		const activeUser = usersManager.getctiveUser;
+		const _btnText = document.querySelector(".txt_for_btn_follow_user");
+		console.log(activeUser.hasCurrentCourse(currentCourse.data.id));
+		if (activeUser.hasCurrentCourse(currentCourse.data.id)) {
+			activeUser.UnfollowCourse(currentCourse.data.id);
+			_btnText.textContent = "Follow";
+		} else {
+			activeUser.FollowCourse(currentCourse.data.id);
+			_btnText.textContent = "Unfollow";
 		}
 		rendererApp.getPage.renderProfilePage();
 		usersManager.saveUsers();
-		console.log(usersManager.getctiveUser)
-	})
+		console.log(usersManager.getctiveUser);
+	});
 
-
+	//add event for <Complete course>
+	document.querySelector(".btn_complete_workout").addEventListener("click", () => {
+		//console.log(currentCourse.getAllCaloriesCourse());
+		usersManager.addHistoryBurnedCalories(currentCourse.getAllCaloriesCourse())
+		console.log(usersManager.getCurrentHistoryItem())
+		rendererApp.getPage.renderHomePage();
+	});
 	document.querySelectorAll(".item_current_exercises").forEach((item) => {
 		item.addEventListener("click", () => {
 			document.querySelector(".current_exercise_info_render").classList.add("active");
@@ -262,44 +270,42 @@ function editCustomCourse(outputPlace: HTMLElement, exercises: Exercises, custom
 	nameCustomCourseInput.value = customCourse.data.name;
 	muscleTypeInput.value = customCourse.data.muscleZone.charAt(0).toUpperCase() + customCourse.data.muscleZone.slice(1);
 	let arrayCurrentExerciseEdit: Exercise[] = [];
-	customCourse.data.exercises.forEach(item=>{
-		arrayCurrentExerciseEdit.push(item)
-	})
+	customCourse.data.exercises.forEach((item) => {
+		arrayCurrentExerciseEdit.push(item);
+	});
 	outputPlace.innerHTML = "";
 
 	customCourse.data.exercises.forEach((item) => {
 		console.log(item.getData.id);
 	});
 	// render list of exercises
-	exercises.getExercises.forEach((itemExercise,index:number) => {
+	exercises.getExercises.forEach((itemExercise, index: number) => {
 		const { getData } = itemExercise;
 		outputPlace.innerHTML += `
-            <div class="exercise_item_edit_course ${customCourse.data.exercises.some((item)=>item.getData.id === itemExercise.getData.id) ? "active" : ""}" data-id-exercise-edit-course="${getData.id}">
+            <div class="exercise_item_edit_course ${
+							customCourse.data.exercises.some((item) => item.getData.id === itemExercise.getData.id) ? "active" : ""
+						}" data-id-exercise-edit-course="${getData.id}">
             <div class="exercise_item_name">${getData.name}</div>
             <div class="exercise_item_diff">${renderlvlDifficulty(getData.lvlDifficulty.id, 3)}</div>
             <div class="exercise_item_muscletype">${getData.muscleType}</div>
             </div>
         `;
-		document.querySelectorAll(".exercise_item_edit_course")[index].addEventListener("click",()=>{
-			
-		})
-
+		document.querySelectorAll(".exercise_item_edit_course")[index].addEventListener("click", () => {});
 	});
 	console.log(document.querySelectorAll(".exercise_item_edit_course"));
 	// add event for every exercise item
-		document.querySelectorAll(".exercise_item_edit_course").forEach((item) => {
-			item.addEventListener("click", () => {
-				item.classList.toggle("active");
-				let _idExercise = item.getAttribute("data-id-exercise-edit-course");
-				let element = exercises.findById(_idExercise);
-				let index = arrayCurrentExerciseEdit.map((e) => e.getData.id).indexOf(_idExercise);
-				console.log(index);
-				item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : index > -1 && arrayCurrentExerciseEdit.splice(index, 1);
-				console.log(_idExercise);
-				console.log(arrayCurrentExerciseEdit);
-			});
+	document.querySelectorAll(".exercise_item_edit_course").forEach((item) => {
+		item.addEventListener("click", () => {
+			item.classList.toggle("active");
+			let _idExercise = item.getAttribute("data-id-exercise-edit-course");
+			let element = exercises.findById(_idExercise);
+			let index = arrayCurrentExerciseEdit.map((e) => e.getData.id).indexOf(_idExercise);
+			console.log(index);
+			item.classList.contains("active") ? arrayCurrentExerciseEdit.push(element) : index > -1 && arrayCurrentExerciseEdit.splice(index, 1);
+			console.log(_idExercise);
+			console.log(arrayCurrentExerciseEdit);
 		});
-
+	});
 
 	//TO DO
 	document.querySelector(".edit-custom-course").addEventListener("click", () => {
@@ -336,7 +342,6 @@ function readyForCreate() {
 	document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
 	setTimeout(() => {
 		createCustomCourse(document.querySelector<HTMLElement>(".render_all_exercises"), allExercises);
-
 	}, 400);
 }
 export function renderTrainingPage() {
@@ -352,7 +357,10 @@ export function renderTrainingPage() {
 	});
 	cancelCreateCourseBtn.addEventListener("click", () => {
 		console.log("click");
-		if (document.querySelector(".hd_create_course").textContent === "Edit Course") {console.log("YES"); readyForCreate()};
+		if (document.querySelector(".hd_create_course").textContent === "Edit Course") {
+			console.log("YES");
+			readyForCreate();
+		}
 		formCreateCourse.classList.remove("active");
 		document.querySelector<HTMLElement>(".container_switcher").style.display = "block";
 		console.log(courseManager.allCourses);
@@ -369,5 +377,3 @@ export function renderTrainingPage() {
 		});
 	});
 }
-
-

@@ -438,7 +438,15 @@
 
 .btn_follow_user{
 	margin-top: 50px;
+	width: 100%;
+	padding: 0 !important;
 }
+.btn_complete_workout{
+	width: 100%;
+	margin-top: 20px;
+}
+
+
 @media screen and (max-width: 991px) {
   .button-75 {
     font-size: 15px;
@@ -449,11 +457,6 @@
     line-height: 50px;
   }
 }
-
-
-
-
-
 
 
 

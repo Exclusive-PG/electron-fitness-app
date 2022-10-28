@@ -13,7 +13,10 @@ export default class  AppController {
         window.removeEventListener("online", this.isOnline);
         window.removeEventListener("offline", this.isOnline);
 	}
-
+	static dateTime() {
+		let normalDate = new Date().toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
+		return normalDate;
+	}
 	static pushScript(script:Function){
 		this._scripts.push(script)
 	}

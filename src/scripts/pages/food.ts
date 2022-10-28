@@ -20,16 +20,13 @@ let avatarFoodItem = {
 	isAvatar: false,
 	src: "",
 };
-function toDateTime() {
-    let normalDate = new Date().toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
-    return normalDate;
-}
+
 
 
 const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) => {
 	console.log(outerPlace);
 	
-	console.log(toDateTime() === "10/28/2022")
+	//console.log(toDateTime() === "10/28/2022")
 	
 	outerPlace.innerHTML = "";
 	const { food } = activeUser.about;

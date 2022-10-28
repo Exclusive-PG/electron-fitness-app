@@ -160,6 +160,8 @@ export function acceptedRegisterUser() {
 		LoginSection.style.display = "none";
 		rendererApp.renderAllPages();
 		logoutUserSection();
+		usersManager.initHistoryItem()
+		//usersManager.addHistoryBurnedCalories(100)
 	}, 1000);
 }
 
