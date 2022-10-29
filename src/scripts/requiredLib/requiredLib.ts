@@ -3,3 +3,6 @@ export const os = require("os");
 export const fs = require("fs");
 export const path = require("path");
 export const { shell } = require("electron");
+export const axios = require("axios")
+
+

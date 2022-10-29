@@ -21,7 +21,9 @@ let avatarFoodItem = {
 	src: "",
 };
 
-
+///////////////
+///////		BUG WITH UPLOAD IMG 
+//////////
 
 const renderFoodPageLocal = (outerPlace: HTMLElement, activeUser: User | null) => {
 	console.log(outerPlace);

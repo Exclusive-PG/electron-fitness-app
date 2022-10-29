@@ -155,14 +155,14 @@ const initEvents = () => {
 
 export function acceptedRegisterUser() {
 	cancelRegLogin();
-	setTimeout(() => {
+	//setTimeout(() => {
 		WrapperLoginForm.style.display = "none";
 		LoginSection.style.display = "none";
+		usersManager.initHistoryItem()
 		rendererApp.renderAllPages();
 		logoutUserSection();
-		usersManager.initHistoryItem()
 		//usersManager.addHistoryBurnedCalories(100)
-	}, 1000);
+//	}, 1000);
 }
 
 function cancelRegLogin() {

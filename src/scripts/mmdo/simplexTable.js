@@ -1,53 +1,42 @@
+export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlace) => {
+	console.log("gop");
+	console.log(outerPlace);
+	("use strict");
+	let matrix, horisont_x, vertical_x, Fun, iteration, min_k1_num, inp_val, min_k_num;
 
-
-
-export const moduleSimplexTable = (InputMatrix,MainFunc,maxCountX,maxLimitation) => {
-    console.log("gop")
-"use strict";
-let matrix,
-	horisont_x ,
-	vertical_x,
-	Fun,
-	iteration,
-	min_k1_num,
-	inp_val,
-	min_k_num
-
-// Начмнаем считать
+	// Начмнаем считать
 
 	// Очищаем поле результатов
-	document.querySelector("#result").innerHTML = "";
-	
-
+	outerPlace.innerHTML = "";
 
 	/*################## ШАГ 0 ##################*/
 	// Перебираем все ограничения
 
-    matrix = InputMatrix
+	matrix = InputMatrix;
 
-	console.log(matrix)
+	console.log(matrix);
 	// Массив индексов по горизонтале
 	horisont_x = [];
 	for (let i = 0; i < maxCountX + 1; i++) {
 		horisont_x[i] = i;
 	}
-	console.log("horisont_x",horisont_x)
+	console.log("horisont_x", horisont_x);
 
 	// Массив индексов по вертикале
 	vertical_x = [];
 	for (let i = 0; i < maxLimitation; i++) {
 		vertical_x[i] = i + maxCountX;
 	}
-	console.log("vertical_x",vertical_x)
+	console.log("vertical_x", vertical_x);
 
 	// Матрица свободных членов
 	let free = [];
 	for (let k = 0; k < matrix.length; k++) {
 		free[k] = matrix[k][maxCountX];
 	}
-	
+
 	free[matrix.length] = 0;
-	console.log("free",free)
+	console.log("free", free);
 
 	// Последняя строка сама функция  Матрица исходных значений
 	Fun = MainFunc;
@@ -56,7 +45,7 @@ let matrix,
 	// Добавим ее в основную матрицу
 	matrix.push(Fun);
 
-	console.log("matrix",matrix)
+	console.log("matrix", matrix);
 	// Есть ли  отрицательные элементы в матрице свободных членов ?
 	if (minelm(free) < 0) {
 		iteration = 0; // счетчик итераций, для защиты от зависаний
@@ -65,31 +54,30 @@ let matrix,
 	// Есть ли  отрицательные элементы в коэфициентах функции (последняя строчка) ?
 	if (minelm(matrix[matrix.length - 1], false, true) < 0) {
 		iteration = 0; // счетчик итераций, для защиты от зависаний
-	 	step2(); // Переходим к шагу 2
+		step2(); // Переходим к шагу 2
 	}
-	 print_table(matrix,horisont_x,vertical_x); // Отображаем итоговую таблицу
+	print_table(matrix, horisont_x, vertical_x,outerPlace); // Отображаем итоговую таблицу
 	results(); // Отображаем результаты в понятном виде
 
 	/*################## ШАГ1 ##################*/
 	function step1() {
 		iteration++;
 		// находим ведущую строку
-		 min_k_num = minelm(free, true, true);
-		console.log("min_k_num",min_k_num)
-		console.log(`matrix[${min_k_num}]`,matrix[min_k_num])
+		min_k_num = minelm(free, true, true);
+		console.log("min_k_num", min_k_num);
+		console.log(`matrix[${min_k_num}]`, matrix[min_k_num]);
 		// находим ведущий столбец
 
 		if (minelm(matrix[min_k_num]) < 0) {
-			
-			 min_k1_num = minelm(matrix[min_k_num], true, true);
-			console.log(min_k1_num,"min_k1_num")
+			min_k1_num = minelm(matrix[min_k_num], true, true);
+			console.log(min_k1_num, "min_k1_num");
 		} else {
 			alert("Условия задачи несовместны и решений у нее нет");
 			return false;
 		}
 		// Печатаем таблицу и выделяем на ней ведущие строку и столбец
-		console.log(`ведущие строку и столбец : ROW ${min_k_num} , COL ${min_k1_num}`)
-		print_table(matrix,horisont_x,vertical_x, min_k_num, min_k1_num);
+		console.log(`ведущие строку и столбец : ROW ${min_k_num} , COL ${min_k1_num}`);
+		print_table(matrix, horisont_x, vertical_x,outerPlace, min_k_num, min_k1_num);
 		// Обновляем индексы элементов по горизонтале и вертикале
 		let tmp = horisont_x[min_k1_num];
 		horisont_x[min_k1_num] = vertical_x[min_k_num];
@@ -101,7 +89,7 @@ let matrix,
 		for (let k = 0; k < matrix.length; k++) {
 			free[k] = matrix[k][maxCountX];
 		}
-		console.log("ЗАМЕНА FREE",free)
+		console.log("ЗАМЕНА FREE", free);
 		if (minelm(free, false, true) < 0 && iteration < 10)
 			// нужно ли еще разок пройти второй шаг ?
 			//if (confirm("продолжаем Шаг 1_"+iteration+" ?")) // Да здравсвует рекурсия, но спросим (чтобы комп не завис)
@@ -132,7 +120,7 @@ let matrix,
 		min_k1_num = min_col_num;
 		min_k_num = min_row_num;
 		// Печатаем таблицу и выделяем на ней ведущие строку и столбец
-		print_table(matrix,horisont_x,vertical_x, min_k_num, min_k1_num);
+		print_table(matrix, horisont_x, vertical_x,outerPlace, min_k_num, min_k1_num);
 		// Обновляем индексы элементов по горизонтале и вертикале
 		tmp = horisont_x[min_k1_num];
 		horisont_x[min_k1_num] = vertical_x[min_k_num];
@@ -199,29 +187,29 @@ let matrix,
 		}
 		let main_result = "";
 		// Минимум(максимум) функции
-		let res= 1;
+		let res = 1;
 		if (res > 0) main_result = "min F =" + matrix[matrix.length - 1][maxCountX] * -1;
 		else main_result = "max F =" + matrix[matrix.length - 1][maxCountX];
 
-		document.querySelector("#result").innerHTML += (nulls + vars + "<br />" + main_result);
+		outerPlace.innerHTML += nulls + vars + "<br />" + main_result;
 	}
 	return false;
 };
 
 // // Вывод таблицы.
-function print_table(arr,horisont_x,vertical_x, row, col) {
+function print_table(arr, horisont_x, vertical_x,outerPlace, row, col) {
 	let max_i = arr.length;
 	let max_j = arr[0].length;
 	let html_table = "";
 	let html_head = "<th></th>";
 	// заголовки
-	console.log("PRINT")
+	console.log("PRINT");
 	//console.log("2222",horisont_x)
 	//console.log("HORISONT_X",horisont_x)
 	for (let j = 0; j < max_j - 1; j++) {
 		html_head += "<th>X" + (horisont_x[j] + 1) + "</th>";
 	}
-	html_head += "<th>Своб.члены</th>";
+	html_head += "<th>Вільні члени</th>";
 	html_head = "<thead><tr>" + html_head + "</tr></thead>";
 	// Элементы
 	for (let i = 0; i < max_i; i++) {
@@ -237,9 +225,10 @@ function print_table(arr,horisont_x,vertical_x, row, col) {
 		}
 		html_table += "</tr>";
 	}
-	console.log("<table>" + html_head + html_table + "</table>")
+	console.log("<table>" + html_head + html_table + "</table>");
 	//$("#result").append("<table>" + html_head + html_table + "</table>");
-	document.querySelector("#result").innerHTML += "<table>" + html_head + html_table + "</table>"
+	//outerPlace.innerHTML += "<table class=>" + html_head + html_table + "</table>";
+	outerPlace.innerHTML += `<table class="simplex_table"> ${html_head}  ${html_table}  </table>`;
 	// Выделяем колонку, если указана
 	// if (col !== undefined)
 	// 	$("table:last tr").each(function () {
@@ -254,7 +243,7 @@ function print_table(arr,horisont_x,vertical_x, row, col) {
 // Поиск минимального элемента
 //minelm(free) < 0
 function minelm(array, dispayNum, not_last) {
-	console.log(array)
+	console.log(array);
 	let m = array[0];
 	let num = 0;
 	let len = 0;
@@ -271,7 +260,7 @@ function minelm(array, dispayNum, not_last) {
 			num = i;
 		}
 	}
-	
+
 	// Выводим номер минимального
 	if (dispayNum) {
 		//console.log("num",num)

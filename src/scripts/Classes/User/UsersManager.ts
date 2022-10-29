@@ -76,6 +76,7 @@ export class UsersManager {
 		this.saveUsers();
 	}
 	public initHistoryItem() {
+		let isItemToday = false;
 		let _obj = {
 			date: AppController.dateTime(),
 			burnedCalories: 0,
@@ -86,19 +87,24 @@ export class UsersManager {
 			},
 		};
 
-		(this._activeUser.about.history.length === 0) && this._activeUser.about.history.push(_obj)
-		
-		this._activeUser.about.history.forEach((item: historyItemType) => {
-			if (item.date !== AppController.dateTime()) {
-				this._activeUser.about.history.push();
-			}else{
-				console.log("founded data")
-			}
+		if (this._activeUser.about.history.length === 0) {
+			this._activeUser.about.history.push(_obj);
+			this.saveUsers();
+			return;
+		}
+
+
+		isItemToday = this._activeUser.about.history.every((item: historyItemType) => {
+			if (item.date === AppController.dateTime()) return false;
+			else return true;
 		});
 
+	
+		isItemToday && this._activeUser.about.history.push(_obj);
+		console.log(this._activeUser.about.history)
 		this.saveUsers();
 	}
-	public addHistoryBurnedCalories(burnedCalories:number){
+	public addHistoryBurnedCalories(burnedCalories: number) {
 		this._activeUser.about.history.forEach((item: historyItemType) => {
 			if (item.date === AppController.dateTime()) {
 				item.burnedCalories += burnedCalories;
@@ -106,7 +112,7 @@ export class UsersManager {
 		});
 		this.saveUsers();
 	}
-	public getCurrentHistoryItem():historyItemType{
+	public getCurrentHistoryItem(): historyItemType {
 		return this._activeUser.about.history.find((item: historyItemType) => item.date === AppController.dateTime());
 	}
 	public clearData() {
