@@ -278,6 +278,8 @@ function renderCustomFoodItems (outerPlace:HTMLElement,foodManager:FoodManager){
 
 }
 
+
+
 export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => {
 	const createCustomFoodItemWin = document.querySelector(".create_custom_food_item");
 	renderFoodPageLocal(renderZoneFood, activeUser);
@@ -288,15 +290,16 @@ export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => 
 		createCustomFoodItemWin.classList.add("active");
 	});
 	addFoodItemWindow();
-	document.querySelector(".img_add_custom_food").addEventListener("click", () => {
-		ipcRenderer.send("upload_file");
-	});
+
     renderCustomFoodItems(document.querySelector(".all_list_custom_food_render"),foodManager)
 	
 	
 };
 
-ipcRenderer.on("upload_file", (event, arg) => {
+document.querySelector(".img_add_custom_food").addEventListener("click", () => {
+	ipcRenderer.send("upload_img_food");
+});
+ipcRenderer.on("upload_img_food", (event, arg) => {
 	console.log(arg.filePath);
 	document.querySelector(".img_add_custom_food").innerHTML = `<img src="${arg.filePath}" height="150px" width="250px" alt="" class="image_food">`;
 	avatarFoodItem = {

@@ -104,7 +104,7 @@
 		background-color: rgba($color: #e1e1e1, $alpha: 0.7);
 	}
 }
-.btn_for_calc_min_cost{
+.btn_for_calc_min_cost {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -362,12 +362,21 @@
 }
 
 .result_simplex_table {
-    max-height: 45vh;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    text-align: center;
+	max-height: 45vh;
+	overflow-y: scroll;
+	flex-direction: column-reverse;
+	display: flex;
+	margin: 0 auto;
+	text-align: center;
+}
+.tables_simplex_table{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.variables_simplex_table{
+	font-size: 20px;
+    font-weight: bold;
 }
 .result_simplex_table::-webkit-scrollbar {
 	width: 20px;
@@ -387,7 +396,6 @@ table th {
 	border-collapse: collapse;
 	border: 1px solid #777777;
 	padding: 20px;
-	background-color: #fff;
 }
 table {
 	margin: 20px 0px;
@@ -396,13 +404,42 @@ table th {
 	background: #042f77;
 	color: #ffffff;
 }
-table .selected {
-	background: #d0d8e5;
-}
-table .selected .selected {
-	background: #a7b6d0;
+
+table tr {
+	background-color: #fff;
 }
 
+table .selected {
+	background-color: #d0d8e5 !important;
+	color: red;
+	font-size: 18px;
+	font-weight: bold;
+}
+table .selected .selected {
+	background-color: #2ecc71 !important;
+	color: #fff !important;
+}
+.btn-controls-render {
+	position: absolute;
+    right: 40px;
+    bottom: 46%;
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	margin: 10px 0;
+	div {
+		color: #fff;
+		padding: 5px;
+		font-size: 25px;
+		margin-right: 20px;
+		transition: .2s all ease-in-out;
+		&:hover{
+			cursor: pointer;
+			color: $MAIN_RED_COLOR;
+			transform: scale(1.3);
+		}
+	}
+}
 @media (max-width: 1350px) {
 	.btn_for_create_your_food_item {
 		bottom: 83%;

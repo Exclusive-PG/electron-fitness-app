@@ -1,7 +1,10 @@
 import { moduleSimplexTable } from "./simplexTable";
+import { Matrix } from './Matrix';
 
 let arrayMainFunction: number[]  = []
-let matrix: number[] | any[] = [];
+let countX = 4,countLimitation = 5;
+const matrix = new Matrix({countX});
+
 
 function renderCountXFunction(countX: number, outerPlace: HTMLElement) {
 	outerPlace.innerHTML = "";
@@ -36,7 +39,7 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		`;
 	});
 	document.querySelector(".btn_for_calc_min_cost").addEventListener("click", () => {
-		createMatrix(countLimitation);
+		matrix.createMatrix(countLimitation);
 		let _tempArrayLimLeft: any[] = [];
 		let _tempArrayRight: any[] = [];
 		let _tempArraySymbolLimitation: any[] = [];
@@ -58,49 +61,28 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		arrayMainFunction.push(0);
 		console.log(arrayMainFunction);
 
-		fillMatrix(_tempArrayLimLeft, _tempArrayRight,_tempArraySymbolLimitation, countX,countLimitation);
+		matrix.fillMatrix(_tempArrayLimLeft, _tempArrayRight,_tempArraySymbolLimitation, countX,countLimitation,arrayMainFunction);
+		renderZoomBtns(document.querySelector(".btn-controls-render"),document.querySelector(".result_simplex_table"))
 	});
 }
-function createMatrix(countLim: number) {
-	matrix = [];
-	for (let index = 0; index < countX+1; index++) {
-		matrix[index] = [];
-	}
-}
-function fillMatrix(dataLimLeft: Array<number>, dataLimRight: Array<number>, dataSymbol:Array<number>, countX: number,countLimitation:number) {
-	let _countGoal = countX;
-	let indexMatrix = 0;
-	console.log(dataLimLeft)
-	dataLimLeft.forEach((item, index) => {
-		if (_countGoal === index) {
-			indexMatrix++;
-			_countGoal += countX;
-		}
-		console.log(`  ${index}  === ${_countGoal} `)
-		matrix[indexMatrix].push(item);
-	});
-	dataLimRight.forEach((item,index)=>{
-		matrix[index].push(item)
+
+function renderZoomBtns(outerPlace:HTMLElement,modifyZone:HTMLElement){
+outerPlace.innerHTML = "";
+outerPlace.innerHTML += `
+<div class="zoom-in-table"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+<div class="zoom-out-table"><i class="fa-solid fa-magnifying-glass-minus"></i></div>
+`
+let modifyPadding:number = 0,step = 50,maxLimit = 400
+	document.querySelector(".zoom-out-table").addEventListener("click",()=>{
+			modifyPadding < maxLimit && (modifyPadding+=step)
+			modifyZone.style.padding = `0 ${modifyPadding}px`
 	})
-
-	for (let i = 0; i < countLimitation; i++) {
-		for (let j = 0; j < countX+1; j++) {
-			console.log(`${ matrix[i][j]} * ${dataSymbol[i]}`)
-			matrix[i][j] = matrix[i][j]*dataSymbol[i] 
-		
-		}
-		
-	}
-	//matrix[countLimitation] = arrayMainFunction
-
-	// dataSymbol.forEach((item,index)=>{
-	// 	console.log(matrix[index])
-	// })
-	moduleSimplexTable(matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".result_simplex_table"))
-//	console.log(matrix,arrayMainFunction);
+	document.querySelector(".zoom-in-table").addEventListener("click",()=>{
+		modifyPadding <= 0 ? (modifyPadding = 0) : (modifyPadding -=step) 
+		modifyZone.style.padding = `0 ${modifyPadding}px`
+})
 }
 
-let countX = 4,countLimitation = 5;
 renderCountXFunction(countX, document.querySelector(".inputs_x"));
 renderLimitationCount(countX, countLimitation, document.querySelector(".limitation_block"));
 //limitation_block

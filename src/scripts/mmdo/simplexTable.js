@@ -1,14 +1,9 @@
-export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlace) => {
-	console.log("gop");
-	console.log(outerPlace);
+export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlaceTable,outerPlaceVariables) => {
+
 	("use strict");
-	let matrix, horisont_x, vertical_x, Fun, iteration, min_k1_num, inp_val, min_k_num;
-
-	// Начмнаем считать
-
-	// Очищаем поле результатов
-	outerPlace.innerHTML = "";
-
+	let matrix, horisont_x, vertical_x, Fun, iteration, min_k1_num, min_k_num;
+	outerPlaceTable.innerHTML = "";
+	outerPlaceVariables.innerHTML = "";
 	/*################## ШАГ 0 ##################*/
 	// Перебираем все ограничения
 
@@ -56,7 +51,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		iteration = 0; // счетчик итераций, для защиты от зависаний
 		step2(); // Переходим к шагу 2
 	}
-	print_table(matrix, horisont_x, vertical_x,outerPlace); // Отображаем итоговую таблицу
+	print_table(matrix, horisont_x, vertical_x, outerPlaceTable); // Отображаем итоговую таблицу
 	results(); // Отображаем результаты в понятном виде
 
 	/*################## ШАГ1 ##################*/
@@ -77,7 +72,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		}
 		// Печатаем таблицу и выделяем на ней ведущие строку и столбец
 		console.log(`ведущие строку и столбец : ROW ${min_k_num} , COL ${min_k1_num}`);
-		print_table(matrix, horisont_x, vertical_x,outerPlace, min_k_num, min_k1_num);
+		print_table(matrix, horisont_x, vertical_x, outerPlaceTable, min_k_num, min_k1_num);
 		// Обновляем индексы элементов по горизонтале и вертикале
 		let tmp = horisont_x[min_k1_num];
 		horisont_x[min_k1_num] = vertical_x[min_k_num];
@@ -120,7 +115,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		min_k1_num = min_col_num;
 		min_k_num = min_row_num;
 		// Печатаем таблицу и выделяем на ней ведущие строку и столбец
-		print_table(matrix, horisont_x, vertical_x,outerPlace, min_k_num, min_k1_num);
+		print_table(matrix, horisont_x, vertical_x, outerPlaceTable, min_k_num, min_k1_num);
 		// Обновляем индексы элементов по горизонтале и вертикале
 		tmp = horisont_x[min_k1_num];
 		horisont_x[min_k1_num] = vertical_x[min_k_num];
@@ -175,29 +170,43 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 	// Выводим результаты в понятном виде
 	function results() {
 		let nulls = "";
+		//let nullsRes = []
+		let valueRes = []
 		// Иксы, равные нулю
 		for (let i = 0; i < horisont_x.length - 1; i++) {
-			if (horisont_x[i] < maxCountX) nulls += "X" + (horisont_x[i] + 1) + "=";
+			if (horisont_x[i] < maxCountX) {
+				nulls += "X" + (horisont_x[i] + 1) + "=";
+				let _key = "X" + (horisont_x[i] + 1)
+				valueRes.push({var:_key,value:0})
+			}
 		}
-		nulls += "0 <br /><br />";
+		
+		nulls += "0 <br />";
 		let vars = "";
 		// Иксы, отличные от нуля
 		for (let i = 0; i < vertical_x.length; i++) {
-			if (vertical_x[i] < maxCountX) vars += "X" + (vertical_x[i] + 1) + "=" + matrix[i][maxCountX] + "<br />";
+			if (vertical_x[i] < maxCountX){ 
+				vars += "X" + (vertical_x[i] + 1) + "=" + matrix[i][maxCountX] + "<br />";
+				let _key = "X" + (vertical_x[i] + 1);
+				valueRes.push({ var: _key, value : matrix[i][maxCountX]})
 		}
+			
+		}
+		console.log(valueRes)
 		let main_result = "";
 		// Минимум(максимум) функции
 		let res = 1;
 		if (res > 0) main_result = "min F =" + matrix[matrix.length - 1][maxCountX] * -1;
 		else main_result = "max F =" + matrix[matrix.length - 1][maxCountX];
 
-		outerPlace.innerHTML += nulls + vars + "<br />" + main_result;
+		valueRes.push({var:"min F",value:matrix[matrix.length - 1][maxCountX] * -1})
+		outerPlaceVariables.innerHTML += `<div class="result_variables">${nulls + vars + "<br />" + main_result}</div>`;
 	}
 	return false;
 };
 
 // // Вывод таблицы.
-function print_table(arr, horisont_x, vertical_x,outerPlace, row, col) {
+function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 	let max_i = arr.length;
 	let max_j = arr[0].length;
 	let html_table = "";
@@ -225,15 +234,41 @@ function print_table(arr, horisont_x, vertical_x,outerPlace, row, col) {
 		}
 		html_table += "</tr>";
 	}
-	console.log("<table>" + html_head + html_table + "</table>");
-	//$("#result").append("<table>" + html_head + html_table + "</table>");
-	//outerPlace.innerHTML += "<table class=>" + html_head + html_table + "</table>";
+
 	outerPlace.innerHTML += `<table class="simplex_table"> ${html_head}  ${html_table}  </table>`;
 	// Выделяем колонку, если указана
 	// if (col !== undefined)
 	// 	$("table:last tr").each(function () {
 	// 		$(this).children("td").eq(col).addClass("selected");
 	// 	});
+	console.log(`ROW:${row}|COL:${col}`);
+
+	if (row !== undefined) {
+		[...document.querySelectorAll(".simplex_table")[document.querySelectorAll(".simplex_table").length - 1].children[1].children].forEach((item, index) => {
+			if (row === index) {
+				//item.classList.add("selected")
+				//console.log(item.children);
+				item.classList.add("selected");
+			}
+			console.log(`AGA-row ${row}-index ${index}`);
+		});
+	}
+
+	if (col !== undefined) {
+		[...document.querySelectorAll(".simplex_table")[document.querySelectorAll(".simplex_table").length - 1].children[1].children].forEach((item, index) => {
+			
+				//item.classList.add("selected")
+				//console.log(item.children);
+				[...item.children].forEach((tdItem,tdIndex)=>{
+					if((col+1)=== tdIndex){
+						tdItem.classList.add("selected")
+					}
+					console.log(`AGA,COL${col} tdIndex:${tdIndex}`);
+				})
+			
+			console.log(`AGA-row ${row}-index ${index}`);
+		});
+	}
 	// // Выделяем строку, если указана
 	// if (row !== undefined)
 	// 	$("table:last tr")

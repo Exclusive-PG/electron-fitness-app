@@ -69,3 +69,14 @@ ipcMain.on("upload_file", (event) => {
 	
 });
 
+ipcMain.on("upload_img_food", (event) => {
+  dialog.showOpenDialog({properties: ['openFile'],filters: [
+    { name: 'Images', extensions: ['jpg', 'png', 'gif'] },] }).then(function (response) {
+    if (!response.canceled) {
+      event.sender.send("upload_img_food", { filePath: response.filePaths[0] });
+    } else {
+      console.log("no file selected");
+    }
+  })
+	
+});

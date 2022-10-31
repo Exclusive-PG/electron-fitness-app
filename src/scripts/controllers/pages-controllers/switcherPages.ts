@@ -15,7 +15,7 @@ const initTabControls = (swiper: any) => {
 			swiper.slideTo(tab.dataset.tab);
 		});
 	});
-	swiper.slideTo(1)
+	swiper.slideTo(2)
 };
 
 const initTabs = () => {
