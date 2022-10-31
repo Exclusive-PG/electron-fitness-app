@@ -42,7 +42,7 @@ export class Matrix {
         }
         
         //MAIN
-        //moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".result_simplex_table"))
+       // moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
         //TEST
         moduleSimplexTable([
             [-1, -12, -12, -2, -21],

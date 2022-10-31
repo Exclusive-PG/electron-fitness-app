@@ -38,7 +38,7 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		<input type="number" value="0" class="lim_right_side">
 		`;
 	});
-	document.querySelector(".btn_for_calc_min_cost").addEventListener("click", () => {
+	document.querySelector(".btn_for_calc_min_cost_event").addEventListener("click", () => {
 		matrix.createMatrix(countLimitation);
 		let _tempArrayLimLeft: any[] = [];
 		let _tempArrayRight: any[] = [];
@@ -72,7 +72,7 @@ outerPlace.innerHTML += `
 <div class="zoom-in-table"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
 <div class="zoom-out-table"><i class="fa-solid fa-magnifying-glass-minus"></i></div>
 `
-let modifyPadding:number = 0,step = 50,maxLimit = 400
+let modifyPadding:number = 400,step = 50,maxLimit = 400
 	document.querySelector(".zoom-out-table").addEventListener("click",()=>{
 			modifyPadding < maxLimit && (modifyPadding+=step)
 			modifyZone.style.padding = `0 ${modifyPadding}px`
