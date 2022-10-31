@@ -1,4 +1,4 @@
-import { dataUser } from "../../../types/types";
+import { dataUser, historyItemForFoodType } from "../../../types/types";
 import { FoodItem } from "./../Food/FoodItem";
 
 export default class User {
@@ -33,6 +33,7 @@ export default class User {
 				return this._data.food.dinner;
 		}
 	}
+
 	public getCurrentUserActivity() {
 		switch (this._data.lvlActivity) {
 			case 0:
@@ -47,5 +48,4 @@ export default class User {
 				return "High loads every day";
 		}
 	}
-	
 }

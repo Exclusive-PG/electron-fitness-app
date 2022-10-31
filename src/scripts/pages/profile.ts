@@ -1,5 +1,6 @@
 import User from "../Classes/User/User";
 import { usersManager } from "../Classes/User/UsersManager";
+import { renderUsersList } from "../controllers/user-controller/switchUser";
 import FoodManager, { foodManager } from './../Classes/Food/FoodManager';
 
 
@@ -39,6 +40,8 @@ function renderCurrentProfile(outerPlace: HTMLElement, activeUser: User,foodMana
     document.querySelector(".delete_account_current_user").addEventListener("click",()=>{
         usersManager.removeCurrentUser()
         document.querySelector<HTMLElement>(".wrapper_create_login_user").style.display  = "flex"
+        document.querySelector<HTMLElement>(".create_login_user").style.display = "flex"
+        renderUsersList();
     })
 }
 

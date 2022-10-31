@@ -1,4 +1,4 @@
-import { dataUser, EnumGoalUser, historyItemType } from "../../../types/types";
+import { dataUser, EnumGoalUser, historyItemForFoodType, historyItemType } from "../../../types/types";
 import FileSystem from "../FileSystem/FileSystem";
 import User from "./User";
 import { fs, path } from "../../../scripts/requiredLib/requiredLib";
@@ -115,6 +115,28 @@ export class UsersManager {
 	public getCurrentHistoryItem(): historyItemType {
 		return this._activeUser.about.history.find((item: historyItemType) => item.date === AppController.dateTime());
 	}
+
+	public editHistoryItemMealForActiveUser(idMeal: string,data:historyItemForFoodType) {
+		let index = this._activeUser.about.history.findIndex((item:historyItemType) => item.date === AppController.dateTime());
+		console.log(this._activeUser.about.history[index])
+		switch (idMeal) {
+			case "1":
+				this._activeUser.about.history[index].food.breakfast = data;
+				break;
+
+			case "2":
+				this._activeUser.about.history[index].food.lunch = data;
+				break;
+
+			case "3":
+				this._activeUser.about.history[index].food.dinner = data;
+				break;
+		}
+		console.log(this._activeUser.about.history)
+		this.saveUsers();
+	}
+
+
 	public clearData() {
 		this._users = [];
 	}

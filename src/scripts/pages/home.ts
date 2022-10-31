@@ -3,37 +3,42 @@ import { usersManager } from "../Classes/User/UsersManager";
 
 const renderDailyIntakeHomePage = (outerPlace: HTMLElement, currentUser: User) => {
 	const { dailyCalorieIntake } = currentUser.about.test;
+	const {burnedCalories,date,food} = usersManager.getCurrentHistoryItem()
+	let allEatenCalories = (food.breakfast.calories + food.lunch.calories + food.dinner.calories)
+	let allEatenCarbs = (food.breakfast.carbs + food.lunch.carbs + food.dinner.carbs)
+	let allEatenFats= (food.breakfast.fat + food.lunch.fat + food.dinner.fat)
+	let allEatenProtein = (food.breakfast.protein + food.lunch.protein + food.dinner.protein)
 	try {
 		const arrayCards = [
 			{
 				title: "Kcal left",
-				percent: 100,
-				value: dailyCalorieIntake.calories.dailyCalorieIntake,
+				percent:  ((dailyCalorieIntake.calories.dailyCalorieIntake-burnedCalories+allEatenCalories)/dailyCalorieIntake.calories.dailyCalorieIntake)*100,
+				value: (dailyCalorieIntake.calories.dailyCalorieIntake-burnedCalories+allEatenCalories),
 				color: "#f44336",
-				eaten: dailyCalorieIntake.calories.eaten,
-				burned:usersManager.getCurrentHistoryItem().burnedCalories,
+				eaten: allEatenCalories,
+				burned:burnedCalories,
 			},
 		];
 
 		const nutriens = [
 			{
 				title: "Carbs",
-				percent:(50/dailyCalorieIntake.calories.dailyCarbs)*100,
-                current:50,
+				percent:(allEatenCarbs/dailyCalorieIntake.calories.dailyCarbs)*100,
+                current:allEatenCarbs,
 				value: dailyCalorieIntake.calories.dailyCarbs,
 				color: "#7ce2dd",
 			},
 			{
 				title: "Protein",
-				percent: (40/dailyCalorieIntake.calories.dailyProtein)*100,
-                current:40,
+				percent: (allEatenProtein/dailyCalorieIntake.calories.dailyProtein)*100,
+                current:allEatenProtein,
 				value: dailyCalorieIntake.calories.dailyProtein,
 				color: "#c988f8",
 			},
 			{
 				title: "Fat",
-				percent: (20/dailyCalorieIntake.calories.dailyFat)*100,
-                current:20,
+				percent: (allEatenFats/dailyCalorieIntake.calories.dailyFat)*100,
+                current:allEatenFats,
 				value: dailyCalorieIntake.calories.dailyFat,
 				color: "#FFA117",
 			},

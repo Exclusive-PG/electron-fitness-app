@@ -157,11 +157,18 @@ const renderCurrentMeal = (outerPlace: HTMLElement, data: dataItem, activeUser: 
 		rendererMyFoodList(document.querySelector(".render_current_food_list_user"), foodManager, activeUser, data);
 		rendererApp.getPage.renderProfilePage();
 	});
+
+	document.querySelector(".eat_current_meal").addEventListener("click", () => {
+		const { calories, carbs, fats, protein } = foodManager.calculateTotalNutriens(arrayForMyActiveFood);
+		usersManager.editHistoryItemMealForActiveUser(data.id,{calories,carbs,fat:fats,protein,status:true})
+		rendererApp.getPage.renderHomePage();
+	})
 };
 
 function showTotalNutriensAndCalories(outerPlace: HTMLElement, id: Array<string>) {
 	const { calories, carbs, fats, protein, portion } = foodManager.calculateTotalNutriens(id);
 	outerPlace.innerHTML = `Calories: ${calories} | Portion: ${portion} g<br/><i class="fa-solid fa-wheat-awn"></i>protein: ${protein} <i class="fa-solid fa-wheat-awn"></i>carbs: ${carbs} <i class="fa-solid fa-wheat-awn"></i>fats: ${fats}`;
+
 }
 function rendererMyFoodList(outerPlace: HTMLElement, foodManager: FoodManager, activeUser: User | null, data: dataItem) {
 	outerPlace.innerHTML = "";
@@ -281,15 +288,6 @@ export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => 
 		createCustomFoodItemWin.classList.add("active");
 	});
 	addFoodItemWindow();
-	ipcRenderer.on("upload_file", (event, arg) => {
-		console.log(arg.filePath);
-		document.querySelector(".img_add_custom_food").innerHTML = `<img src="${arg.filePath}" height="150px" width="250px" alt="" class="image_food">`;
-		avatarFoodItem = {
-			isAvatar: true,
-			src: arg.filePath,
-		};
-	});
-
 	document.querySelector(".img_add_custom_food").addEventListener("click", () => {
 		ipcRenderer.send("upload_file");
 	});
@@ -298,3 +296,11 @@ export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => 
 	
 };
 
+ipcRenderer.on("upload_file", (event, arg) => {
+	console.log(arg.filePath);
+	document.querySelector(".img_add_custom_food").innerHTML = `<img src="${arg.filePath}" height="150px" width="250px" alt="" class="image_food">`;
+	avatarFoodItem = {
+		isAvatar: true,
+		src: arg.filePath,
+	};
+});
