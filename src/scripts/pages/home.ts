@@ -11,7 +11,7 @@ const renderDailyIntakeHomePage = (outerPlace: HTMLElement, currentUser: User) =
 	try {
 		const arrayCards = [
 			{
-				title: "Kcal left",
+				title: "Cal left",
 				percent:  ((dailyCalorieIntake.calories.dailyCalorieIntake-burnedCalories+allEatenCalories)/dailyCalorieIntake.calories.dailyCalorieIntake)*100,
 				value: (dailyCalorieIntake.calories.dailyCalorieIntake-burnedCalories+allEatenCalories),
 				color: "#f44336",
@@ -66,7 +66,7 @@ const renderDailyIntakeHomePage = (outerPlace: HTMLElement, currentUser: User) =
             </div>
             <div class="circular_card">
                 <div class="circular-progress" style="background:${circleProgressBar(arrayCards[0].percent, arrayCards[0].color)}">
-                    <div class="value-container">${arrayCards[0].value.toFixed(0)}<br/>Kcal Left</div>
+                    <div class="value-container">${arrayCards[0].value.toFixed(0)}<br/>${arrayCards[0].title}</div>
                 </div>
     
             </div>

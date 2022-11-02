@@ -289,7 +289,7 @@ export const renderFoodPage = (activeUser: User = usersManager.getctiveUser) => 
 	document.querySelector(".btn_for_create_your_food_item").addEventListener("click", () => {
 		createCustomFoodItemWin.classList.add("active");
 	});
-	addFoodItemWindow();
+
 
     renderCustomFoodItems(document.querySelector(".all_list_custom_food_render"),foodManager)
 	
@@ -306,4 +306,5 @@ ipcRenderer.on("upload_img_food", (event, arg) => {
 		isAvatar: true,
 		src: arg.filePath,
 	};
-});
+});	
+addFoodItemWindow();
