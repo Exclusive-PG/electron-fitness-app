@@ -93,15 +93,13 @@ export class UsersManager {
 			return;
 		}
 
-
 		isItemToday = this._activeUser.about.history.every((item: historyItemType) => {
 			if (item.date === AppController.dateTime()) return false;
 			else return true;
 		});
 
-	
 		isItemToday && this._activeUser.about.history.push(_obj);
-		console.log(this._activeUser.about.history)
+		console.log(this._activeUser.about.history);
 		this.saveUsers();
 	}
 	public addHistoryBurnedCalories(burnedCalories: number) {
@@ -116,9 +114,9 @@ export class UsersManager {
 		return this._activeUser.about.history.find((item: historyItemType) => item.date === AppController.dateTime());
 	}
 
-	public editHistoryItemMealForActiveUser(idMeal: string,data:historyItemForFoodType) {
-		let index = this._activeUser.about.history.findIndex((item:historyItemType) => item.date === AppController.dateTime());
-		console.log(this._activeUser.about.history[index])
+	public editHistoryItemMealForActiveUser(idMeal: string, data: historyItemForFoodType) {
+		let index = this._activeUser.about.history.findIndex((item: historyItemType) => item.date === AppController.dateTime());
+		console.log(this._activeUser.about.history[index]);
 		switch (idMeal) {
 			case "1":
 				this._activeUser.about.history[index].food.breakfast = data;
@@ -132,10 +130,42 @@ export class UsersManager {
 				this._activeUser.about.history[index].food.dinner = data;
 				break;
 		}
-		console.log(this._activeUser.about.history)
+		console.log(this._activeUser.about.history);
 		this.saveUsers();
 	}
 
+	public getShareHistory() {
+		let totalBurnedCalories: number = 0,
+			totalEatenCalories: number = 0,
+			totalProtein: number = 0,
+			totalFats: number = 0,
+			totalCarbs: number = 0,
+			followingCourses:number = this._activeUser.about.courses.length,
+			lvlActivity:string = this._activeUser.getCurrentUserActivity()
+		this._activeUser.about.history.forEach((item: historyItemType) => {
+			totalBurnedCalories += item.burnedCalories;
+			totalEatenCalories += item.food.breakfast.calories + item.food.lunch.calories + item.food.dinner.calories;
+			totalProtein+= item.food.breakfast.protein + item.food.lunch.protein + item.food.dinner.protein;
+			totalFats+= item.food.breakfast.fat + item.food.lunch.fat + item.food.dinner.fat;
+			totalCarbs+= item.food.breakfast.carbs + item.food.lunch.carbs + item.food.dinner.carbs;
+		});
+		return {
+			date: {
+				from: this._activeUser.about.history[0].date,
+				to: this._activeUser.about.history[this._activeUser.about.history.length - 1].date,
+			},
+			result: {
+				totalBurnedCalories,
+				totalEatenCalories,
+				totalProtein,
+				totalFats,
+				totalCarbs,
+				followingCourses,
+				lvlActivity
+
+			},
+		};
+	}
 
 	public clearData() {
 		this._users = [];
