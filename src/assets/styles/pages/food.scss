@@ -215,7 +215,6 @@
 	}
 }
 
-
 .create_custom_food_item,
 .calculate_min_cost_during_diet_win {
 	transition: 0.3s all;
@@ -365,20 +364,29 @@
 .result_simplex_table {
 	max-height: 45vh;
 	overflow-y: scroll;
-	padding: 0 400px;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	display: flex;
 	margin: 0 auto;
 	text-align: center;
 }
-.tables_simplex_table{
+.tables_simplex_table {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	padding: 0 400px;
 }
-.variables_simplex_table{
+.variables_simplex_table {
 	font-size: 20px;
-    font-weight: bold;
+	font-weight: bold;
+	p {
+		text-align: justify;
+		padding: 0 30px;
+		margin-top: 20px;
+	}
+	.wrapper_products{
+		text-align: justify;
+		padding: 5px 30px 20px 30px;
+	}
 }
 .result_simplex_table::-webkit-scrollbar {
 	width: 20px;
@@ -423,8 +431,8 @@ table .selected .selected {
 }
 .btn-controls-render {
 	position: absolute;
-    right: 40px;
-    bottom: 46%;
+	right: 40px;
+	bottom: 46%;
 	display: flex;
 	justify-content: right;
 	align-items: center;
@@ -434,8 +442,8 @@ table .selected .selected {
 		padding: 5px;
 		font-size: 25px;
 		margin-right: 20px;
-		transition: .2s all ease-in-out;
-		&:hover{
+		transition: 0.2s all ease-in-out;
+		&:hover {
 			cursor: pointer;
 			color: $MAIN_RED_COLOR;
 			transform: scale(1.3);

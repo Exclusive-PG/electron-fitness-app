@@ -1,5 +1,4 @@
-export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlaceTable,outerPlaceVariables) => {
-
+export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlaceTable, outerPlaceVariables) => {
 	("use strict");
 	let matrix, horisont_x, vertical_x, Fun, iteration, min_k1_num, min_k_num;
 	outerPlaceTable.innerHTML = "";
@@ -171,40 +170,61 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 	function results() {
 		let nulls = "";
 		//let nullsRes = []
-		let valueRes = []
+		let valueRes = [];
 		// Иксы, равные нулю
 		for (let i = 0; i < horisont_x.length - 1; i++) {
 			if (horisont_x[i] < maxCountX) {
 				nulls += "X" + (horisont_x[i] + 1) + "=";
-				let _key = "X" + (horisont_x[i] + 1)
-				valueRes.push({var:_key,value:0})
+				let _key = "X" + (horisont_x[i] + 1);
+				valueRes.push({ var: _key, value: 0, name: `Кількість продукту №${horisont_x[i] + 1}` , id:horisont_x[i] + 1});
 			}
 		}
-		
+
 		nulls += "0 <br />";
 		let vars = "";
 		// Иксы, отличные от нуля
 		for (let i = 0; i < vertical_x.length; i++) {
-			if (vertical_x[i] < maxCountX){ 
+			if (vertical_x[i] < maxCountX) {
 				vars += "X" + (vertical_x[i] + 1) + "=" + matrix[i][maxCountX] + "<br />";
 				let _key = "X" + (vertical_x[i] + 1);
-				valueRes.push({ var: _key, value : matrix[i][maxCountX]})
+				valueRes.push({ var: _key, value: matrix[i][maxCountX], name: `Кількість продукту №${vertical_x[i] + 1}` ,id: vertical_x[i]+1});
+			}
 		}
-			
-		}
-		console.log(valueRes)
+		console.log(valueRes);
 		let main_result = "";
 		// Минимум(максимум) функции
 		let res = 1;
 		if (res > 0) main_result = "min F =" + matrix[matrix.length - 1][maxCountX] * -1;
 		else main_result = "max F =" + matrix[matrix.length - 1][maxCountX];
 
-		valueRes.push({var:"min F",value:matrix[matrix.length - 1][maxCountX] * -1})
+		valueRes.push({ var: "min F", value: matrix[matrix.length - 1][maxCountX] * -1 });
+
+		let resProducts = "";
+		valueRes.splice(0, valueRes.length-1).sort(sortByIdProduct).forEach((item) => {
+			resProducts += `<div class="product_count_item">${item.name}: ${item.value} од.</div>`;
+		});
 		outerPlaceVariables.innerHTML += `<div class="result_variables">${nulls + vars + "<br />" + main_result}</div>`;
+		outerPlaceVariables.innerHTML += `
+		<p>Для отримання найбільш дешевих закупівель продуктів , що забезпечують дієтичні вимоги потрібно використати план з розміром ${
+			matrix[matrix.length - 1][maxCountX] * -1
+		} одиниць продуктів та склад повинен бути наступним:
+		</p>
+		<div class="wrapper_products">
+			${resProducts}
+		</div>
+		`;
 	}
 	return false;
 };
-
+function sortByIdProduct( a, b ) {
+	if ( a.id < b.id ){
+	  return -1;
+	}
+	if ( a.id > b.id ){
+	  return 1;
+	}
+	return 0;
+  }
 // // Вывод таблицы.
 function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 	let max_i = arr.length;
@@ -213,8 +233,7 @@ function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 	let html_head = "<th></th>";
 	// заголовки
 	console.log("PRINT");
-	//console.log("2222",horisont_x)
-	//console.log("HORISONT_X",horisont_x)
+
 	for (let j = 0; j < max_j - 1; j++) {
 		html_head += "<th>X" + (horisont_x[j] + 1) + "</th>";
 	}
@@ -236,18 +255,12 @@ function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 	}
 
 	outerPlace.innerHTML += `<table class="simplex_table"> ${html_head}  ${html_table}  </table>`;
-	// Выделяем колонку, если указана
-	// if (col !== undefined)
-	// 	$("table:last tr").each(function () {
-	// 		$(this).children("td").eq(col).addClass("selected");
-	// 	});
+
 	console.log(`ROW:${row}|COL:${col}`);
 
 	if (row !== undefined) {
 		[...document.querySelectorAll(".simplex_table")[document.querySelectorAll(".simplex_table").length - 1].children[1].children].forEach((item, index) => {
 			if (row === index) {
-				//item.classList.add("selected")
-				//console.log(item.children);
 				item.classList.add("selected");
 			}
 			console.log(`AGA-row ${row}-index ${index}`);
@@ -256,24 +269,16 @@ function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 
 	if (col !== undefined) {
 		[...document.querySelectorAll(".simplex_table")[document.querySelectorAll(".simplex_table").length - 1].children[1].children].forEach((item, index) => {
-			
-				//item.classList.add("selected")
-				//console.log(item.children);
-				[...item.children].forEach((tdItem,tdIndex)=>{
-					if((col+1)=== tdIndex){
-						tdItem.classList.add("selected")
-					}
-					console.log(`AGA,COL${col} tdIndex:${tdIndex}`);
-				})
-			
+			[...item.children].forEach((tdItem, tdIndex) => {
+				if (col + 1 === tdIndex) {
+					tdItem.classList.add("selected");
+				}
+				console.log(`AGA,COL${col} tdIndex:${tdIndex}`);
+			});
+
 			console.log(`AGA-row ${row}-index ${index}`);
 		});
 	}
-	// // Выделяем строку, если указана
-	// if (row !== undefined)
-	// 	$("table:last tr")
-	// 		.eq(row + 1)
-	// 		.addClass("selected");
 }
 // Поиск минимального элемента
 //minelm(free) < 0

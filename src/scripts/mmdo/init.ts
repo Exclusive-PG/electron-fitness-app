@@ -62,7 +62,9 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		console.log(arrayMainFunction);
 
 		matrix.fillMatrix(_tempArrayLimLeft, _tempArrayRight,_tempArraySymbolLimitation, countX,countLimitation,arrayMainFunction);
-		renderZoomBtns(document.querySelector(".btn-controls-render"),document.querySelector(".result_simplex_table"))
+		renderZoomBtns(document.querySelector(".btn-controls-render"),document.querySelector(".tables_simplex_table"))
+		document.querySelector(".result_simplex_table").scrollTo({top:0,behavior:"smooth"})
+	
 	});
 }
 
@@ -85,5 +87,6 @@ let modifyPadding:number = 400,step = 50,maxLimit = 400
 
 renderCountXFunction(countX, document.querySelector(".inputs_x"));
 renderLimitationCount(countX, countLimitation, document.querySelector(".limitation_block"));
+
 //limitation_block
 export const renderPageCalc = () => {};
