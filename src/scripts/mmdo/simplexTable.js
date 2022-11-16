@@ -1,6 +1,7 @@
 export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlaceTable, outerPlaceVariables) => {
 	("use strict");
 	let matrix, horisont_x, vertical_x, Fun, iteration, min_k1_num, min_k_num;
+	let valueRes = [];
 	outerPlaceTable.innerHTML = "";
 	outerPlaceVariables.innerHTML = "";
 	/*################## ШАГ 0 ##################*/
@@ -170,7 +171,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 	function results() {
 		let nulls = "";
 		//let nullsRes = []
-		let valueRes = [];
+		 valueRes = [];
 		// Иксы, равные нулю
 		for (let i = 0; i < horisont_x.length - 1; i++) {
 			if (horisont_x[i] < maxCountX) {
@@ -249,7 +250,8 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		</div>
 		`;
 	}
-	return false;
+	return valueRes;
+
 };
 function sortByIdProduct( a, b ) {
 	if ( a.id < b.id ){
@@ -314,6 +316,7 @@ function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 			console.log(`AGA-row ${row}-index ${index}`);
 		});
 	}
+
 }
 // Поиск минимального элемента
 //minelm(free) < 0
@@ -345,4 +348,6 @@ function minelm(array, dispayNum, not_last) {
 		//console.log(m)
 		return m;
 	}
+
+
 }

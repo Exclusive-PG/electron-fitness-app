@@ -1,5 +1,7 @@
 import { moduleSimplexTable } from "./simplexTable";
 import { Matrix } from './Matrix';
+import FileSystem from './../Classes/FileSystem/FileSystem';
+import { path } from "../requiredLib/requiredLib";
 
 let arrayMainFunction: number[]  = []
 let countX = 4,countLimitation = 5;
@@ -62,17 +64,18 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		console.log(arrayMainFunction);
 
 		matrix.fillMatrix(_tempArrayLimLeft, _tempArrayRight,_tempArraySymbolLimitation, countX,countLimitation,arrayMainFunction);
-		renderZoomBtns(document.querySelector(".btn-controls-render"),document.querySelector(".tables_simplex_table"))
+		renderBtns(document.querySelector(".btn-controls-render"),document.querySelector(".tables_simplex_table"))
 		document.querySelector(".result_simplex_table").scrollTo({top:0,behavior:"smooth"})
 	
 	});
 }
 
-function renderZoomBtns(outerPlace:HTMLElement,modifyZone:HTMLElement){
+function renderBtns(outerPlace:HTMLElement,modifyZone:HTMLElement){
 outerPlace.innerHTML = "";
 outerPlace.innerHTML += `
 <div class="zoom-in-table"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
 <div class="zoom-out-table"><i class="fa-solid fa-magnifying-glass-minus"></i></div>
+<div class="save-log-file-calculating"><i class="fa-regular fa-file-lines"></i></div>
 `
 let modifyPadding:number = 400,step = 50,maxLimit = 400
 	document.querySelector(".zoom-out-table").addEventListener("click",()=>{
@@ -83,6 +86,10 @@ let modifyPadding:number = 400,step = 50,maxLimit = 400
 		modifyPadding <= 0 ? (modifyPadding = 0) : (modifyPadding -=step) 
 		modifyZone.style.padding = `0 ${modifyPadding}px`
 })
+	document.querySelector(".save-log-file-calculating").addEventListener("click",()=>{
+		console.log(matrix.getResultData())
+		FileSystem.createLog(JSON.stringify(matrix.getResultData()),path.join(FileSystem.PATHS.logs, `${Date.now().toString()}.txt`))
+	})
 }
 
 renderCountXFunction(countX, document.querySelector(".inputs_x"));

@@ -8,6 +8,7 @@ export default class FileSystem {
 		exercises: path.resolve(path.join("data", "exercises.json")),
 		customCourses: path.resolve(path.join("data", "customCourses.json")),
 		foodItem: path.resolve(path.join("data", "food","foodItem.json")),
+		logs: path.resolve(path.join("data", "logs",)),
 	};
 	public static createJSONData(data: any, pathFile: string) {
 		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {
@@ -20,7 +21,17 @@ export default class FileSystem {
 			console.log((e as Error).message);
 		}
 	}
-
+	public static createLog(data: any, pathFile: string) {
+		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {
+			if (err) throw err;
+		});
+		console.log(path.resolve(pathFile))
+		try {
+			fs.writeFileSync(path.resolve(pathFile), data);
+		} catch (e) {
+			console.log((e as Error).message);
+		}
+	}
 	public static createDirectory(pathDir: string) {
 		if (!fs.existsSync(pathDir)) {
 			fs.mkdirSync(pathDir, { recursive: true });

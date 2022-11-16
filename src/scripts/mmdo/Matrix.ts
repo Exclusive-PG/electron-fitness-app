@@ -4,7 +4,7 @@ import { moduleSimplexTable } from "./simplexTable";
 export class Matrix {
     private matrix:Array<Array<number>>
     private config:{countX:number}
-   
+    private result:Object ;
     constructor(config:{countX:number}){
         this.config = config
     }
@@ -44,7 +44,7 @@ export class Matrix {
         //MAIN
        // moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
         //TEST
-        moduleSimplexTable([
+        this.result = moduleSimplexTable([
             [-1, -12, -12, -2, -21],
             [-10, -1, -0, -4, -33],
             [-2, -7, -3, -0, -12],
@@ -58,5 +58,9 @@ export class Matrix {
     }
     public getMatrix(){
         return this.matrix
+    }
+    public getResultData(){
+        console.log(this.result)
+        return this.result
     }
 }
