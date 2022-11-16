@@ -190,7 +190,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 				valueRes.push({ var: _key, value: matrix[i][maxCountX], name: `Кількість продукту №${vertical_x[i] + 1}` ,id: vertical_x[i]+1});
 			}
 		}
-		console.log(valueRes);
+		//console.log(valueRes);
 		let main_result = "";
 		// Минимум(максимум) функции
 		let res = 1;
@@ -200,9 +200,41 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		valueRes.push({ var: "min F", value: matrix[matrix.length - 1][maxCountX] * -1 });
 
 		let resProducts = "";
-		valueRes.splice(0, valueRes.length-1).sort(sortByIdProduct).forEach((item) => {
-			resProducts += `<div class="product_count_item">${item.name}: ${item.value} од.</div>`;
+	
+		valueRes.sort(sortByIdProduct).forEach((item) => {
+			item.name !== undefined && (resProducts += `<div class="product_count_item">${item.name}: ${item.value} од.</div>`)
 		});
+		console.log(valueRes)
+		console.log("inputMatrix",InputMatrix)
+		let resultsCheck = [],_valueCheck  = 0;
+		let resultCheckInString = [], resultCheckHTMLFormat = "<p>Коли ми знайшли значення наших змінних, тобто продуктів, то потрібно зробити перевірку підставляючи наші змінні до обмежень.</p>";
+		for (let i= 0; i < InputMatrix.length - 1; i++) {
+
+			for (let j = 0; j < InputMatrix[i].length - 1; j++) {
+				let _tempSymbolValue = InputMatrix[i][j] < 0 ? (InputMatrix[i][j]* -1) : InputMatrix[i][j]
+				try{
+				 
+				_valueCheck += _tempSymbolValue * valueRes.filter((item)=>item.id === (j+1))[0].value;
+				console.log(`${_tempSymbolValue} * ${valueRes.filter((item)=>item.id === (j+1))[0].value}`)
+				}catch{
+
+				}
+			}
+			resultsCheck.push(_valueCheck)
+			let valueLimitationTransform = InputMatrix[i][InputMatrix[i].length-1] < 0 ?  (InputMatrix[i][InputMatrix[i].length-1] * -1) : (InputMatrix[i][InputMatrix[i].length-1])
+			let symboLimitationTransform =  InputMatrix[i][InputMatrix[i].length-1] < 0 ? ">=" : "<=";
+			resultCheckInString.push(`${_valueCheck.toFixed(3)}  ${symboLimitationTransform} ${valueLimitationTransform} `)
+			_valueCheck = 0;
+		}
+		
+		resultCheckInString.forEach((item)=>{
+			resultCheckHTMLFormat+= `
+			<div>${item}</div>
+			`
+		})
+		console.log(resultsCheck)
+		console.log(resultCheckInString)
+		//console.log(valueRes.filter((item)=>item.id === (1+1))[0])
 		outerPlaceVariables.innerHTML += `<div class="result_variables">${nulls + vars + "<br />" + main_result}</div>`;
 		outerPlaceVariables.innerHTML += `
 		<p>Для отримання найбільш дешевих закупівель продуктів , що забезпечують дієтичні вимоги потрібно використати план з розміром ${
@@ -211,6 +243,9 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		</p>
 		<div class="wrapper_products">
 			${resProducts}
+		</div>
+		<div class="check_limitation">
+			${resultCheckHTMLFormat}
 		</div>
 		`;
 	}
