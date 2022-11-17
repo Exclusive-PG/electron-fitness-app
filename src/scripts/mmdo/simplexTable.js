@@ -1,5 +1,8 @@
+let numberOfTables = 0;
+
 export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitation, outerPlaceTable, outerPlaceVariables) => {
 	("use strict");
+
 	let matrix, horisont_x, vertical_x, Fun, iteration, min_k1_num, min_k_num;
 	let valueRes = [];
 	outerPlaceTable.innerHTML = "";
@@ -181,7 +184,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 			}
 		}
 
-		nulls += "0 <br />";
+		nulls += valueRes.length === 0 ? "" : "0 <br />"; 
 		let vars = "";
 		// Иксы, отличные от нуля
 		for (let i = 0; i < vertical_x.length; i++) {
@@ -250,6 +253,7 @@ export const moduleSimplexTable = (InputMatrix, MainFunc, maxCountX, maxLimitati
 		</div>
 		`;
 	}
+	numberOfTables = 0;
 	return valueRes;
 
 };
@@ -264,12 +268,13 @@ function sortByIdProduct( a, b ) {
   }
 // // Вывод таблицы.
 function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
+	++numberOfTables
 	let max_i = arr.length;
 	let max_j = arr[0].length;
 	let html_table = "";
-	let html_head = "<th></th>";
+	let html_head = `<h2>Таблиця №${numberOfTables}</h2><th></th>`;
 	// заголовки
-	console.log("PRINT");
+	
 
 	for (let j = 0; j < max_j - 1; j++) {
 		html_head += "<th>X" + (horisont_x[j] + 1) + "</th>";
@@ -293,14 +298,11 @@ function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 
 	outerPlace.innerHTML += `<table class="simplex_table"> ${html_head}  ${html_table}  </table>`;
 
-	console.log(`ROW:${row}|COL:${col}`);
-
 	if (row !== undefined) {
 		[...document.querySelectorAll(".simplex_table")[document.querySelectorAll(".simplex_table").length - 1].children[1].children].forEach((item, index) => {
 			if (row === index) {
 				item.classList.add("selected");
 			}
-			console.log(`AGA-row ${row}-index ${index}`);
 		});
 	}
 
@@ -310,10 +312,7 @@ function print_table(arr, horisont_x, vertical_x, outerPlace, row, col) {
 				if (col + 1 === tdIndex) {
 					tdItem.classList.add("selected");
 				}
-				console.log(`AGA,COL${col} tdIndex:${tdIndex}`);
 			});
-
-			console.log(`AGA-row ${row}-index ${index}`);
 		});
 	}
 

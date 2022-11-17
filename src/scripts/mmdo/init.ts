@@ -5,7 +5,7 @@ import { path } from "../requiredLib/requiredLib";
 
 let arrayMainFunction: number[]  = []
 let countX = 4,countLimitation = 5;
-const matrix = new Matrix({countX});
+const matrix = new Matrix();
 
 
 function renderCountXFunction(countX: number, outerPlace: HTMLElement) {
@@ -40,7 +40,7 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		`;
 	});
 	document.querySelector(".btn_for_calc_min_cost_event").addEventListener("click", () => {
-		matrix.createMatrix(countLimitation);
+		matrix.createMatrix(countX);
 		let _tempArrayLimLeft: any[] = [];
 		let _tempArrayRight: any[] = [];
 		let _tempArraySymbolLimitation: any[] = [];

@@ -3,18 +3,16 @@ import { moduleSimplexTable } from "./simplexTable";
 
 export class Matrix {
     private matrix:Array<Array<number>>
-    private config:{countX:number}
     private result:Object ;
-    constructor(config:{countX:number}){
-        this.config = config
-    }
+
    
-   
-    public createMatrix(countLim: number) {
+    public createMatrix(countX: number) {
+    
         this.matrix = [];
-        for (let index = 0; index < this.config.countX+1; index++) {
+        for (let index = 0; index < countX+1; index++) {
             this.matrix[index] = [];
         }
+        console.log("CREATE",this.matrix)
     }
     public fillMatrix(dataLimLeft: Array<number>, dataLimRight: Array<number>, dataSymbol:Array<number>, countX: number,countLimitation:number,arrayMainFunction:Array<number>) {
         let _countGoal = countX;
@@ -42,7 +40,7 @@ export class Matrix {
         }
         
         //MAIN
-      // moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
+     // this.result = moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
         //TEST
         this.result = moduleSimplexTable([
             [-1, -12, -12, -2, -21],
