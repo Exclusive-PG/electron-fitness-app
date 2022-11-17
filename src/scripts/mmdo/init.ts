@@ -19,7 +19,6 @@ function renderCountXFunction(countX: number, outerPlace: HTMLElement) {
 
 	//});
 }
-
 function renderLimitationCount(countX: number, countLimitation: number, outerPlace: HTMLElement) {
 	outerPlace.innerHTML = "";
 
@@ -68,6 +67,7 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		document.querySelector(".result_simplex_table").scrollTo({top:0,behavior:"smooth"})
 	
 	});
+
 }
 
 function renderBtns(outerPlace:HTMLElement,modifyZone:HTMLElement){
@@ -91,9 +91,22 @@ let modifyPadding:number = 400,step = 50,maxLimit = 400
 		FileSystem.createLog(JSON.stringify(matrix.getResultData()),path.join(FileSystem.PATHS.logs, `${Date.now().toString()}.txt`))
 	})
 }
-
+document.querySelector(".btn_set_matrix").addEventListener("click",()=>{
+		
+	document.querySelector(".section_set_matrix").classList.add("active")
+})
+document.querySelector(".close_win_set_matrix").addEventListener("click",()=>{
+document.querySelector(".section_set_matrix").classList.remove("active")
+console.log("click")
+})
+document.querySelector(".btn_save_matrix").addEventListener("click",()=>{
+countX = parseInt(document.querySelector<HTMLInputElement>(".count_x").value);
+countLimitation = parseInt(document.querySelector<HTMLInputElement>(".count_limitation").value);
 renderCountXFunction(countX, document.querySelector(".inputs_x"));
 renderLimitationCount(countX, countLimitation, document.querySelector(".limitation_block"));
-
+document.querySelector(".section_set_matrix").classList.remove("active")
+})
+renderCountXFunction(countX, document.querySelector(".inputs_x"));
+renderLimitationCount(countX, countLimitation, document.querySelector(".limitation_block"));
 //limitation_block
 export const renderPageCalc = () => {};
