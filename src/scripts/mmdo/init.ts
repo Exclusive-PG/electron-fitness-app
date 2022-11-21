@@ -1,12 +1,12 @@
 import { moduleSimplexTable } from "./simplexTable";
 import { Matrix } from './Matrix';
 import FileSystem from './../Classes/FileSystem/FileSystem';
-import { path } from "../requiredLib/requiredLib";
+import { path, shell } from "../requiredLib/requiredLib";
 
 let arrayMainFunction: number[]  = []
 let countX = 4,countLimitation = 5;
 const matrix = new Matrix();
-
+let dataInput : any;
 
 function renderCountXFunction(countX: number, outerPlace: HTMLElement) {
 	outerPlace.innerHTML = "";
@@ -62,7 +62,7 @@ function renderLimitationCount(countX: number, countLimitation: number, outerPla
 		arrayMainFunction.push(0);
 		console.log(arrayMainFunction);
 
-		matrix.fillMatrix(_tempArrayLimLeft, _tempArrayRight,_tempArraySymbolLimitation, countX,countLimitation,arrayMainFunction);
+		dataInput = matrix.fillMatrix(_tempArrayLimLeft, _tempArrayRight,_tempArraySymbolLimitation, countX,countLimitation,arrayMainFunction);
 		renderBtns(document.querySelector(".btn-controls-render"),document.querySelector(".tables_simplex_table"))
 		document.querySelector(".result_simplex_table").scrollTo({top:0,behavior:"smooth"})
 	
@@ -88,7 +88,9 @@ let modifyPadding:number = 400,step = 50,maxLimit = 400
 })
 	document.querySelector(".save-log-file-calculating").addEventListener("click",()=>{
 		console.log(matrix.getResultData())
-		FileSystem.createLog(JSON.stringify(matrix.getResultData()),path.join(FileSystem.PATHS.logs, `${Date.now().toString()}.txt`))
+		let _pathLog = path.join(FileSystem.PATHS.logs, `${Date.now().toString()}.log`)
+		FileSystem.createLog(matrix.getResultData(),dataInput,_pathLog)
+		shell.showItemInFolder(_pathLog)
 	})
 }
 document.querySelector(".btn_set_matrix").addEventListener("click",()=>{

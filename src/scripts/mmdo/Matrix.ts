@@ -40,19 +40,24 @@ export class Matrix {
         }
         
         //MAIN
-     // this.result = moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
+      this.result = moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
         //TEST
-        this.result = moduleSimplexTable([
-            [-1, -12, -12, -2, -21],
-            [-10, -1, -0, -4, -33],
-            [-2, -7, -3, -0, -12],
-            [2, 7, 3, 0, 65],
-            [-3, -0, -4, -6, -34],
-            //[1, 2, 2, 3, 0],
-        ],[1, 2, 2, 3, 0],countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
+        // arrayMainFunction = [1, 2, 2, 3, 0]
+        // this.matrix = [
+        //     [-1, -12, -12, -2, -21],
+        //     [-10, -1, -0, -4, -33],
+        //     [-2, -7, -3, -0, -12],
+        //     [2, 7, 3, 0, 65],
+        //     [-3, -0, -4, -6, -34]]
+
+        // this.result = moduleSimplexTable(this.matrix,arrayMainFunction,countX,countLimitation,document.querySelector(".tables_simplex_table"),document.querySelector(".variables_simplex_table"))
     
         // /.result_simplex_table
     //	console.log(matrix,arrayMainFunction);
+    return {
+        matrix:this.matrix,
+        mainFunction:arrayMainFunction
+    };
     }
     public getMatrix(){
         return this.matrix

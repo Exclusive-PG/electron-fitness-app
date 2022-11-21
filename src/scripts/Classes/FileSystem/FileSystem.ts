@@ -21,13 +21,20 @@ export default class FileSystem {
 			console.log((e as Error).message);
 		}
 	}
-	public static createLog(data: any, pathFile: string) {
+	public static createLog(dataAnswer: any, dataInput: any, pathFile: string) {
+
+		let log = {
+			date:new Date().toLocaleDateString(),
+			dataInput,
+			dataAnswer
+		}
 		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {
 			if (err) throw err;
 		});
+
 		console.log(path.resolve(pathFile))
 		try {
-			fs.writeFileSync(path.resolve(pathFile), data);
+			fs.writeFileSync(path.resolve(pathFile), JSON.stringify(log));
 		} catch (e) {
 			console.log((e as Error).message);
 		}
